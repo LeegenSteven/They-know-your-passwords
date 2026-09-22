@@ -7,12 +7,12 @@
 - Qt 6.8.3 `win64_msvc2022_64`，含 Declarative、ImageFormats、SVG、Tools 和 Translations。
 - Python 3.9.25，PyTorch 2.8.0+cu129，torch-geometric 2.6.1，tomli 2.2.1。
 
-## 配置 KeePassXC
+## 配置桌面客户端
 
 Ninja 在 Windows 上无法可靠扫描含中文字符的源码路径。先创建只指向同一工作区源码的 ASCII 目录联接，再在 Visual Studio x64 Developer Command Prompt 中执行：
 
 ```powershell
-New-Item -ItemType Junction -Path D:\tmp\TheyKnowYourPasswordsSrc -Target 'D:\研究生\网络安全竞赛\keepassxc-develop'
+New-Item -ItemType Junction -Path D:\tmp\TheyKnowYourPasswordsSrc -Target 'D:\研究生\网络安全竞赛\desktop-app'
 cmake -S D:\tmp\TheyKnowYourPasswordsSrc -B D:\tmp\TheyKnowYourPasswordsBuild -G Ninja `
   -DCMAKE_BUILD_TYPE=Release `
   -DCMAKE_TOOLCHAIN_FILE=D:\vcpkg\scripts\buildsystems\vcpkg.cmake `
@@ -34,32 +34,32 @@ cmake --build D:\tmp\TheyKnowYourPasswordsBuild --target KeePassXC keepassxc-pro
 $env:KEEPASSXC_RISK_PYTHON='D:\Anaconda3\envs\pytorch_cuda\python.exe'
 $env:KEEPASSXC_RISK_SERVICE='D:\研究生\网络安全竞赛\algo-service\server.py'
 $env:KEEPASSXC_RISK_CONFIG='D:\研究生\网络安全竞赛\algo-service\config.toml'
-& 'D:\tmp\TheyKnowYourPasswordsBuild\src\KeePassXC.exe'
+& 'D:\tmp\TheyKnowYourPasswordsBuild\src\TheyKnowYourPasswords.exe'
 ```
 
 也可在 KeePassXC“设置 → 浏览器集成 → 高级”填写同样的 Python、服务脚本和 TOML 路径。启动时服务会预热模型；stdout 只允许协议 JSON，宿主丢弃 stderr，避免诊断信息进入应用日志。
 
-仓库也提供 `scripts\start-demo.ps1`。它设置上述三个环境变量后启动 `D:\tmp\TheyKnowYourPasswordsDemo\KeePassXC.exe`。
+仓库也提供 `scripts\start-demo.ps1`。它设置上述三个环境变量后启动 `D:\tmp\TheyKnowYourPasswordsPackage\TheyKnowYourPasswords.exe`。
 
 ## 加载扩展
 
 扩展构建命令：
 
 ```powershell
-cd keepassxc-browser
+cd browser-extension
 npm install
 node build.js --skip-translations
 ```
 
-运行 `npm run debug:chromium` 可把带固定公钥的 Chromium 清单复制到开发目录。随后在 Chrome 或 Edge 的扩展管理页面启用开发者模式，选择“加载已解压的扩展”，目录为 `keepassxc-browser\keepassxc-browser`。固定 ID 应显示为 `ijlckofhohjbbifcfhpiglkmfndaaeol`。在 KeePassXC 浏览器设置中启用 Chrome/Edge 后重新生成 Native Messaging 清单。
+运行 `npm run debug:chromium` 可把带固定公钥的 Chromium 清单复制到开发目录。随后在 Chrome 或 Edge 的扩展管理页面启用开发者模式，选择“加载已解压的扩展”，目录为 `browser-extension\extension`。固定 ID 应显示为 `ijlckofhohjbbifcfhpiglkmfndaaeol`。在桌面客户端的浏览器设置中启用 Chrome/Edge 后重新生成 Native Messaging 清单。
 
 若要生成包含 Qt/vcpkg 运行库、算法服务和已解压 Chromium 扩展的本地演示目录，执行：
 
 ```powershell
-.\scripts\package-demo.ps1 -BuildDirectory D:\tmp\TheyKnowYourPasswordsBuild -OutputDirectory D:\tmp\TheyKnowYourPasswordsDemo
+.\scripts\package-demo.ps1 -BuildDirectory D:\tmp\TheyKnowYourPasswordsBuild -OutputDirectory D:\tmp\TheyKnowYourPasswordsPackage
 ```
 
-模型权重不会复制进演示目录；生成的配置仍引用工作区中的只读算法资产。加载 `D:\tmp\TheyKnowYourPasswordsDemo\extension-chromium` 后，运行 `D:\tmp\TheyKnowYourPasswordsDemo\start-demo.ps1`。
+模型权重不会复制进演示目录；生成的配置仍引用工作区中的只读算法资产。加载 `D:\tmp\TheyKnowYourPasswordsPackage\extension-chromium` 后，运行 `D:\tmp\TheyKnowYourPasswordsPackage\start-demo.ps1`。
 
 ## 演示流程
 

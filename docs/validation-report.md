@@ -11,12 +11,12 @@
 - 扩展 JavaScript `node --check`：新增及相关脚本通过。
 - 扩展清单 JSON 与 Qt UI XML：解析通过。
 - 扩展打包：`node build.js --skip-translations` 成功生成 Firefox 和 Chromium 包。
-- KeePassXC：MSVC 19.44/Qt 6.8.3/vcpkg Release 构建成功，生成 `KeePassXC.exe`、`keepassxc-proxy.exe` 和 `keepassxc-cli.exe`。
-- 本地安装目录：`cmake --install` 与 Qt 部署成功；补齐 vcpkg 运行库后，安装目录中的 `keepassxc-cli.exe --version` 退出码为 0。
+- 桌面客户端：MSVC 19.44/Qt 6.8.3/vcpkg Release 构建成功，生成 `TheyKnowYourPasswords.exe`、`they-know-your-passwords-proxy.exe` 和 `they-know-your-passwords-cli.exe`。
+- 本地安装目录：`cmake --install` 与 Qt 部署成功；补齐 vcpkg 运行库后，安装目录中的 `they-know-your-passwords-cli.exe --version` 退出码为 0。
 - 跨组件静态契约：`tools/check_integration_contract.py` 通过。
 - 扩展限定范围 ESLint：0 个错误，11 个 `error_code` 协议字段 camelcase 警告。
 - 品牌一致性：扩展三份清单、运行时常量、38 份本地化资源、45 份 KeePassXC 翻译资源、npm 包名、归档名和演示路径已统一为 `They know your passwords`；结构解析和静态契约通过。
-- 新名称构建目录：`D:\tmp\TheyKnowYourPasswordsBuild` 完成 Release 编译；`D:\tmp\TheyKnowYourPasswordsDemo` 打包成功。
+- 新名称构建目录：`D:\tmp\TheyKnowYourPasswordsBuild` 完成 Release 编译；`D:\tmp\TheyKnowYourPasswordsPackage` 完成干净打包。
 - 演示包品牌复核：Chromium Manifest 为 6,294 字节，`name` 和工具栏标题均为 `They know your passwords`；扩展运行时资源无旧品牌残留。
 - 扩展打包可靠性：Manifest 版本写入已串行等待，演示包只选择 `they-know-your-passwords_*_chromium.zip`，消除空 Manifest 和误选旧归档的竞态。
 - Git 补丁检查：无空白错误；Windows checkout 显示预期的 LF/CRLF 提示。

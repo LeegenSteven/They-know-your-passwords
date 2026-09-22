@@ -42,7 +42,7 @@
 .\scripts\start-demo.ps1
 ```
 
-默认演示目录为 `D:\tmp\TheyKnowYourPasswordsDemo`。
+默认演示目录为 `D:\tmp\TheyKnowYourPasswordsPackage`。
 
 ## 项目资料
 

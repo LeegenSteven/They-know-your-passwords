@@ -1,0 +1,33 @@
+{
+  "name": "they-know-your-passwords",
+  "version": "1.10.4",
+  "description": "They know your passwords browser extension",
+  "main": "build.js",
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^20.14.10",
+    "eslint": "^9.39.1"
+  },
+  "dependencies": {
+    "@npmcli/fs": "^2.1.0"
+  },
+  "scripts": {
+    "build": "node build.js",
+    "debug:chromium": "node -e \"require('fs').copyFileSync('dist/manifest_chromium.json','extension/manifest.json')\"",
+    "debug:firefox": "node -e \"require('fs').copyFileSync('dist/manifest_firefox.json','extension/manifest.json')\"",
+    "lint": "npx eslint --no-warn-ignored extension/**/*.js",
+    "tests": "npx playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeegenSteven/They-know-your-passwords.git"
+  },
+  "author": "KeePassXC Team",
+  "license": "GPL-3.0",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/LeegenSteven/They-know-your-passwords/issues"
+  },
+  "homepage": "https://github.com/LeegenSteven/They-know-your-passwords#readme"
+}

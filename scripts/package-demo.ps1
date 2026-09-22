@@ -1,18 +1,18 @@
 [CmdletBinding()]
 param(
     [string] $BuildDirectory = 'D:\tmp\TheyKnowYourPasswordsBuild',
-    [string] $OutputDirectory = 'D:\tmp\TheyKnowYourPasswordsDemo'
+    [string] $OutputDirectory = 'D:\tmp\TheyKnowYourPasswordsPackage'
 )
 
 $ErrorActionPreference = 'Stop'
 $repositoryRoot = Split-Path -Parent $PSScriptRoot
-$browserRoot = Join-Path $repositoryRoot 'keepassxc-browser'
+$browserRoot = Join-Path $repositoryRoot 'browser-extension'
 $serviceRoot = Join-Path $repositoryRoot 'algo-service'
 
 $requiredBuildFiles = @(
-    (Join-Path $BuildDirectory 'src\KeePassXC.exe'),
-    (Join-Path $BuildDirectory 'src\proxy\keepassxc-proxy.exe'),
-    (Join-Path $BuildDirectory 'src\cli\keepassxc-cli.exe')
+    (Join-Path $BuildDirectory 'src\TheyKnowYourPasswords.exe'),
+    (Join-Path $BuildDirectory 'src\proxy\they-know-your-passwords-proxy.exe'),
+    (Join-Path $BuildDirectory 'src\cli\they-know-your-passwords-cli.exe')
 )
 foreach ($requiredPath in $requiredBuildFiles) {
     if (-not (Test-Path -LiteralPath $requiredPath -PathType Leaf)) {
@@ -78,7 +78,7 @@ Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'start-demo.ps1') -Destination $
 
 [pscustomobject]@{
     OutputDirectory = (Resolve-Path -LiteralPath $OutputDirectory).Path
-    KeePassXC = (Join-Path $OutputDirectory 'KeePassXC.exe')
+    DesktopApp = (Join-Path $OutputDirectory 'TheyKnowYourPasswords.exe')
     Extension = $extensionDirectory
     StartScript = (Join-Path $OutputDirectory 'start-demo.ps1')
 }

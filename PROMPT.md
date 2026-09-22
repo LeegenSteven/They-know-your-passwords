@@ -8,11 +8,11 @@
 
 ## 0. 一句话任务
 
-把 `keepassxc-develop/`（KeePassXC 2.8.0-snapshot，Qt6 / C++20）改造成带**个性化口令风险评估**的口令管理器：
+把 `desktop-app/`（基于 KeePassXC 2.8.0-snapshot，Qt6 / C++20）改造成带**个性化口令风险评估**的口令管理器：
 
 - **无可用历史口令** → 调用 **RankGuess 拖网猜测**算法，输出该口令的**期望猜测次数**，衡量通用抗猜测强度；
 - **存在可用历史口令** → 调用 **PARD 定向猜测**算法，输出候选口令在"由该用户旧口令推导出的候选列表"中的**排名**，衡量重用/衍生风险；
-- 评估结果经 `keepassxc-browser` 的 fork 版浏览器扩展呈现，并把 **评估 → 建议口令 → 复检 → 保存** 做成闭环。
+- 评估结果经 `browser-extension/` 中的 fork 版浏览器扩展呈现，并把 **评估 → 建议口令 → 复检 → 保存** 做成闭环。
 
 **.kdbx 加密口令库直接复用 KeePassXC 原有实现**，不新写加密存储；**不新增账号服务器**。
 
@@ -70,7 +70,7 @@
 | 生成器 | `src/core/PasswordGenerator.{h,cpp}`（CSPRNG），浏览器侧生成口令走 `PasswordGeneratorWidget::popupGenerator()` |
 | 外部进程先例 | `src/core/HibpOffline.cpp:120` 用 `QProcess` 调外部工具；`src/gui/remote/RemoteProcess.{h,cpp}` 是现成的 QProcess 封装 |
 | 设置开关四件套 | `Config.h:148-170`（枚举键）→ `Config.cpp:170-180`（键名+默认值）→ `BrowserSettings.h/.cpp`（存取器）→ `BrowserSettingsWidget.ui` + `.cpp` 的 `load/saveSettings()`。范例：`allowGetDatabaseEntriesRequest` |
-| 扩展侧不存在 | **`keepassxc-develop` 里没有 JS 扩展源码**。唯一相关的原生清单写在 `NativeMessageInstaller.cpp:330`，白名单在 `:40-43`（Chrome 扩展 ID `oboonakemofpalcgghocfoadofidjkkk`，Firefox `keepassxc-browser@keepassxc.org`） |
+| 扩展侧不存在 | **`desktop-app/` 里没有 JS 扩展源码**。唯一相关的原生清单写在 `NativeMessageInstaller.cpp:330`，白名单在 `:40-43`（Chrome 扩展 ID `oboonakemofpalcgghocfoadofidjkkk`，Firefox `keepassxc-browser@keepassxc.org`） |
 | 测试挂载 | `tests/CMakeLists.txt:28 add_unit_test(NAME ... SOURCES ...)`；`BrowserAction`/`BrowserService` 已对 `TestBrowser` 开放 `friend`（`BrowserAction.h:103`、`BrowserService.h:226`），测试里直接构造 JSON 调 `processClientMessage(nullptr, json)` |
 
 ### 1.3 环境侧（本机实测）
@@ -83,7 +83,7 @@
 | 编译器 | PATH 里没有 `cl`；有 MinGW `g++`（Strawberry/`D:\MinGW`） | ⚠️ 需装 VS2022 或改用 MSYS2-MinGW |
 | vcpkg | **未安装**（无 `vcpkg` 可执行、无 `C:\vcpkg`）；但仓库自带 `vcpkg.json` + `vcpkg/triplets/` | ⚠️ Windows + MSVC 路线**必须**先装 vcpkg |
 | cmake | 3.29.2 | ✅ 满足 |
-| git | **`keepassxc-develop/` 不是 git 仓库**（是解压出来的目录） | ⚠️ 改之前先 `git init` + 首次提交，否则无法回滚/出 diff |
+| git | **`desktop-app/` 不是独立 git 仓库**（是解压出来的目录） | ⚠️ 由项目根仓库统一管理版本，避免形成嵌套仓库 |
 
 ---
 
@@ -123,7 +123,7 @@
 └───────────────────────────┬────────────────────────────────┘
                             │ QLocalSocket / 命名管道
 ┌───────────────────────────▼────────────────────────────────┐
-│  KeePassXC（keepassxc-develop，本项目的改造主体）            │
+│  桌面客户端（desktop-app，本项目的改造主体）                 │
 │    BrowserAction                                                        │
 │      · 【新】assess-password    → 风险评估（异步延迟回复）     │
 │      · 【新】recommend-password → 生成+复检合格候选（异步）    │
@@ -174,7 +174,7 @@ D:\研究生\网络安全竞赛\
 ├── 浏览器口令管理插件开发框架.md                            （输入，不改）
 ├── PARD定向猜测\                    （**只读**，不得修改任何一行）
 ├── RankGuess拖网猜测\               （**只读**，不得修改任何一行）
-├── keepassxc-develop\              （改造主体，动手前先 git init）
+├── desktop-app\                    （桌面客户端改造主体）
 │   ├── src\
 │   │   ├── riskassess\             【新】风险评估静态库
 │   │   │   ├── CMakeLists.txt
@@ -203,8 +203,8 @@ D:\研究生\网络安全竞赛\
 │   │   └── pard.py                 定向：top-K 排名 + log P 打分
 │   ├── mc_cache\                   蒙特卡洛参考表缓存（.npz + 模型哈希）
 │   └── tools\smoke_test.py         自检脚本（见 §5.6）
-└── keepassxc-browser\              【新】fork 自上游（GPL-3.0），扩展侧改造
-    └── keepassxc-browser\
+└── browser-extension\              【新】fork 自上游（GPL-3.0），扩展侧改造
+    └── extension\
         ├── js\
         │   ├── assessment.js       【新】风险评估请求与状态管理
         │   └── ...                 （其余改上游文件）
@@ -604,7 +604,7 @@ struct AssessmentResult {
 
 ### 阶段 0：把 KeePassXC 编译出来（**先做这个，再写任何业务代码**）
 
-1. `cd keepassxc-develop && git init && git add -A && git commit -m "upstream 2.8.0-snapshot 基线"`（**先做，否则后面无法回滚**）。
+1. 在项目根仓库为 `desktop-app/` 建立上游基线提交（**先做，否则后面无法回滚**）。
 2. 三条路线按顺序试，**哪条先通走哪条**：
    - **路线 A（官方推荐，Windows）**：装 VS2022 Build Tools + `vcpkg`，`cmake -B build -DCMAKE_TOOLCHAIN_FILE=<vcpkg>/scripts/buildsystems/vcpkg.cmake`（仓库自带 `vcpkg.json`，依赖会自动拉）；
    - **路线 B（最省事）**：**WSL2 / Ubuntu**，`apt install qt6-base-dev libbotan-2-dev libargon2-dev zlib1g-dev libreadline-dev libpcsclite-dev`，Linux 下这条路在本仓库是一等公民；
@@ -707,7 +707,7 @@ struct AssessmentResult {
 请阅读 D:\研究生\网络安全竞赛\PROMPT.md，严格按其中的规格工作。
 
 第一步（不要跳过、不要并行做别的）：
-  1. cd keepassxc-develop && git init && 提交当前状态为基线，输出 commit hash。
+  1. 在项目根仓库提交 `desktop-app/` 当前状态为上游基线，输出 commit hash。
   2. 按 PROMPT.md §9 阶段 0 尝试把 KeePassXC 编译出来；
      先探测本机已有的 Qt6 / MSVC / vcpkg / WSL 情况，向我报告三条路线的实际可行性，
      再动手装依赖。不要在没有把握的情况下一口气装几个 GB 的东西。

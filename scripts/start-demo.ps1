@@ -11,11 +11,11 @@ $scriptDirectory = $PSScriptRoot
 $repositoryRoot = Split-Path -Parent $scriptDirectory
 
 if (-not $KeePassExecutable) {
-    $bundledKeePass = Join-Path $scriptDirectory 'KeePassXC.exe'
-    $KeePassExecutable = if (Test-Path -LiteralPath $bundledKeePass) {
-        $bundledKeePass
+    $bundledDesktopApp = Join-Path $scriptDirectory 'TheyKnowYourPasswords.exe'
+    $KeePassExecutable = if (Test-Path -LiteralPath $bundledDesktopApp) {
+        $bundledDesktopApp
     } else {
-        'D:\tmp\TheyKnowYourPasswordsDemo\KeePassXC.exe'
+        'D:\tmp\TheyKnowYourPasswordsPackage\TheyKnowYourPasswords.exe'
     }
 }
 
