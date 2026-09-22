@@ -74,6 +74,19 @@ def main() -> int:
     assert package_lock["packages"][""]["name"] == PACKAGE_NAME
     assert f"{PACKAGE_NAME}_${{version}}_${{browser}}.zip" in read("browser-extension/build.js")
 
+    mcp_server = read("mcp-server/typ_mcp/server.py")
+    mcp_client = read("mcp-server/typ_mcp/algorithm_client.py")
+    for tool_name in ("get_security_status", "list_risk_models", "assess_demo_password"):
+        assert f'name="{tool_name}"' in mcp_server
+    assert 'mcp.run(transport="stdio")' in mcp_server
+    assert '"calibrated": False' in mcp_server
+    assert 'response.pop("id", None)' in mcp_client
+    assert "create_subprocess_exec" in mcp_client
+    assert "asyncio.subprocess.DEVNULL" in mcp_client
+
+    mcp_config = json.loads(read("mcp-server/mcp-config.example.json"))
+    assert "they-know-your-passwords" in mcp_config["mcpServers"]
+
     extension_root = ROOT / "browser-extension" / "extension"
     for path in extension_root.rglob("*"):
         if path.suffix.lower() not in {".css", ".html", ".js", ".json"}:

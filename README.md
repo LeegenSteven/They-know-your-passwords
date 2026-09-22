@@ -4,11 +4,12 @@
 
 ## 当前交付形态
 
-项目由三个本地组件组成：
+项目由四个本地组件组成：
 
 - **桌面客户端**：管理加密口令库、读取条目历史、生成安全候选口令，并异步调度风险评估。
 - **浏览器扩展**：面向 Chrome/Edge，提供评估、推荐、复检和确认保存界面；同时保留 Firefox 构建。
 - **算法服务**：通过标准输入输出运行 RankGuess 拖网猜测和 PARD 重用衍生评估，不监听网络端口。
+- **MCP 演示服务**：允许支持 MCP 的 Agent 查询模型状态，并对虚构测试字符串调用本地风险评估。
 
 本项目不是网页，也不需要账号服务器。当前版本是可编译、可打包的 Windows 竞赛演示原型。
 
@@ -29,6 +30,7 @@
 - 浏览器端风险面板、候选口令暂存、来源校验和确认保存流程。
 - Chrome/Edge 与 Firefox 扩展包构建。
 - Windows Release 构建、演示目录打包和本地启动脚本。
+- MCP stdio 服务、Agent 配置模板和不加载模型的协议测试。
 - 不含口令明文的可复现数据抽样清单。
 
 仍需完成真实 Chrome/Edge 会话的人工联调、已有实验结果导入和风险阈值冻结。阈值未标定时，界面保留原生指标并显示 `UNKNOWN` 或 `UNCALIBRATED`。
@@ -44,12 +46,22 @@
 
 默认演示目录为 `D:\tmp\TheyKnowYourPasswordsPackage`。
 
+MCP 演示服务使用独立 Python 3.10+ 环境：
+
+```powershell
+cd mcp-server
+.\setup.ps1
+```
+
+Agent 接入配置、工具列表和隐私限制见 [`mcp-server/README.md`](mcp-server/README.md)。演示 MCP 仅用于虚构测试字符串，不读取口令库。
+
 ## 项目资料
 
 - [`开发计划.md`](开发计划.md)：任务状态、验收证据、阻塞项和下一步。
 - [`docs/algorithm-contract.md`](docs/algorithm-contract.md)：算法请求、响应、状态和输入域。
 - [`docs/browser-contract.md`](docs/browser-contract.md)：浏览器动作、会话修订和保存约束。
 - [`docs/threat-model.md`](docs/threat-model.md)：明文边界、来源校验和本地通信安全。
+- [`docs/mcp-contract.md`](docs/mcp-contract.md)：Agent 工具、stdio 传输和演示版隐私边界。
 - [`docs/validation-report.md`](docs/validation-report.md)：构建、测试和已知限制。
 
 ## 数据与隐私

@@ -14,6 +14,7 @@
 - 桌面客户端：MSVC 19.44/Qt 6.8.3/vcpkg Release 构建成功，生成 `TheyKnowYourPasswords.exe`、`they-know-your-passwords-proxy.exe` 和 `they-know-your-passwords-cli.exe`。
 - 本地安装目录：`cmake --install` 与 Qt 部署成功；补齐 vcpkg 运行库后，安装目录中的 `they-know-your-passwords-cli.exe --version` 退出码为 0。
 - 跨组件静态契约：`tools/check_integration_contract.py` 通过。
+- MCP 演示服务：6 项测试通过，覆盖 SDK 工具发现、真实 stdio 子进程握手、算法 JSON Lines 桥接、输入不回显、未标定状态和精确重用事实；配置 JSON、项目 TOML、PowerShell 安装脚本及依赖一致性检查通过。
 - 扩展限定范围 ESLint：0 个错误，11 个 `error_code` 协议字段 camelcase 警告。
 - 品牌一致性：扩展三份清单、运行时常量、38 份本地化资源、45 份 KeePassXC 翻译资源、npm 包名、归档名和演示路径已统一为 `They know your passwords`；结构解析和静态契约通过。
 - 新名称构建目录：`D:\tmp\TheyKnowYourPasswordsBuild` 完成 Release 编译；`D:\tmp\TheyKnowYourPasswordsPackage` 完成干净打包。
@@ -27,3 +28,4 @@
 - 完整真实模型冒烟脚本在本机冷启动超过 90 秒后人工终止，没有运行非精确 PARD beam 搜索；脚本已改为受启动上限约束。按用户要求不继续投入时间跑效果集。
 - 上游扩展全量 ESLint 在 Windows checkout 上因所有上游文件均为 CRLF 而失败；JavaScript 语法检查与扩展打包已通过，新增文件另行使用忽略换行规则的 lint。
 - 宿主与扩展尚未在真实 Chrome/Edge 会话中完成 Native Messaging 握手、建库保存和网站修改后的确认保存，因此当前为可构建演示原型，集成任务保持“待验收”。
+- MCP 测试使用协议假服务，不加载模型权重或运行效果测试集；真实模型的单条虚构输入演示仍受既有冷启动耗时影响。演示 MCP 不读取 KDBX，也不适用于真实凭据。

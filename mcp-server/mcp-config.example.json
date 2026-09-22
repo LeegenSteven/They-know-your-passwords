@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "they-know-your-passwords": {
+      "command": "<PROJECT_ROOT>\\mcp-server\\.venv\\Scripts\\python.exe",
+      "args": [
+        "<PROJECT_ROOT>\\mcp-server\\server.py"
+      ],
+      "env": {
+        "TYP_ALGORITHM_PYTHON": "D:\\Anaconda3\\envs\\pytorch_cuda\\python.exe",
+        "TYP_ALGORITHM_SERVER": "<PROJECT_ROOT>\\algo-service\\server.py",
+        "TYP_ALGORITHM_CONFIG": "<PROJECT_ROOT>\\algo-service\\config.toml"
+      }
+    }
+  }
+}

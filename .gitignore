@@ -11,6 +11,7 @@ __pycache__/
 .pytest_cache/
 algo-service/mc_cache/
 algo-service/.venv/
+mcp-server/.venv/
 
 # Large/private assets supplied outside source control
 *.pth
