@@ -4,8 +4,8 @@ include::.sharedheader[]
 
 // tag::content[]
 == Browser Integration
-The KeePassXC-Browser extension is installed within your web browser so that you can automatically pull usernames and passwords from KeePassXC and fill them directly into website fields. It is a very useful and secure extension that enhances your productivity while using KeePassXC. With this extension, you do not need to manually copy the data from your KeePassXC database and paste it into the website fields.
-The KeePassXC-Browser extension is available on the following web browsers:
+The They know your passwords extension is installed within your web browser so that you can automatically pull usernames and passwords from KeePassXC and fill them directly into website fields. It is a very useful and secure extension that enhances your productivity while using KeePassXC. With this extension, you do not need to manually copy the data from your KeePassXC database and paste it into the website fields.
+The They know your passwords extension is available on the following web browsers:
 
 * Google Chrome, Vivaldi, and Brave
 * Mozilla Firefox and Tor-Browser
@@ -15,7 +15,7 @@ The KeePassXC-Browser extension is available on the following web browsers:
 NOTE: On Linux, Flatpak and Snap based browsers are generally not supported. Ubuntu's Firefox Snap is currently the only known exception. 
 
 === Install the Browser Extension
-You can download the KeePassXC-Browser extension from your web browser. To download the KeePassXC-Browser extension, perform the following steps:
+You can download the They know your passwords extension from your web browser. To download the They know your passwords extension, perform the following steps:
 
 1. Click the link corresponding to your browser:
   * https://chromewebstore.google.com/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk[Chrome, Chromium, Vivaldi, and Brave]
@@ -30,10 +30,10 @@ TIP: For the most up-to-date troubleshooting advice on all platforms, please rea
 NOTE: When Microsoft Edge is installed as a managed application, system administrators are required to deploy a custom native messaging configuration. Instructions for this are found in the advanced section below.
 // end::advanced[]
 
-=== Configure KeePassXC-Browser
-To start using KeePassXC-Browser, you must configure it so that it can communicate with the KeePassXC application on your desktop.
+=== Configure They know your passwords
+To start using They know your passwords, you must configure it so that it can communicate with the KeePassXC application on your desktop.
 
-To configure KeePassXC-Browser, perform the following steps:
+To configure They know your passwords, perform the following steps:
 
 1. Open the KeePassXC application on your desktop and navigate to Tools > Settings.
 
@@ -42,16 +42,16 @@ To configure KeePassXC-Browser, perform the following steps:
 .Browser Settings
 image::browser_settings.png[]
 
-3. Click the _Enable browser integration_ checkbox *(2)*. Then select the browsers for which you have downloaded the KeePassXC-Browser extension *(3)* and click *OK*.
+3. Click the _Enable browser integration_ checkbox *(2)*. Then select the browsers for which you have downloaded the They know your passwords extension *(3)* and click *OK*.
 
 4. Ensure your database is unlocked, then open (or restart) your browser.
 
-5. Click the KeePassXC-Browser extension icon *(A)* in your browser (see figure below). A pop-up window appears.
+5. Click the They know your passwords extension icon *(A)* in your browser (see figure below). A pop-up window appears.
 +
 .Connect Extension to KeePassXC
 image::browser_extension_connect.png[,80%]
 
-6. Click the _Connect_ button *(B)* in the pop-up window to complete integrating the KeePassXC-Browser extension with your KeePassXC desktop application.
+6. Click the _Connect_ button *(B)* in the pop-up window to complete integrating the They know your passwords extension with your KeePassXC desktop application.
 
 7. You are now prompted to enter a unique name to identify the connection between this browser and your database. Enter a unique name in the field (e.g., firefox-laptop) and click the _Save and allow access_ button.
 +
@@ -61,11 +61,11 @@ image::browser_extension_association.png[,80%]
 WARNING: If you reuse a connection name in a database, the previous browser connection will be overwritten and prevent access.
 
 === Using the Browser Extension
-The KeePassXC-Browser extension lets you automatically fill the entries from your KeePassXC database into the fields on websites you visit. To do so, perform the following steps:
+The They know your passwords extension lets you automatically fill the entries from your KeePassXC database into the fields on websites you visit. To do so, perform the following steps:
 
 1. Open your KeePassXC desktop application and unlock your database.
 
-2. Open your web browser. The KeePassXC-Browser extension icon in your browser window will change based on its connection state. The figure below shows the different states.
+2. Open your web browser. The They know your passwords extension icon in your browser window will change based on its connection state. The figure below shows the different states.
 +
 *(A)* KeePassXC is not running or is disconnected. +
 *(B)* KeePassXC is running, but KeePassXC Browser Extension is not connected to the current database. +
@@ -75,12 +75,12 @@ The KeePassXC-Browser extension lets you automatically fill the entries from you
 .Extension Icon States
 image::browser_extension_icons.png[,70%]
 
-3. If the KeePassXC desktop application is not connected with the KeePassXC-Browser extension, click the extension icon in your web browser and click _Reload_ from the pop-up window as shown in the following screen.
+3. If the KeePassXC desktop application is not connected with the They know your passwords extension, click the extension icon in your web browser and click _Reload_ from the pop-up window as shown in the following screen.
 +
 .Reload Extension Connection
 image::browser_extension_reload.png[,80%]
 
-4. Open the URL for which you want to use with your database. If you have previously created an entry in your database then the KeePassXC-Browser Confirm Access dialog may appear:
+4. Open the URL for which you want to use with your database. If you have previously created an entry in your database then the They know your passwords Confirm Access dialog may appear:
 +
 .Confirm Access Dialog
 image::browser_confirm_access_dialog.png[,80%]
@@ -93,7 +93,7 @@ image::browser_confirm_access_dialog.png[,80%]
 image::browser_fill_credentials.png[,80%]
 
 === Generate Passwords
-The KeePassXC-Browser Extension also lets you generate passwords directly in your browser. 
+The They know your passwords extension also lets you generate passwords directly in your browser.
 This feature can be used for websites with existing credentials as well as for new websites. 
 You can then choose to update/add the credentials to your KeePassXC database directly from the Browser.
 

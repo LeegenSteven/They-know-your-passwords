@@ -1110,7 +1110,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>ဝင်းဒိုးငယ်</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
+        <source>This is required for accessing your databases with They know your passwords</source>
         <translation>KeePassXC-ဘရောက်ဇာဖြင့် သင့်ဒေတာဘေ့စ်များကို အသုံးပြုရန် ၎င်းကို လိုအပ်သည်</translation>
     </message>
     <message>
@@ -1244,7 +1244,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>စိတ်ကြိုက်ပရောက်စီတည်နေရာကို သုံးရန် -</translation>
     </message>
     <message>
@@ -1341,7 +1341,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1818,7 +1818,7 @@ Are you sure you want to continue with this file?.</source>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
+        <source>They know your passwords settings</source>
         <translation>KeePassXC-ဘရောက်ဇာ ဆက်တင်များ</translation>
     </message>
     <message>
@@ -1922,8 +1922,8 @@ This is only necessary if your database is a copy of another and the browser ext
 သင့်ဒေတာဘေ့စ်သည် အခြားဒေတာဘေ့စ်တစ်ခု၏ မိတ္တူဖြစ်ပြီး ဘရောက်ဇာအဆက်နှင့် ချိတ်ဆက်၍မရမှသာ ပြန်လည်လန်းဆန်းရန် လိုအပ်ပါသည်။</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>legacy KeePassHTTP လက္ခဏာရပ် ကို KeePassXC-Browser နှင့်သင့်လျော်သောဒေတာ သို့ပြောင်းပါ</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>legacy KeePassHTTP လက္ခဏာရပ် ကို They know your passwords နှင့်သင့်လျော်သောဒေတာ သို့ပြောင်းပါ</translation>
     </message>
     <message>
         <source>No keys found</source>

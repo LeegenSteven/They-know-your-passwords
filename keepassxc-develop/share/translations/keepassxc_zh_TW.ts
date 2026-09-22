@@ -1123,7 +1123,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>對話方塊</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
+        <source>This is required for accessing your databases with They know your passwords</source>
         <translation>使用 KeePassXC 瀏覽器擴充存取您的資料庫</translation>
     </message>
     <message>
@@ -1257,7 +1257,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>使用自定義的代理位置：</translation>
     </message>
     <message>
@@ -1354,7 +1354,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>允許通行密鑰使用 localhost</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation>需要 KeePassXC 瀏覽器擴充才能使用整合功能。&lt;br /&gt;可供 %1 和 %2 和 %3 下載。</translation>
     </message>
     <message>
@@ -1842,7 +1842,7 @@ Are you sure you want to continue with this file?.</source>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
+        <source>They know your passwords settings</source>
         <translation>KeePassXC 瀏覽器擴充設定</translation>
     </message>
     <message>
@@ -1946,8 +1946,8 @@ This is only necessary if your database is a copy of another and the browser ext
 只有當資料庫屬於另一份複本，且瀏覽器擴充無法連結時，才有必要進行。</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>將舊版 KeePassHTTP 屬性轉換為相容於 KeePassXC-Browser 的自定義資料</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>將舊版 KeePassHTTP 屬性轉換為相容於 They know your passwords 的自定義資料</translation>
     </message>
     <message>
         <source>No keys found</source>

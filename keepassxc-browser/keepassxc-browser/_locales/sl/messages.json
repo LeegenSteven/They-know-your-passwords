@@ -16,7 +16,7 @@
         "description": "Allow Cross-Origin iframes button title text."
     },
     "connectButtonTitle": {
-        "message": "Connect current active database to KeePassXC-Browser.",
+        "message": "Connect current active database to They know your passwords.",
         "description": "Connect button title text."
     },
     "copyDebugInfoButtonTitle": {
@@ -28,7 +28,7 @@
         "description": "Dismiss HTTP Auth button title text."
     },
     "reconnectButtonTitle": {
-        "message": "Reconnect current active database to KeePassXC-Browser.",
+        "message": "Reconnect current active database to They know your passwords.",
         "description": "Reconnect button title text."
     },
     "redetectButtonTitle": {
@@ -40,7 +40,7 @@
         "description": "Reload button title text."
     },
     "removeConnectedDatabaseButtonTitle": {
-        "message": "Remove connected database from KeePassXC-Browser.",
+        "message": "Remove connected database from They know your passwords.",
         "description": "Remove button title on Connected Databases tab."
     },
     "removeCustomLoginFieldsButtonTitle": {
@@ -375,7 +375,7 @@
         "description": "Alert message when trying to fill username and/or password when multiple credentials are found."
     },
     "credentialsMultipleFoundSecondLine": {
-        "message": "Click the KeePassXC-Browser icon for more options.",
+        "message": "Click the They know your passwords icon for more options.",
         "description": "Alert message when trying to fill username and/or password when multiple credentials are found."
     },
     "credentialsNoUsernameFound": {
@@ -447,7 +447,7 @@
         "description": "Button text for allowing Cross-Origin iframes option."
     },
     "popupErrorEncountered": {
-        "message": "KeePassXC-Browser je naletel na napako:",
+        "message": "They know your passwords je naletel na napako:",
         "description": "A text shown above error message in the popup."
     },
     "popupUpdateAvailable": {
@@ -483,11 +483,11 @@
         "description": "Checking status message in popup."
     },
     "popupNotConfigured": {
-        "message": "KeePassXC-Browser has not been configured. Click the connect button to pair with KeePassXC.",
+        "message": "They know your passwords has not been configured. Click the connect button to pair with KeePassXC.",
         "description": "A popup message shown when the extension has not been connected to KeePassXC."
     },
     "popupNeedReconfigure": {
-        "message": "Povezava med KeePassXC-Browser in KeePassXC je bila prekinjena.",
+        "message": "Povezava med They know your passwords in KeePassXC je bila prekinjena.",
         "description": "A popup message shown when the extension has been disconnected from KeePassXC."
     },
     "popupNeedReconfigureMessage": {
@@ -495,11 +495,11 @@
         "description": "A popup message shown when reconnect is needed."
     },
     "popupConfiguredNotAssociated": {
-        "message": "KeePassXC-Browser še ni povezan s KeePassXC, vendar je bil nastavljen za uporabo identifikatorja: $1",
+        "message": "They know your passwords še ni povezan s KeePassXC, vendar je bil nastavljen za uporabo identifikatorja: $1",
         "description": "A popup message shown when KeePassXC is not connected but configured."
     },
     "popupConfiguredAndAssociated": {
-        "message": "KeePassXC-Browser je povezan s KeePassXC in je nastavljen z uporabo naslednjega identifikatorja: $1",
+        "message": "They know your passwords je povezan s KeePassXC in je nastavljen z uporabo naslednjega identifikatorja: $1",
         "description": "A popup message when a connection to KeePassXC is successful."
     },
     "popupUsernameFieldDetected": {
@@ -919,7 +919,7 @@
         "description": "Hide icons alert text text."
     },
     "optionsAutoRetrieveCredentialsHelpText": {
-        "message": "KeePassXC-Browser bo pridobil poverilnice takoj, ko je zavihek brskalnika aktiviran.",
+        "message": "They know your passwords bo pridobil poverilnice takoj, ko je zavihek brskalnika aktiviran.",
         "description": "Auto-Retrive Credentials option help text."
     },
     "optionsAutomaticReconnectHelpText": {
@@ -927,7 +927,7 @@
         "description": "Auto-reconnect option help text."
     },
     "optionsAutoFillSingleEntryHelpText": {
-        "message": "Naj KeePassXC-Browser samodejno vnese poverilnice, če pridobi samo en vnos.",
+        "message": "Naj They know your passwords samodejno vnese poverilnice, če pridobi samo en vnos.",
         "description": "Auto-Fill Single Entry option help text."
     },
     "optionsAutoFillRelevantCredentialHelpText": {
@@ -935,11 +935,11 @@
         "description": "Auto-Fill Relevant Credential option help text."
     },
     "optionsAutoFillSingleEntryWarning": {
-        "message": "Warning! Using auto-fill is not safe. Use at your own risk. KeePassXC-Browser automatically tries to detect login fields. However, they may be detected incorrectly, possibly filling sensitive data to unsafe input fields.",
+        "message": "Warning! Using auto-fill is not safe. Use at your own risk. They know your passwords automatically tries to detect login fields. However, they may be detected incorrectly, possibly filling sensitive data to unsafe input fields.",
         "description": "Auto-Fill Single Entry warning text."
     },
     "optionsAutoFillSingleTotpHelpText": {
-        "message": "Let KeePassXC-Browser automatically fill in TOTP fields if it receives only a single entry.",
+        "message": "Let They know your passwords automatically fill in TOTP fields if it receives only a single entry.",
         "description": "Auto-Fill Single TOTP field option help text."
     },
     "optionsAutocompleteUsernamesHelpText": {
@@ -979,7 +979,7 @@
         "description": "Download favicon after save help text."
     },
     "optionsAutoFillAndSendHelpText": {
-        "message": "Če so za stran najdene poverilnice in je vrsta prijave zahtevek za HTTP Basic Auth, se bo KeePassXC-Browser poskušal samodejno prijaviti s prvo od vnesenih poverilnic. Če je na voljo več poverilnic, se lahko uporabi pojavno okno v meniju razširitve, za izbiro zahtevane poverilnice. Poverilnice za HTTP Basic Auth prijavo lahko vnesete ročno, tudi če je ta funkcija omogočena.",
+        "message": "Če so za stran najdene poverilnice in je vrsta prijave zahtevek za HTTP Basic Auth, se bo They know your passwords poskušal samodejno prijaviti s prvo od vnesenih poverilnic. Če je na voljo več poverilnic, se lahko uporabi pojavno okno v meniju razširitve, za izbiro zahtevane poverilnice. Poverilnice za HTTP Basic Auth prijavo lahko vnesete ročno, tudi če je ta funkcija omogočena.",
         "description": "Auto-Fill And Send option help text."
     },
     "optionsAutoFillAndSendHelpTextSecond": {
@@ -995,7 +995,7 @@
         "description": "Clear credentials timeout help text."
     },
     "optionsVersionInfoText": {
-        "message": "KeePassXC-Browser potrebuje KeePassXC  za pridobivanje povernic.",
+        "message": "They know your passwords potrebuje KeePassXC  za pridobivanje povernic.",
         "description": "Settings page version info text."
     },
     "optionsVersionDownload": {
@@ -1051,7 +1051,7 @@
         "description": "Import settings confirmation dialog help text."
     },
     "optionsConnectedDatabasesText": {
-        "message": "Baze povezane s KeePassXC-Browser.",
+        "message": "Baze povezane s They know your passwords.",
         "description": "Info text about connected databases."
     },
     "optionsConnectedDatabasesNotFound": {
@@ -1179,11 +1179,11 @@
         "description": "Table caption of Custom Login Fields page."
     },
     "optionsCustomFieldsTabHelpTextFirst": {
-        "message": "Če KeePassXC-Browser zazna napačna polja za prijavo, lahko sami določite pravilna polja.",
+        "message": "Če They know your passwords zazna napačna polja za prijavo, lahko sami določite pravilna polja.",
         "description": "Saved Custom Login Fields info text, first part."
     },
     "optionsCustomFieldsTabHelpTextSecond": {
-        "message": "Pojdite na želeno spletno mesto in kliknite na ikono KeePassXC-Browser, nato izberite ",
+        "message": "Pojdite na želeno spletno mesto in kliknite na ikono They know your passwords, nato izberite ",
         "description": "Saved Custom Login Fields info text, second part."
     },
     "optionsCustomFieldsTabHelpTextThird": {
@@ -1199,7 +1199,7 @@
         "description": "Confirmation text when removing saved Custom Login Fields."
     },
     "optionsCustomFieldsConfirmationHelpText": {
-        "message": "KeePassXC-Browser bo samodejno zaznal prijavna polja ob naslednjem obisku te strani.",
+        "message": "They know your passwords bo samodejno zaznal prijavna polja ob naslednjem obisku te strani.",
         "description": "Part of confirmation text when removing saved Custom Login Fields."
     },
     "optionsSitePreferencesNotFound": {
@@ -1223,7 +1223,7 @@
         "description": "Site Preferences info text, third part."
     },
     "optionsSitePreferencesTabHelpTextFourth": {
-        "message": "Zaznavanje samo uporabniškega imena omogoča, da KeePassXC-Browser izpolni prijavne podatke na spletnih mestih, ki imajo ločene strani za uporabniško ime in geslo.",
+        "message": "Zaznavanje samo uporabniškega imena omogoča, da They know your passwords izpolni prijavne podatke na spletnih mestih, ki imajo ločene strani za uporabniško ime in geslo.",
         "description": "Site Preferences info text, fourth part."
     },
     "optionsSitePreferencesImprovedInputFieldDetectionHelpText": {
@@ -1247,7 +1247,7 @@
         "description": "Confirmation text when removing site from Site Preferences."
     },
     "optionsSitePreferencesConfirmationHelpText": {
-        "message": "KeePassXC-Browser bo omogočil vse funkcije za to spletno mesto in odstranil zaznavanje samo uporabniškega imena.",
+        "message": "They know your passwords bo omogočil vse funkcije za to spletno mesto in odstranil zaznavanje samo uporabniškega imena.",
         "description": "Part of confirmation text when removing Site Preferences."
     },
     "optionsSitePreferencesTableCaption": {
@@ -1259,23 +1259,23 @@
         "description": "Title text of select element in Site Preferences."
     },
     "optionsAboutChrome": {
-        "message": "Obišči KeePassXC-Browser v spletni trgovini Chrome.",
+        "message": "Obišči They know your passwords v spletni trgovini Chrome.",
         "description": "About page link to Chrome Web Store."
     },
     "optionsAboutMozilla": {
-        "message": "Obišči KeePassXC-Browser v Mozilla Add-ons.",
+        "message": "Obišči They know your passwords v Mozilla Add-ons.",
         "description": "About page link to AMO."
     },
     "optionsAboutEdge": {
-        "message": "Visit KeePassXC-Browser in the Edge Add-ons page.",
+        "message": "Visit They know your passwords in the Edge Add-ons page.",
         "description": "About page link to Edge Add-ons page."
     },
     "optionsAboutGitHub": {
-        "message": "Obišči KeePassXC-Browser na GitHub-u.",
+        "message": "Obišči They know your passwords na GitHub-u.",
         "description": "About page link to GitHub."
     },
     "optionsAboutExtensionVersion": {
-        "message": "Različica KeePassXC-Browser: $1",
+        "message": "Različica They know your passwords: $1",
         "description": "About page text of extension version."
     },
     "optionsAboutKeePassXCVersion": {

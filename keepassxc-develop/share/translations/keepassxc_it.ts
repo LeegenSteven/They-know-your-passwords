@@ -1113,8 +1113,8 @@ Vuoi sovrascrivere la passkey in %1 - %2?</translation>
         <translation>Finestra</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Questo è necessario per accedere al database con KeePassXC-Browser</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>Questo è necessario per accedere al database con They know your passwords</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1247,7 +1247,7 @@ Vuoi sovrascrivere la passkey in %1 - %2?</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Usa un proxy personalizzato:</translation>
     </message>
     <message>
@@ -1344,8 +1344,8 @@ Vuoi sovrascrivere la passkey in %1 - %2?</translation>
         <translation>Permetti di utilizzare localhost con le passkeys</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
-        <translation>KeePassXC-Browser è necessario per il funzionamento dell&apos;integrazione con il browser. Scaricalo per %1, %2 e %3.</translation>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <translation>They know your passwords è necessario per il funzionamento dell&apos;integrazione con il browser. Scaricalo per %1, %2 e %3.</translation>
     </message>
     <message>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
@@ -1832,8 +1832,8 @@ Sei sicuro di voler continuare con questo file?</translation>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>Impostazioni di KeePassXC-Browser</translation>
+        <source>They know your passwords settings</source>
+        <translation>Impostazioni di They know your passwords</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
@@ -1936,8 +1936,8 @@ This is only necessary if your database is a copy of another and the browser ext
 Questo è necessario solo se il database è una copia e l&apos;estensione del browser non riesce a connettersi.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Convertire gli attributi KeePassHTTP obsoleti in dati personalizzati compatibili con KeePassXC-Browser</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>Convertire gli attributi KeePassHTTP obsoleti in dati personalizzati compatibili con They know your passwords</translation>
     </message>
     <message>
         <source>No keys found</source>

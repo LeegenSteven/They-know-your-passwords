@@ -1110,8 +1110,8 @@ Vil du erstatte tilgangsnøkkelen i %1 - %2?</translation>
         <translation>Vindu</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Dette er nødvendig for å få tilgang til dine databaser med KeePassXC-Browser</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>Dette er nødvendig for å få tilgang til dine databaser med They know your passwords</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1244,7 +1244,7 @@ Vil du erstatte tilgangsnøkkelen i %1 - %2?</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Bruk en egendefinert proxy-plassering:</translation>
     </message>
     <message>
@@ -1341,7 +1341,7 @@ Vil du erstatte tilgangsnøkkelen i %1 - %2?</translation>
         <translation>Tillat bruk av localhost med tilgangsnøkler</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1828,7 +1828,7 @@ Er du sikker på at du vil fortsette med denne filen?</translation>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
+        <source>They know your passwords settings</source>
         <translation>KeePassXC nettleser-innstillinger</translation>
     </message>
     <message>
@@ -1932,8 +1932,8 @@ This is only necessary if your database is a copy of another and the browser ext
 Dette er bare nødvendig hvis databasen er en kopi av en annen og nettleserutvidelsen ikke kan koble til.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Konverter eldre KeePassHTTP-attributter til KeePassXC-Browser-kompatible egendefinerte data</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>Konverter eldre KeePassHTTP-attributter til They know your passwords-kompatible egendefinerte data</translation>
     </message>
     <message>
         <source>No keys found</source>

@@ -1,4 +1,4 @@
-# KeePassXC-Browser
+# They know your passwords
 
 Browser extension for [KeePassXC](https://keepassxc.org/) with [native messaging](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Native_messaging).
 
@@ -12,14 +12,14 @@ Please see this [document](https://keepassxc.org/docs/KeePassXC_GettingStarted.h
 
 ## How it works
 
-KeePassXC-Browser communicates with KeePassXC through _keepassxc-proxy_. The proxy handles listening to STDIN/STDOUT
+They know your passwords communicates with KeePassXC through _keepassxc-proxy_. The proxy handles listening to STDIN/STDOUT
 and transfers these messages through Unix domain sockets / named pipes to KeePassXC. This means KeePassXC can be used and started normally without interference from
-Native Messaging API. KeePassXC-Browser starts only the proxy application and there's no risk of shutting down KeePassXC or losing any unsaved changes. You don't need to install keepassxc-proxy separately. It is included in the KeePassXC application package. Alternatively you can use
+Native Messaging API. They know your passwords starts only the proxy application and there's no risk of shutting down KeePassXC or losing any unsaved changes. You don't need to install keepassxc-proxy separately. It is included in the KeePassXC application package. Alternatively you can use
 [keepassxc-proxy-rust](https://github.com/varjolintu/keepassxc-proxy-rust) as a proxy if you prefer a non-Qt solution.
 
 ## Requested permissions
 
-KeePassXC-Browser extension requests the following permissions:
+They know your passwords extension requests the following permissions:
 
 | Name  | Reason |
 | ----- | ----- |
@@ -37,8 +37,8 @@ KeePassXC-Browser extension requests the following permissions:
 | `webRequest`              | For handling HTTP Basic Auth |
 | `webRequestAuthProvider`  | For handling HTTP Basic Auth for Chromium based browsers |
 | `webRequestBlocking`      | For handling HTTP Basic Auth |
-| `http://*/*`              | To allow using KeePassXC-Browser on all websites |
-| `https://*/*`             | To allow using KeePassXC-Browser on all websites |
+| `http://*/*`              | To allow using They know your passwords on all websites |
+| `https://*/*`             | To allow using They know your passwords on all websites |
 | `https://api.github.com/` | For checking the latest KeePassXC version from GitHub |
 
 ## Protocol

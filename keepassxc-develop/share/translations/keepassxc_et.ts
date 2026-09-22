@@ -1123,8 +1123,8 @@ Kas soovid selle uue pääsuvõtmega (%2) üle kirjutada?</translation>
         <translation>Dialoog</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>See on vajalik andmebaasidele KeePassXC-Browseri abil juurdepääsemiseks.</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>See on vajalik andmebaasidele They know your passwordsi abil juurdepääsemiseks.</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1257,7 +1257,7 @@ Kas soovid selle uue pääsuvõtmega (%2) üle kirjutada?</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Kasutatakse kohandatud puhverrakenduse asukohta:</translation>
     </message>
     <message>
@@ -1354,8 +1354,8 @@ Kas soovid selle uue pääsuvõtmega (%2) üle kirjutada?</translation>
         <translation>Lubatakse localhosti kasutamine pääsuvõtmetega</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
-        <translation>Lõimingu toimimiseks peab brauserile olema paigaldatud laiendus KeePassXC-Browser. &lt;br /&gt;See on saadaval %1i, %2’i ja %3’i jaoks.</translation>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <translation>Lõimingu toimimiseks peab brauserile olema paigaldatud laiendus They know your passwords. &lt;br /&gt;See on saadaval %1i, %2’i ja %3’i jaoks.</translation>
     </message>
     <message>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
@@ -1842,8 +1842,8 @@ Kas oled kindel, et soovid selle failiga jätkata?</translation>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>KeePassXC-Browseri seaded</translation>
+        <source>They know your passwords settings</source>
+        <translation>They know your passwordsi seaded</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
@@ -1946,8 +1946,8 @@ This is only necessary if your database is a copy of another and the browser ext
 See on vajalik vaid juhul, kui sinu andmebaas on teise andmebaasi koopia ning brauserilaiendus ei saa sellega ühendust.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Teisenda KeePassHTTP pärandatribuudid KeePassXC-Browseriga ühilduvateks kohandatud andmeteks</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>Teisenda KeePassHTTP pärandatribuudid They know your passwordsiga ühilduvateks kohandatud andmeteks</translation>
     </message>
     <message>
         <source>No keys found</source>

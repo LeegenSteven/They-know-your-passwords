@@ -1110,8 +1110,8 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Dialog</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Ito ay kinakailangan para sa pag-access sa mga database mo gamit ang KeePassXC-Browser</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>Ito ay kinakailangan para sa pag-access sa mga database mo gamit ang They know your passwords</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1244,7 +1244,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Gumamit ng custom na lokasyon ng proxy:</translation>
     </message>
     <message>
@@ -1341,7 +1341,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1824,7 +1824,7 @@ Are you sure you want to continue with this file?.</source>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
+        <source>They know your passwords settings</source>
         <translation>KeePassXC-Mga Browser setting</translation>
     </message>
     <message>
@@ -1928,7 +1928,7 @@ This is only necessary if your database is a copy of another and the browser ext
 Ito ay kinakailangan lamang kung ang iyong database ay isang kopya ng isa pa at ang extension ng browser ay hindi makakonekta.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
         <translation>I-convert ang mga legacy na attribute ng KeePassHTTP -Browser na tugma sa custom data</translation>
     </message>
     <message>

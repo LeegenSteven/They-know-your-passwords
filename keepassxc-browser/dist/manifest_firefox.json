@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "name": "They Know Your Passwords",
+    "name": "They know your passwords",
     "version": "1.10.4",
     "description": "KeePassXC 本地口令风险评估与安全推荐演示扩展",
     "author": "KeePassXC Team",
@@ -22,7 +22,7 @@
             "38": "icons/keepassxc.svg",
             "64": "icons/keepassxc.svg"
         },
-        "default_title": "They Know Your Passwords",
+        "default_title": "They know your passwords",
         "default_popup": "popups/popup.html"
     },
     "options_ui": {

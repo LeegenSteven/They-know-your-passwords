@@ -1112,7 +1112,7 @@ Doni të mbishkruhet kyçkalimi te %1 - %2?</translation>
         <translation>Dialog</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
+        <source>This is required for accessing your databases with They know your passwords</source>
         <translation>Kjo është e domosdoshme për të hyrë në bazat tuaja të të dhënave me Shfletuesin KeePassXC</translation>
     </message>
     <message>
@@ -1246,7 +1246,7 @@ Doni të mbishkruhet kyçkalimi te %1 - %2?</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Përdor një vendndodhje vetjake ndërmjetësi:</translation>
     </message>
     <message>
@@ -1343,7 +1343,7 @@ Doni të mbishkruhet kyçkalimi te %1 - %2?</translation>
         <translation>Lejo përdorim localhost-i me kodkalime</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation>Që të funksionojë integrimi i shfletuesit, është i nevojshëm Shfletuesi KeePassXC. &lt;br /&gt;Shkarkojeni për %1 dhe %2 dhe %3.</translation>
     </message>
     <message>
@@ -1832,8 +1832,8 @@ Jeni i sigurt se doni të vazhdohet me këtë kartelë?</translation>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>Rregullime për KeePassXC-Browser</translation>
+        <source>They know your passwords settings</source>
+        <translation>Rregullime për They know your passwords</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
@@ -1936,8 +1936,8 @@ This is only necessary if your database is a copy of another and the browser ext
 Kjo është e nevojshme vetëm nëse baza juaj e të dhënave është një kopje e një tjetre dhe zgjerimi i shfletuesit s’bën dot lidhjen.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Shndërroni atribute KeePassHTTP të dikurshëm në të dhëna vetjake të përputhshme me KeePassXC-Browser</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>Shndërroni atribute KeePassHTTP të dikurshëm në të dhëna vetjake të përputhshme me They know your passwords</translation>
     </message>
     <message>
         <source>No keys found</source>

@@ -1108,8 +1108,8 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Дијалог</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Ово је потребно за приступ базама података помоћу KeePassXC-Browser-у</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>Ово је потребно за приступ базама података помоћу They know your passwords-у</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1242,7 +1242,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Користите прилагођену локацију проксија:</translation>
     </message>
     <message>
@@ -1339,7 +1339,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1816,8 +1816,8 @@ Are you sure you want to continue with this file?.</source>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>KeePassXC-Browser подешавања</translation>
+        <source>They know your passwords settings</source>
+        <translation>They know your passwords подешавања</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
@@ -1920,7 +1920,7 @@ This is only necessary if your database is a copy of another and the browser ext
 То је неопходно само ако је ваша база података копија друге и ако екстензија прегледача не може да се повеже.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
         <translation type="unfinished"/>
     </message>
     <message>

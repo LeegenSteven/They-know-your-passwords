@@ -1112,7 +1112,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>대화 상자</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
+        <source>This is required for accessing your databases with They know your passwords</source>
         <translation>KeePassXC-브라우저에서 데이터베이스에 접근하려면 필요합니다</translation>
     </message>
     <message>
@@ -1246,7 +1246,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>사용자 정의 프록시 위치 사용:</translation>
     </message>
     <message>
@@ -1343,7 +1343,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>localhost에 패스키 사용 허용</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation>브라우저 통합을 사용하려면 KeePassXC-브라우저가 필요합니다.&lt;br /&gt;%1, %2, %3용으로 다운로드할 수 있습니다.</translation>
     </message>
     <message>
@@ -1831,7 +1831,7 @@ Are you sure you want to continue with this file?.</source>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
+        <source>They know your passwords settings</source>
         <translation>KeePassXC-브라우저 설정</translation>
     </message>
     <message>
@@ -1935,7 +1935,7 @@ This is only necessary if your database is a copy of another and the browser ext
 데이터베이스가 다른 데이터베이스의 복제본이고 브라우저 확장 기능에서 연결할 수 없을 때에만 사용하십시오.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
         <translation>레거시 KeePassHTTP 설정을 KeePassXC-브라우저 호환 사용자 정의 데이터로 변환</translation>
     </message>
     <message>

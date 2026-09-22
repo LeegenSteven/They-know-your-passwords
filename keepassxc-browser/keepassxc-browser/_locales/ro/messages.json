@@ -16,7 +16,7 @@
         "description": "Allow Cross-Origin iframes button title text."
     },
     "connectButtonTitle": {
-        "message": "Conectați baza de date activă curentă la KeePassXC-Browser.",
+        "message": "Conectați baza de date activă curentă la They know your passwords.",
         "description": "Connect button title text."
     },
     "copyDebugInfoButtonTitle": {
@@ -28,7 +28,7 @@
         "description": "Dismiss HTTP Auth button title text."
     },
     "reconnectButtonTitle": {
-        "message": "Reconectați baza de date activă curentă la KeePassXC-Browser.",
+        "message": "Reconectați baza de date activă curentă la They know your passwords.",
         "description": "Reconnect button title text."
     },
     "redetectButtonTitle": {
@@ -40,7 +40,7 @@
         "description": "Reload button title text."
     },
     "removeConnectedDatabaseButtonTitle": {
-        "message": "Eliminați baza de date conectată din KeePassXC-Browser.",
+        "message": "Eliminați baza de date conectată din They know your passwords.",
         "description": "Remove button title on Connected Databases tab."
     },
     "removeCustomLoginFieldsButtonTitle": {
@@ -407,7 +407,7 @@
         "description": "Alert message when trying to fill username and/or password when multiple credentials are found."
     },
     "credentialsMultipleFoundSecondLine": {
-        "message": "Click the KeePassXC-Browser icon for more options.",
+        "message": "Click the They know your passwords icon for more options.",
         "description": "Alert message when trying to fill username and/or password when multiple credentials are found."
     },
     "credentialsNoUsernameFound": {
@@ -483,7 +483,7 @@
         "description": "Button text for allowing Cross-Origin iframes option."
     },
     "popupErrorEncountered": {
-        "message": "KeePassXC-Browser a întâmpinat o eroare:",
+        "message": "They know your passwords a întâmpinat o eroare:",
         "description": "A text shown above error message in the popup."
     },
     "popupUpdateAvailable": {
@@ -519,7 +519,7 @@
         "description": "Checking status message in popup."
     },
     "popupNotConfigured": {
-        "message": "KeePassXC-Browser has not been configured. Click the connect button to pair with KeePassXC.",
+        "message": "They know your passwords has not been configured. Click the connect button to pair with KeePassXC.",
         "description": "A popup message shown when the extension has not been connected to KeePassXC."
     },
     "popupNeedReconfigure": {
@@ -667,7 +667,7 @@
         "description": "Default settings title for Getting Started page."
     },
     "optionsWelcomeTitle": {
-        "message": "KeePassXC-Browser",
+        "message": "They know your passwords",
         "description": "Main card title for Getting Started page."
     },
     "optionsTitle": {
@@ -875,7 +875,7 @@
         "description": "Default password manager checkbox text."
     },
     "optionsDefaultPasswordManagerHelpText": {
-        "message": "Sets KeePassXC-Browser as the default password manager for the browser.",
+        "message": "Sets They know your passwords as the default password manager for the browser.",
         "description": "Default password manager help text."
     },
     "optionsRedirectAllowance": {
@@ -1003,7 +1003,7 @@
         "description": "Auto-reconnect option help text."
     },
     "optionsAutoFillSingleEntryHelpText": {
-        "message": "Permiteți KeePassXC-Browser să completeze automat credențialele dacă primește doar o singură intrare.",
+        "message": "Permiteți They know your passwords să completeze automat credențialele dacă primește doar o singură intrare.",
         "description": "Auto-Fill Single Entry option help text."
     },
     "optionsAutoFillRelevantCredentialHelpText": {
@@ -1011,11 +1011,11 @@
         "description": "Auto-Fill Relevant Credential option help text."
     },
     "optionsAutoFillSingleEntryWarning": {
-        "message": "Atenție! Folosirea sistemului de autocompletare nu este sigură. Utilizați-o pe propriul risc. KeePassXC-Browser încearcă să detecteze automat câmpurile de conectare. Cu toate acestea, este posibil ca acestea să fie detectate incorect, completând eventual date sensibile în câmpuri de introducere nesigure.",
+        "message": "Atenție! Folosirea sistemului de autocompletare nu este sigură. Utilizați-o pe propriul risc. They know your passwords încearcă să detecteze automat câmpurile de conectare. Cu toate acestea, este posibil ca acestea să fie detectate incorect, completând eventual date sensibile în câmpuri de introducere nesigure.",
         "description": "Auto-Fill Single Entry warning text."
     },
     "optionsAutoFillSingleTotpHelpText": {
-        "message": "Let KeePassXC-Browser automatically fill in TOTP fields if it receives only a single entry.",
+        "message": "Let They know your passwords automatically fill in TOTP fields if it receives only a single entry.",
         "description": "Auto-Fill Single TOTP field option help text."
     },
     "optionsAutocompleteUsernamesHelpText": {
@@ -1055,7 +1055,7 @@
         "description": "Download favicon after save help text."
     },
     "optionsAutoFillAndSendHelpText": {
-        "message": "Daca sunt găsite credențiale pentru un site si tipul de autentificare este HTTP Basic Auth, atunci KeePassXC-Browser va încerca să vă autentifice cu primul set de credențiale care se potrivește cu acesta. Când sunt mai multe seturi de credențiale atunci puteți folosi meniul extensiei pentru a alege pe cea corectă. Chiar si dacă această opțiune este activă puteți introduce credențialele manual pentru HTTP Basic Auth",
+        "message": "Daca sunt găsite credențiale pentru un site si tipul de autentificare este HTTP Basic Auth, atunci They know your passwords va încerca să vă autentifice cu primul set de credențiale care se potrivește cu acesta. Când sunt mai multe seturi de credențiale atunci puteți folosi meniul extensiei pentru a alege pe cea corectă. Chiar si dacă această opțiune este activă puteți introduce credențialele manual pentru HTTP Basic Auth",
         "description": "Auto-Fill And Send option help text."
     },
     "optionsAutoFillAndSendHelpTextSecond": {
@@ -1135,7 +1135,7 @@
         "description": "Reset all settings dialog text."
     },
     "optionsConnectedDatabasesText": {
-        "message": "Baze de date conectate la KeePassXC-Browser.",
+        "message": "Baze de date conectate la They know your passwords.",
         "description": "Info text about connected databases."
     },
     "optionsConnectedDatabasesNotFound": {
@@ -1311,7 +1311,7 @@
         "description": "Site Preferences info text, third part."
     },
     "optionsSitePreferencesTabHelpTextFourth": {
-        "message": "Detectarea doar a câmpului de Utilizator permite KeePassXC-Browser să completeze datele de logare unde numele de utilizator si parola sunt introduse pe pagini diferite ale site-ului",
+        "message": "Detectarea doar a câmpului de Utilizator permite They know your passwords să completeze datele de logare unde numele de utilizator si parola sunt introduse pe pagini diferite ale site-ului",
         "description": "Site Preferences info text, fourth part."
     },
     "optionsSitePreferencesImprovedInputFieldDetectionHelpText": {
@@ -1335,7 +1335,7 @@
         "description": "Confirmation text when removing site from Site Preferences."
     },
     "optionsSitePreferencesConfirmationHelpText": {
-        "message": "KeePassXC-Browser va permite toate funcțiile pentru acest site și elimină detectarea doar a câmpului de utilizator.",
+        "message": "They know your passwords va permite toate funcțiile pentru acest site și elimină detectarea doar a câmpului de utilizator.",
         "description": "Part of confirmation text when removing Site Preferences."
     },
     "optionsSitePreferencesTableCaption": {
@@ -1355,7 +1355,7 @@
         "description": "About page link to AMO."
     },
     "optionsAboutEdge": {
-        "message": "Visit KeePassXC-Browser in the Edge Add-ons page.",
+        "message": "Visit They know your passwords in the Edge Add-ons page.",
         "description": "About page link to Edge Add-ons page."
     },
     "optionsAboutGitHub": {
@@ -1467,7 +1467,7 @@
         "description": "Lock database button title text."
     },
     "welcomeText": {
-        "message": "Welcome to KeePassXC-Browser!",
+        "message": "Welcome to They know your passwords!",
         "description": "Main title of Getting Started page."
     },
     "documentationGettingStarted": {
@@ -1483,8 +1483,8 @@
         "description": "Troubleshooting Guide text."
     },
     "gettingStartedWelcomeText": {
-        "message": "Welcome to KeePassXC-Browser, the official browser extension for KeePassXC.",
-        "description": "Welcome to KeePassXC-Browser, the official browser extension for KeePassXC."
+        "message": "Welcome to They know your passwords, the official browser extension for KeePassXC.",
+        "description": "Welcome to They know your passwords, the official browser extension for KeePassXC."
     },
     "gettingStartedSecondWelcomeText": {
         "message": "Please go through the default settings and check all your preferred options.",

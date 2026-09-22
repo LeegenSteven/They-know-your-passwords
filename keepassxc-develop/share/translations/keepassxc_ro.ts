@@ -1111,7 +1111,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Dialog</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
+        <source>This is required for accessing your databases with They know your passwords</source>
         <translation>Acest lucru este necesar pentru accesarea bazelor de date cu KeePassXC-browser</translation>
     </message>
     <message>
@@ -1245,7 +1245,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1342,7 +1342,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1829,8 +1829,8 @@ Sunteți sigur că doriți să continuați cu acest fișier?.</translation>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>Setări KeePassXC-Browser</translation>
+        <source>They know your passwords settings</source>
+        <translation>Setări They know your passwords</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
@@ -1933,7 +1933,7 @@ This is only necessary if your database is a copy of another and the browser ext
 Acest lucru este necesar doar dacă baza de date este o copie a alteia și extensia browserului nu se poate conecta.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
         <translation type="unfinished"/>
     </message>
     <message>

@@ -33,7 +33,7 @@ BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
     // clang-format off
     m_ui->extensionLabel->setOpenExternalLinks(true);
     m_ui->extensionLabel->setText(
-        tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2 and %3.")
+        tr("They know your passwords is needed for the browser integration to work. <br />Download it for %1 and %2 and %3.")
             .arg("<a href=\"https://addons.mozilla.org/firefox/addon/keepassxc-browser/\">Firefox</a>",
                  "<a href=\"https://chromewebstore.google.com/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">"
                  "Google Chrome / Chromium / Vivaldi / Brave</a>",

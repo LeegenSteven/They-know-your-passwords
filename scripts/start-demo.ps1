@@ -15,7 +15,7 @@ if (-not $KeePassExecutable) {
     $KeePassExecutable = if (Test-Path -LiteralPath $bundledKeePass) {
         $bundledKeePass
     } else {
-        'D:\tmp\TheyKnowDemo\KeePassXC.exe'
+        'D:\tmp\TheyKnowYourPasswordsDemo\KeePassXC.exe'
     }
 }
 

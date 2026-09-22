@@ -1123,8 +1123,8 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>ダイアログ</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>このオプションは KeePassXC-Browser からデータベースにアクセスするために必要です</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>このオプションは They know your passwords からデータベースにアクセスするために必要です</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1257,7 +1257,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>カスタムプロキシーを使用する:</translation>
     </message>
     <message>
@@ -1354,8 +1354,8 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>ローカルホストでのパスキーの使用を許可する</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
-        <translation>ブラウザー統合の動作には KeePassXC-Browser が必要です。&lt;br /&gt;%1 用、%2 用、%3 用からダウンロードしてください。</translation>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <translation>ブラウザー統合の動作には They know your passwords が必要です。&lt;br /&gt;%1 用、%2 用、%3 用からダウンロードしてください。</translation>
     </message>
     <message>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
@@ -1841,8 +1841,8 @@ Are you sure you want to continue with this file?.</source>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>KeePassXC-Browser 設定</translation>
+        <source>They know your passwords settings</source>
+        <translation>They know your passwords 設定</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
@@ -1945,8 +1945,8 @@ This is only necessary if your database is a copy of another and the browser ext
 これはデータベースが別のデータベースのコピーで、ブラウザー拡張機能が接続できない場合にのみ必要です。</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>古い KeePassHTTP の属性を KeePassXC-Browser の互換性のあるカスタムデータに変換する</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>古い KeePassHTTP の属性を They know your passwords の互換性のあるカスタムデータに変換する</translation>
     </message>
     <message>
         <source>No keys found</source>

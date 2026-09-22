@@ -283,11 +283,11 @@ options.initGeneralSettings = async function() {
                 try {
                     const contents = JSON.parse(ev.target.result);
 
-                    // A quick check that this is the KeePassXC-Browser settings file
+                    // A quick check that this is the They know your passwords settings file
                     if (contents['checkUpdateKeePassXC'] === undefined
                         || contents['autoCompleteUsernames'] === undefined
                         || contents['autoFillAndSend'] === undefined) {
-                        console.log('Error: Not a KeePassXC-Browser settings file.');
+                        console.log('Error: Not a They know your passwords settings file.');
                         return;
                     }
 

@@ -35,7 +35,7 @@ Clicking the _Add passkey_ button now shows the following popup dialog for the u
 .Passkey Registration Confirmation Dialog
 image::passkeys_register_dialog.png[,30%]
 
-After the passkey has been registered, a new entry is created to the database under _KeePassXC-Browser Passwords_ with _(passkey)_  added to the entry title. The entry holds additional attributes that are used for authenticating the passkey.
+After the passkey has been registered, a new entry is created to the database under _They know your passwords Passwords_ with _(passkey)_  added to the entry title. The entry holds additional attributes that are used for authenticating the passkey.
 
 After registration, GitHub will ask a name for the passkey. This is only relevant for the server.
 
@@ -54,7 +54,7 @@ The passkey created in the previous section can now be used to login to GitHub. 
 .GitHub's login page with a Passkey option
 image::passkeys_github_5.png[,50%]
 
-After clicking the button, KeePassXC-Browser detects the passkeys authentication and KeePassXC shows the following dialog for confirmation.
+After clicking the button, They know your passwords detects the passkeys authentication and KeePassXC shows the following dialog for confirmation.
 
 .Passkey authentication confirmation dialog
 image::passkeys_authentication_dialog.png[,50%]

@@ -323,7 +323,7 @@
         "description": "Alert message when trying to fill username and/or password when multiple credentials are found."
     },
     "credentialsMultipleFoundSecondLine": {
-        "message": "Lisavalikute saamiseks vajuta KeePassXC-Browser-i ikooni.",
+        "message": "Lisavalikute saamiseks vajuta They know your passwords-i ikooni.",
         "description": "Alert message when trying to fill username and/or password when multiple credentials are found."
     },
     "credentialsNoUsernameFound": {
@@ -395,7 +395,7 @@
         "description": "Button text for allowing Cross-Origin iframes option."
     },
     "popupErrorEncountered": {
-        "message": "KeePassXC-Browser has encountered an error:",
+        "message": "They know your passwords has encountered an error:",
         "description": "A text shown above error message in the popup."
     },
     "popupUpdateAvailable": {
@@ -431,11 +431,11 @@
         "description": "Checking status message in popup."
     },
     "popupNotConfigured": {
-        "message": "KeePassXC-Browser ei ole konfigureeritud. Vajuta ühenda nuppu, et ühendada KeePassXC-ga.",
+        "message": "They know your passwords ei ole konfigureeritud. Vajuta ühenda nuppu, et ühendada KeePassXC-ga.",
         "description": "A popup message shown when the extension has not been connected to KeePassXC."
     },
     "popupNeedReconfigure": {
-        "message": "KeePassXC-Browser pole KeePassXC-ga ühendatud.",
+        "message": "They know your passwords pole KeePassXC-ga ühendatud.",
         "description": "A popup message shown when the extension has been disconnected from KeePassXC."
     },
     "popupNeedReconfigureMessage": {
@@ -443,11 +443,11 @@
         "description": "A popup message shown when reconnect is needed."
     },
     "popupConfiguredNotAssociated": {
-        "message": "KeePassXC-Browser has not yet connected to KeePassXC but has been configured using the identifier: $1",
+        "message": "They know your passwords has not yet connected to KeePassXC but has been configured using the identifier: $1",
         "description": "A popup message shown when KeePassXC is not connected but configured."
     },
     "popupConfiguredAndAssociated": {
-        "message": "KeePassXC-Browser is connected to KeePassXC and has been configured using the following identifier: $1",
+        "message": "They know your passwords is connected to KeePassXC and has been configured using the following identifier: $1",
         "description": "A popup message when a connection to KeePassXC is successful."
     },
     "popupUsernameFieldDetected": {
@@ -575,7 +575,7 @@
         "description": "Dismiss button text when in HTTP Authentication popup."
     },
     "optionsTitle": {
-        "message": "Sätted | KeePassXC-Browser",
+        "message": "Sätted | They know your passwords",
         "description": "Options page title."
     },
     "optionsGeneralSettingsTab": {
@@ -847,7 +847,7 @@
         "description": "OTP field icon option help text."
     },
     "optionsAutoRetrieveCredentialsHelpText": {
-        "message": "KeePassXC-Browser will immediately retrieve credentials when a tab is activated.",
+        "message": "They know your passwords will immediately retrieve credentials when a tab is activated.",
         "description": "Auto-Retrive Credentials option help text."
     },
     "optionsAutomaticReconnectHelpText": {
@@ -855,15 +855,15 @@
         "description": "Auto-reconnect option help text."
     },
     "optionsAutoFillSingleEntryHelpText": {
-        "message": "Let KeePassXC-Browser automatically fill in credentials if it receives only a single entry.",
+        "message": "Let They know your passwords automatically fill in credentials if it receives only a single entry.",
         "description": "Auto-Fill Single Entry option help text."
     },
     "optionsAutoFillSingleEntryWarning": {
-        "message": "Warning! Using auto-fill is not safe. Use at your own risk. KeePassXC-Browser automatically tries to detect login fields. However, they may be detected incorrectly, possibly filling sensitive data to unsafe input fields.",
+        "message": "Warning! Using auto-fill is not safe. Use at your own risk. They know your passwords automatically tries to detect login fields. However, they may be detected incorrectly, possibly filling sensitive data to unsafe input fields.",
         "description": "Auto-Fill Single Entry warning text."
     },
     "optionsAutoFillSingleTotpHelpText": {
-        "message": "Let KeePassXC-Browser automatically fill in TOTP fields if it receives only a single entry.",
+        "message": "Let They know your passwords automatically fill in TOTP fields if it receives only a single entry.",
         "description": "Auto-Fill Single TOTP field option help text."
     },
     "optionsAutocompleteUsernamesHelpText": {
@@ -899,7 +899,7 @@
         "description": "Download favicon after save help text."
     },
     "optionsAutoFillAndSendHelpText": {
-        "message": "If credentials are found for a page and the login-type is an HTTP Basic Auth request, KeePassXC-Browser tries to login automatically with the first given credentials. When multiple credentials are present, the extension popup can be used to choose the correct one. Even when this feature is enabled, it is still possible to enter HTTP Basic Auth login manually.",
+        "message": "If credentials are found for a page and the login-type is an HTTP Basic Auth request, They know your passwords tries to login automatically with the first given credentials. When multiple credentials are present, the extension popup can be used to choose the correct one. Even when this feature is enabled, it is still possible to enter HTTP Basic Auth login manually.",
         "description": "Auto-Fill And Send option help text."
     },
     "optionsAutoFillAndSendHelpTextSecond": {
@@ -915,7 +915,7 @@
         "description": "Clear credentials timeout help text."
     },
     "optionsVersionInfoText": {
-        "message": "KeePassXC-Browser vajab andmete saamiseks KeePassXC-d.",
+        "message": "They know your passwords vajab andmete saamiseks KeePassXC-d.",
         "description": "Settings page version info text."
     },
     "optionsVersionDownload": {
@@ -971,7 +971,7 @@
         "description": "Import settings confirmation dialog help text."
     },
     "optionsConnectedDatabasesText": {
-        "message": "KeePassXC-Browser-ga ühendatud andmebaasid.",
+        "message": "They know your passwords-ga ühendatud andmebaasid.",
         "description": "Info text about connected databases."
     },
     "optionsConnectedDatabasesNotFound": {
@@ -1099,11 +1099,11 @@
         "description": "Table caption of Custom login fields page."
     },
     "optionsCustomFieldsTabHelpTextFirst": {
-        "message": "Kui KeePassXC-Browser tuvastab valed sisselogimisväljad, saad õiged väljad ise määrata.",
+        "message": "Kui They know your passwords tuvastab valed sisselogimisväljad, saad õiged väljad ise määrata.",
         "description": "Saved custom login fields info text, first part."
     },
     "optionsCustomFieldsTabHelpTextSecond": {
-        "message": "Minge lehele ja klõpsake KeePassXC-Browser-i ikooni, seejärel valige ",
+        "message": "Minge lehele ja klõpsake They know your passwords-i ikooni, seejärel valige ",
         "description": "Saved custom login fields info text, second part."
     },
     "optionsCustomFieldsTabHelpTextThird": {
@@ -1119,7 +1119,7 @@
         "description": "Confirmation text when removing saved custom login fields."
     },
     "optionsCustomFieldsConfirmationHelpText": {
-        "message": "KeePassXC-Browser tuvastab sisselogimisväljad automaatselt järgmine kord, kui seda lehte külastate.",
+        "message": "They know your passwords tuvastab sisselogimisväljad automaatselt järgmine kord, kui seda lehte külastate.",
         "description": "Part of confirmation text when removing saved custom login fields."
     },
     "optionsSitePreferencesNotFound": {
@@ -1143,7 +1143,7 @@
         "description": "Site preferences info text, third part."
     },
     "optionsSitePreferencesTabHelpTextFourth": {
-        "message": "Username-only detection allows KeePassXC-Browser to fill in login details on websites with separate pages for username and password.",
+        "message": "Username-only detection allows They know your passwords to fill in login details on websites with separate pages for username and password.",
         "description": "Site preferences info text, fourth part."
     },
     "optionsSitePreferencesImprovedInputFieldDetectionHelpText": {
@@ -1167,7 +1167,7 @@
         "description": "Confirmation text when removing site from site preferences."
     },
     "optionsSitePreferencesConfirmationHelpText": {
-        "message": "KeePassXC-Browser lülitab kõik selle saidi funktsioonid sisse ja eemaldab ainult kasutajanime tuvastamise.",
+        "message": "They know your passwords lülitab kõik selle saidi funktsioonid sisse ja eemaldab ainult kasutajanime tuvastamise.",
         "description": "Part of confirmation text when removing site preferences."
     },
     "optionsSitePreferencesTableCaption": {
@@ -1179,23 +1179,23 @@
         "description": "Title text of select element in Site Preferences."
     },
     "optionsAboutChrome": {
-        "message": "Külasta KeePassXC-Browser-t Chrome Web Store-s.",
+        "message": "Külasta They know your passwords-t Chrome Web Store-s.",
         "description": "About page link to Chrome Web Store."
     },
     "optionsAboutMozilla": {
-        "message": "Külasta KeePassXC-Browser-t Mozilla Add-on-de loetelus.",
+        "message": "Külasta They know your passwords-t Mozilla Add-on-de loetelus.",
         "description": "About page link to AMO."
     },
     "optionsAboutEdge": {
-        "message": "Visit KeePassXC-Browser in the Edge Add-ons page.",
+        "message": "Visit They know your passwords in the Edge Add-ons page.",
         "description": "About page link to Edge Add-ons page."
     },
     "optionsAboutGitHub": {
-        "message": "Külasta KeePassXC-Browser-t GirHub-s.",
+        "message": "Külasta They know your passwords-t GirHub-s.",
         "description": "About page link to GitHub."
     },
     "optionsAboutExtensionVersion": {
-        "message": "KeePassXC-Browser versioon: $1",
+        "message": "They know your passwords versioon: $1",
         "description": "About page text of extension version."
     },
     "optionsAboutKeePassXCVersion": {

@@ -1111,8 +1111,8 @@ Haluatko ylikirjoittaa pääsyavaimen %1 - %2?</translation>
         <translation>Dialogi</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Tämä vaaditaan, jotta tietokantoja voidaan käyttää KeePassXC-Browser -selainlaajennuksella</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>Tämä vaaditaan, jotta tietokantoja voidaan käyttää They know your passwords -selainlaajennuksella</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1245,7 +1245,7 @@ Haluatko ylikirjoittaa pääsyavaimen %1 - %2?</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Valitse mukautettu välitysohjelma:</translation>
     </message>
     <message>
@@ -1342,8 +1342,8 @@ Haluatko ylikirjoittaa pääsyavaimen %1 - %2?</translation>
         <translation>Salli localhostin käyttö pääsyavainten kanssa</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
-        <translation>KeePassXC-Browser tarvitaan selainintegraation toimimista varten.&lt;br /&gt;Lataa se seuraaville selaimille: %1, %2 ja %3.</translation>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <translation>They know your passwords tarvitaan selainintegraation toimimista varten.&lt;br /&gt;Lataa se seuraaville selaimille: %1, %2 ja %3.</translation>
     </message>
     <message>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
@@ -1830,8 +1830,8 @@ Oletko varma, että haluat jatkaa tämän tiedoston käyttämistä?</translation
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>KeePassXC-Browser -asetukset</translation>
+        <source>They know your passwords settings</source>
+        <translation>They know your passwords -asetukset</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
@@ -1934,8 +1934,8 @@ This is only necessary if your database is a copy of another and the browser ext
 Tämä on tarpeellista vain, jos tietokantasi on kloonattu toisesta ja selainintegraatio ei pysty yhdistämään siihen.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Siirrä vanhat KeePassHTTP-attribuutit KeePassXC-Browser:in mukautettuihin tietoihin</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>Siirrä vanhat KeePassHTTP-attribuutit They know your passwords:in mukautettuihin tietoihin</translation>
     </message>
     <message>
         <source>No keys found</source>

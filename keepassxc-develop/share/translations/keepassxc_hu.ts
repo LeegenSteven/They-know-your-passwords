@@ -1121,7 +1121,7 @@ Felülírja az itt található jelkulcsot: %1 – %2?</translation>
         <translation>Párbeszédablak</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
+        <source>This is required for accessing your databases with They know your passwords</source>
         <translation>Ez szükséges az adatbázis KeePassXC-böngészőből történő eléréséhez</translation>
     </message>
     <message>
@@ -1255,7 +1255,7 @@ Felülírja az itt található jelkulcsot: %1 – %2?</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Egyéni proxyhely alkalmazása:</translation>
     </message>
     <message>
@@ -1352,7 +1352,7 @@ Felülírja az itt található jelkulcsot: %1 – %2?</translation>
         <translation>Localhost használatának engedélyezése a jelkulcsokkal</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation>A böngészőintegráció működéséhez a KeePassXC-böngészőre van szükség. &lt;br /&gt;Letölthető ezen böngészőkre: %1, %2 és %3.</translation>
     </message>
     <message>
@@ -1840,7 +1840,7 @@ Valóban folytatja ezzel a fájllal?</translation>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
+        <source>They know your passwords settings</source>
         <translation>KeePassXC-böngésző beállítások</translation>
     </message>
     <message>
@@ -1944,7 +1944,7 @@ This is only necessary if your database is a copy of another and the browser ext
 Erre csak akkor lehet szükség, ha az adatbázis egy másik másolata és a böngésző kiterjesztés nem tud kapcsolódni.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
         <translation>Az örökölt KeePassHTTP attribútumok konvertálása KeePassXC-böngésző kompatibilis egyéni adatokká</translation>
     </message>
     <message>

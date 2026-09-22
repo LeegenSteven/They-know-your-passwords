@@ -1,4 +1,4 @@
-# They Know Your Passwords
+# They know your passwords
 
 这是一个 Windows 本地演示原型：KeePassXC 保存凭据并提供 Native Messaging 宿主，浏览器扩展提供口令风险面板，RankGuess 与 PARD 在独立 Python 子进程中完成评估。算法服务只通过标准输入输出通信，不监听端口。
 

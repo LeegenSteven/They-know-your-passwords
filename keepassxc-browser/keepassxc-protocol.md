@@ -179,7 +179,7 @@ Response message data (success, decrypted):
             "uuid": "<group UUID>",
             "children": [
                 {
-                    "name": "KeePassXC-Browser Passwords",
+                    "name": "They know your passwords",
                     "uuid": "<group UUID>",
                     "children": []
                 },

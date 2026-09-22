@@ -1,6 +1,6 @@
 'use strict';
 
-const DEFAULT_BROWSER_GROUP = 'KeePassXC-Browser Passwords';
+const DEFAULT_BROWSER_GROUP = 'They know your passwords';
 
 const kpxcBanner = {};
 kpxcBanner.banner = undefined;

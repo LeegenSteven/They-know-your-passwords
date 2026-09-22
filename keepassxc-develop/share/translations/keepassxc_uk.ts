@@ -1123,8 +1123,8 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Діалог</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Це потрібно для надання KeePassXC-Browser доступу до ваших баз даних</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>Це потрібно для надання They know your passwords доступу до ваших баз даних</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1257,7 +1257,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Використовувати власне розташування проксі:</translation>
     </message>
     <message>
@@ -1354,8 +1354,8 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Дозволити використовувати localhost з паролями</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
-        <translation>KeePassXC-Browser потрібен для роботи інтеграції з браузером. &lt;br /&gt;Завантажте його для %1 та %2 і %3.</translation>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <translation>They know your passwords потрібен для роботи інтеграції з браузером. &lt;br /&gt;Завантажте його для %1 та %2 і %3.</translation>
     </message>
     <message>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
@@ -1842,8 +1842,8 @@ Are you sure you want to continue with this file?.</source>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>Налаштування KeePassXC-Browser</translation>
+        <source>They know your passwords settings</source>
+        <translation>Налаштування They know your passwords</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
@@ -1946,8 +1946,8 @@ This is only necessary if your database is a copy of another and the browser ext
 Це потрібно лише якщо ваша база даних є копією іншої та неможливо під&apos;єднати розширення браузера.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Конвертувати застарілі атрибути KeePassHTTP у користувацькі дані, сумісні з KeePassXC-Browser</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>Конвертувати застарілі атрибути KeePassHTTP у користувацькі дані, сумісні з They know your passwords</translation>
     </message>
     <message>
         <source>No keys found</source>

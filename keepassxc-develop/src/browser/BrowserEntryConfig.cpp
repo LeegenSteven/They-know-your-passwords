@@ -26,6 +26,7 @@
 #include <QJsonObject>
 #include <QVariant>
 
+// Persisted KDBX custom-data key. Keep the legacy value for database compatibility.
 static const char KEEPASSXCBROWSER_NAME[] = "KeePassXC-Browser Settings";
 
 BrowserEntryConfig::BrowserEntryConfig(QObject* parent)

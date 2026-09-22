@@ -1110,8 +1110,8 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Dialóg</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Toto je potrebné na prístup k vašim databázam cez KeePassXC-Browser</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>Toto je potrebné na prístup k vašim databázam cez They know your passwords</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1244,7 +1244,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Použiť vlastné umiestnenie proxy:</translation>
     </message>
     <message>
@@ -1341,7 +1341,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1818,8 +1818,8 @@ Are you sure you want to continue with this file?.</source>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>Nastavenia KeePassXC-Browser</translation>
+        <source>They know your passwords settings</source>
+        <translation>Nastavenia They know your passwords</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
@@ -1922,8 +1922,8 @@ This is only necessary if your database is a copy of another and the browser ext
 Toto je potrebné len ak je vaša databáza kópiou inej a doplnok prehliadača sa nemôže pripojiť.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Konvertovať KeePassHTTP atribúty do formátu kompatibilného s KeePassXC-Browser</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>Konvertovať KeePassHTTP atribúty do formátu kompatibilného s They know your passwords</translation>
     </message>
     <message>
         <source>No keys found</source>

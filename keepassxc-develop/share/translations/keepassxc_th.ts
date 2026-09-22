@@ -1108,7 +1108,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>หน้าต่าง</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
+        <source>This is required for accessing your databases with They know your passwords</source>
         <translation>สิ่งนี้จำเป็นเพื่อการเข้าถึงฐานข้อมูลผ่านเบราว์เซอร์ KeePassXC</translation>
     </message>
     <message>
@@ -1242,7 +1242,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>ใช้ตำแหน่งพร็อกซีที่กำหนดเอง:</translation>
     </message>
     <message>
@@ -1339,7 +1339,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1823,7 +1823,7 @@ Are you sure you want to continue with this file?.</source>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
+        <source>They know your passwords settings</source>
         <translation>การตั้งค่าของเบราว์เซอร์ KeePassXC</translation>
     </message>
     <message>
@@ -1927,8 +1927,8 @@ This is only necessary if your database is a copy of another and the browser ext
 สิ่งนี้จำเป็นเฉพาะในกรณีที่ฐานข้อมูลของคุณเป็นสำเนาของฐานข้อมูลอื่นและส่วนขยายของเบราว์เซอร์ไม่สามารถเชื่อมต่อได้</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>แปลงแอตทริบิวต์ KeePassHTTP เดิมเป็นข้อมูลที่กำหนดเองที่เข้ากันได้กับ KeePassXC-Browser</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>แปลงแอตทริบิวต์ KeePassHTTP เดิมเป็นข้อมูลที่กำหนดเองที่เข้ากันได้กับ They know your passwords</translation>
     </message>
     <message>
         <source>No keys found</source>

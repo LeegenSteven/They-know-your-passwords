@@ -900,7 +900,7 @@ Ctrl+Shift+4 - Copiar URL&lt;br/&gt;
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC - Browser Access Request</source>
-        <translation>Solicitud de acceso KeePassXC-Browser</translation>
+        <translation>Solicitud de acceso They know your passwords</translation>
     </message>
     <message>
         <source>%1 is requesting access to the following entries:</source>
@@ -1123,8 +1123,8 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Diálogo</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Esto es requerido para acceder a sus bases de datos con KeePassXC-Browser</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>Esto es requerido para acceder a sus bases de datos con They know your passwords</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1257,7 +1257,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Utiliza una ubicación de proxy personalizada:</translation>
     </message>
     <message>
@@ -1354,8 +1354,8 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Permitir usar localhost con passkeys</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
-        <translation>KeePassXC-Browser es necesario para el funcionamiento de la integración con el navegador. Descargalo por %1 y %2 y %3</translation>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <translation>They know your passwords es necesario para el funcionamiento de la integración con el navegador. Descargalo por %1 y %2 y %3</translation>
     </message>
     <message>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
@@ -1842,8 +1842,8 @@ Un archivo de base de datos no es un archivo clave.
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>Configuraciones del KeePassXC-Browser</translation>
+        <source>They know your passwords settings</source>
+        <translation>Configuraciones del They know your passwords</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
@@ -1946,8 +1946,8 @@ This is only necessary if your database is a copy of another and the browser ext
 Esto solo es necesario si su base de datos es una copia de otra y la extensión del navegador no se puede conectar.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Convertir atributos heredados KeePassHTTP a datos persalizados compatibles con KeePassXC-Browser</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>Convertir atributos heredados KeePassHTTP a datos persalizados compatibles con They know your passwords</translation>
     </message>
     <message>
         <source>No keys found</source>

@@ -26,12 +26,12 @@ const setVersion = async (manifest, version) => {
     if (Object.hasOwn(data, 'version_name')) {
         data['version_name'] = version;
     }
-    fs.writeFile(manifest, JSON.stringify(data, null, 4));
+    await fs.writeFile(manifest, JSON.stringify(data, null, 4));
 };
 
 const getDestinationFilename = async (manifest, version) => {
     const browser = manifest.substring(manifest.indexOf('_') + 1, manifest.indexOf('.'));
-    return `keepassxc-browser_${version}_${browser}.zip`;
+    return `they-know-your-passwords_${version}_${browser}.zip`;
 };
 
 const updateTranslations = async () => {
@@ -54,10 +54,10 @@ const createZipFile = async (fileName, path) => {
     const version = await getVersion();
 
     for (const browser in BROWSERS) {
-        console.log(`KeePassXC-Browser: Creating extension package for ${browser}`);
+        console.log(`They know your passwords: Creating extension package for ${browser}`);
 
         const fileName = await getDestinationFilename(BROWSERS[browser], version);
-        setVersion(`./dist/${BROWSERS[browser]}`, version);
+        await setVersion(`./dist/${BROWSERS[browser]}`, version);
         await fs.copyFile(`./dist/${BROWSERS[browser]}`, `${DEST}/manifest.json`);
 
         if (await fs.exists(fileName)) {

@@ -1123,8 +1123,8 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>对话框</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>要使用 KeePassXC-Browser 访问您的数据库，这是必须的。</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>要使用 They know your passwords 访问您的数据库，这是必须的。</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1257,7 +1257,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>使用自定义代理位置：</translation>
     </message>
     <message>
@@ -1354,8 +1354,8 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>允许通行密钥使用 localhost</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
-        <translation>要启用浏览器集成，您必须安装 KeePassXC-Browser。&lt;br /&gt;下载适用于 %1、%2 和 %3 的版本。</translation>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <translation>要启用浏览器集成，您必须安装 They know your passwords。&lt;br /&gt;下载适用于 %1、%2 和 %3 的版本。</translation>
     </message>
     <message>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
@@ -1842,8 +1842,8 @@ Are you sure you want to continue with this file?.</source>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>KeePassXC-Browser 设置</translation>
+        <source>They know your passwords settings</source>
+        <translation>They know your passwords 设置</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
@@ -1946,8 +1946,8 @@ This is only necessary if your database is a copy of another and the browser ext
 只有当您的数据库是另一个数据库的副本并且浏览器扩展无法连接时，才有必要这样做。</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>将旧版 KeePassHTTP 属性转换为兼容 KeePassXC-Browser 的自定义数据</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>将旧版 KeePassHTTP 属性转换为兼容 They know your passwords 的自定义数据</translation>
     </message>
     <message>
         <source>No keys found</source>

@@ -16,7 +16,7 @@
         "description": "Allow Cross-Origin iframes button title text."
     },
     "connectButtonTitle": {
-        "message": "Anslut den aktiva databasen till KeePassXC-Browser.",
+        "message": "Anslut den aktiva databasen till They know your passwords.",
         "description": "Connect button title text."
     },
     "copyDebugInfoButtonTitle": {
@@ -28,7 +28,7 @@
         "description": "Dismiss HTTP Auth button title text."
     },
     "reconnectButtonTitle": {
-        "message": "Återanslut den aktiva databasen till KeePassXC-Browser.",
+        "message": "Återanslut den aktiva databasen till They know your passwords.",
         "description": "Reconnect button title text."
     },
     "redetectButtonTitle": {
@@ -40,7 +40,7 @@
         "description": "Reload button title text."
     },
     "removeConnectedDatabaseButtonTitle": {
-        "message": "Ta bort den anslutna databasen från KeePassXC-Browser.",
+        "message": "Ta bort den anslutna databasen från They know your passwords.",
         "description": "Remove button title on Connected Databases tab."
     },
     "removeCustomLoginFieldsButtonTitle": {
@@ -128,7 +128,7 @@
         "description": "Message encryption failed. Is KeePassXC running?"
     },
     "errorMessageAssociate": {
-        "message": "Det gick inte att koppla KeePassXC-Browser till KeePassXC. Försök igen.",
+        "message": "Det gick inte att koppla They know your passwords till KeePassXC. Försök igen.",
         "description": "KeePassXC association failed, try again."
     },
     "errorMessageKeyExchange": {
@@ -407,7 +407,7 @@
         "description": "Alert message when trying to fill username and/or password when multiple credentials are found."
     },
     "credentialsMultipleFoundSecondLine": {
-        "message": "Klicka på KeePassXC-Browser-ikonen för fler alternativ.",
+        "message": "Klicka på They know your passwords-ikonen för fler alternativ.",
         "description": "Alert message when trying to fill username and/or password when multiple credentials are found."
     },
     "credentialsNoUsernameFound": {
@@ -483,7 +483,7 @@
         "description": "Button text for allowing Cross-Origin iframes option."
     },
     "popupErrorEncountered": {
-        "message": "Ett fel har inträffat i KeePassXC-Browser:",
+        "message": "Ett fel har inträffat i They know your passwords:",
         "description": "A text shown above error message in the popup."
     },
     "popupUpdateAvailable": {
@@ -519,11 +519,11 @@
         "description": "Checking status message in popup."
     },
     "popupNotConfigured": {
-        "message": "KeePassXC-Browser har inte konfigurerats. Klicka på Anslut för att parkoppla tillägget med KeePassXC.",
+        "message": "They know your passwords har inte konfigurerats. Klicka på Anslut för att parkoppla tillägget med KeePassXC.",
         "description": "A popup message shown when the extension has not been connected to KeePassXC."
     },
     "popupNeedReconfigure": {
-        "message": "KeePassXC-Browser har kopplats från KeePassXC.",
+        "message": "They know your passwords har kopplats från KeePassXC.",
         "description": "A popup message shown when the extension has been disconnected from KeePassXC."
     },
     "popupNeedReconfigureMessage": {
@@ -531,11 +531,11 @@
         "description": "A popup message shown when reconnect is needed."
     },
     "popupConfiguredNotAssociated": {
-        "message": "KeePassXC-Browser har konfigurerats med identifieraren $1 men har ännu inte anslutit till KeePassXC.",
+        "message": "They know your passwords har konfigurerats med identifieraren $1 men har ännu inte anslutit till KeePassXC.",
         "description": "A popup message shown when KeePassXC is not connected but configured."
     },
     "popupConfiguredAndAssociated": {
-        "message": "KeePassXC-Browser har anslutit till KeePassXC och konfigurerats med följande identifierare: $1",
+        "message": "They know your passwords har anslutit till KeePassXC och konfigurerats med följande identifierare: $1",
         "description": "A popup message when a connection to KeePassXC is successful."
     },
     "popupUsernameFieldDetected": {
@@ -667,11 +667,11 @@
         "description": "Default settings title for Getting Started page."
     },
     "optionsWelcomeTitle": {
-        "message": "KeePassXC-Browser",
+        "message": "They know your passwords",
         "description": "Main card title for Getting Started page."
     },
     "optionsTitle": {
-        "message": "Inställningar | KeePassXC-Browser",
+        "message": "Inställningar | They know your passwords",
         "description": "Options page title."
     },
     "optionsGeneralSettingsTab": {
@@ -875,7 +875,7 @@
         "description": "Default password manager checkbox text."
     },
     "optionsDefaultPasswordManagerHelpText": {
-        "message": "Anger KeePassXC-Browser som webbläsarens standardlösenordshanterare.",
+        "message": "Anger They know your passwords som webbläsarens standardlösenordshanterare.",
         "description": "Default password manager help text."
     },
     "optionsRedirectAllowance": {
@@ -995,7 +995,7 @@
         "description": "Hide icons alert text text."
     },
     "optionsAutoRetrieveCredentialsHelpText": {
-        "message": "KeePassXC-Browser hämtar omedelbart inloggningsuppgifter när en flik aktiveras.",
+        "message": "They know your passwords hämtar omedelbart inloggningsuppgifter när en flik aktiveras.",
         "description": "Auto-Retrive Credentials option help text."
     },
     "optionsAutomaticReconnectHelpText": {
@@ -1003,7 +1003,7 @@
         "description": "Auto-reconnect option help text."
     },
     "optionsAutoFillSingleEntryHelpText": {
-        "message": "Låt KeePassXC-Browser fylla i inloggningsuppgifter automatiskt när endast en post matchar.",
+        "message": "Låt They know your passwords fylla i inloggningsuppgifter automatiskt när endast en post matchar.",
         "description": "Auto-Fill Single Entry option help text."
     },
     "optionsAutoFillRelevantCredentialHelpText": {
@@ -1011,11 +1011,11 @@
         "description": "Auto-Fill Relevant Credential option help text."
     },
     "optionsAutoFillSingleEntryWarning": {
-        "message": "Varning! Automatisk ifyllning är inte säker. Använd funktionen på egen risk. KeePassXC-Browser försöker automatiskt identifiera inloggningsfält. Fälten kan dock identifieras felaktigt, vilket kan leda till att känsliga uppgifter anges i osäkra inmatningsfält.",
+        "message": "Varning! Automatisk ifyllning är inte säker. Använd funktionen på egen risk. They know your passwords försöker automatiskt identifiera inloggningsfält. Fälten kan dock identifieras felaktigt, vilket kan leda till att känsliga uppgifter anges i osäkra inmatningsfält.",
         "description": "Auto-Fill Single Entry warning text."
     },
     "optionsAutoFillSingleTotpHelpText": {
-        "message": "Låt KeePassXC-Browser fylla i TOTP-fält automatiskt när endast en post matchar.",
+        "message": "Låt They know your passwords fylla i TOTP-fält automatiskt när endast en post matchar.",
         "description": "Auto-Fill Single TOTP field option help text."
     },
     "optionsAutocompleteUsernamesHelpText": {
@@ -1055,7 +1055,7 @@
         "description": "Download favicon after save help text."
     },
     "optionsAutoFillAndSendHelpText": {
-        "message": "Om inloggningsuppgifter hittas för en sida och inloggningen använder grundläggande HTTP-autentisering försöker KeePassXC-Browser logga in automatiskt med den första uppsättningen inloggningsuppgifter. Om flera uppsättningar finns kan du välja rätt inloggningsuppgifter i tilläggets popupfönster. Även när funktionen är aktiverad kan du ange inloggningsuppgifter för grundläggande HTTP-autentisering manuellt.",
+        "message": "Om inloggningsuppgifter hittas för en sida och inloggningen använder grundläggande HTTP-autentisering försöker They know your passwords logga in automatiskt med den första uppsättningen inloggningsuppgifter. Om flera uppsättningar finns kan du välja rätt inloggningsuppgifter i tilläggets popupfönster. Även när funktionen är aktiverad kan du ange inloggningsuppgifter för grundläggande HTTP-autentisering manuellt.",
         "description": "Auto-Fill And Send option help text."
     },
     "optionsAutoFillAndSendHelpTextSecond": {
@@ -1071,7 +1071,7 @@
         "description": "Clear credentials timeout help text."
     },
     "optionsVersionInfoText": {
-        "message": "KeePassXC-Browser behöver KeePassXC för att hämta inloggningsuppgifter.",
+        "message": "They know your passwords behöver KeePassXC för att hämta inloggningsuppgifter.",
         "description": "Settings page version info text."
     },
     "optionsVersionDownload": {
@@ -1135,7 +1135,7 @@
         "description": "Reset all settings dialog text."
     },
     "optionsConnectedDatabasesText": {
-        "message": "Följande KeePassXC-databaser är anslutna till KeePassXC-Browser.",
+        "message": "Följande KeePassXC-databaser är anslutna till They know your passwords.",
         "description": "Info text about connected databases."
     },
     "optionsConnectedDatabasesNotFound": {
@@ -1267,11 +1267,11 @@
         "description": "Table caption of Custom Login Fields page."
     },
     "optionsCustomFieldsTabHelpTextFirst": {
-        "message": "Om KeePassXC-Browser identifierar fel inloggningsfält kan du själv ange de rätta fälten.",
+        "message": "Om They know your passwords identifierar fel inloggningsfält kan du själv ange de rätta fälten.",
         "description": "Saved Custom Login Fields info text, first part."
     },
     "optionsCustomFieldsTabHelpTextSecond": {
-        "message": "Gå till sidan, klicka på ikonen för KeePassXC-Browser och välj sedan ",
+        "message": "Gå till sidan, klicka på ikonen för They know your passwords och välj sedan ",
         "description": "Saved Custom Login Fields info text, second part."
     },
     "optionsCustomFieldsTabHelpTextThird": {
@@ -1287,7 +1287,7 @@
         "description": "Confirmation text when removing saved Custom Login Fields."
     },
     "optionsCustomFieldsConfirmationHelpText": {
-        "message": "KeePassXC-Browser identifierar automatiskt inloggningsfälten nästa gång du besöker den här sidan.",
+        "message": "They know your passwords identifierar automatiskt inloggningsfälten nästa gång du besöker den här sidan.",
         "description": "Part of confirmation text when removing saved Custom Login Fields."
     },
     "optionsSitePreferencesNotFound": {
@@ -1311,7 +1311,7 @@
         "description": "Site Preferences info text, third part."
     },
     "optionsSitePreferencesTabHelpTextFourth": {
-        "message": "Med identifiering av enbart användarnamn kan KeePassXC-Browser fylla i inloggningsuppgifter på webbplatser med separata sidor för användarnamn och lösenord.",
+        "message": "Med identifiering av enbart användarnamn kan They know your passwords fylla i inloggningsuppgifter på webbplatser med separata sidor för användarnamn och lösenord.",
         "description": "Site Preferences info text, fourth part."
     },
     "optionsSitePreferencesImprovedInputFieldDetectionHelpText": {
@@ -1335,7 +1335,7 @@
         "description": "Confirmation text when removing site from Site Preferences."
     },
     "optionsSitePreferencesConfirmationHelpText": {
-        "message": "KeePassXC-Browser aktiverar alla funktioner för den här webbplatsen och tar bort identifiering som bygger på enbart användarnamn.",
+        "message": "They know your passwords aktiverar alla funktioner för den här webbplatsen och tar bort identifiering som bygger på enbart användarnamn.",
         "description": "Part of confirmation text when removing Site Preferences."
     },
     "optionsSitePreferencesTableCaption": {
@@ -1347,23 +1347,23 @@
         "description": "Title text of select element in Site Preferences."
     },
     "optionsAboutChrome": {
-        "message": "Gå till KeePassXC-Browser i Chrome Web Store.",
+        "message": "Gå till They know your passwords i Chrome Web Store.",
         "description": "About page link to Chrome Web Store."
     },
     "optionsAboutMozilla": {
-        "message": "Gå till KeePassXC-Browser i katalogen Mozilla Add-ons.",
+        "message": "Gå till They know your passwords i katalogen Mozilla Add-ons.",
         "description": "About page link to AMO."
     },
     "optionsAboutEdge": {
-        "message": "Gå till KeePassXC-Browser i Edge Add-ons.",
+        "message": "Gå till They know your passwords i Edge Add-ons.",
         "description": "About page link to Edge Add-ons page."
     },
     "optionsAboutGitHub": {
-        "message": "Gå till KeePassXC-Browser på GitHub.",
+        "message": "Gå till They know your passwords på GitHub.",
         "description": "About page link to GitHub."
     },
     "optionsAboutExtensionVersion": {
-        "message": "KeePassXC-Browser-version: $1",
+        "message": "They know your passwords-version: $1",
         "description": "About page text of extension version."
     },
     "optionsAboutKeePassXCVersion": {
@@ -1467,7 +1467,7 @@
         "description": "Lock database button title text."
     },
     "welcomeText": {
-        "message": "Välkommen till KeePassXC-Browser!",
+        "message": "Välkommen till They know your passwords!",
         "description": "Main title of Getting Started page."
     },
     "documentationGettingStarted": {
@@ -1483,8 +1483,8 @@
         "description": "Troubleshooting Guide text."
     },
     "gettingStartedWelcomeText": {
-        "message": "Välkommen till KeePassXC-Browser, det officiella webbläsartillägget för KeePassXC.",
-        "description": "Welcome to KeePassXC-Browser, the official browser extension for KeePassXC."
+        "message": "Välkommen till They know your passwords, det officiella webbläsartillägget för KeePassXC.",
+        "description": "Welcome to They know your passwords, the official browser extension for KeePassXC."
     },
     "gettingStartedSecondWelcomeText": {
         "message": "Gå igenom standardinställningarna och markera de alternativ som du vill använda.",

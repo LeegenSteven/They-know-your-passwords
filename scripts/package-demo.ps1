@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
-    [string] $BuildDirectory = 'D:\tmp\TheyKnowBuild3',
-    [string] $OutputDirectory = 'D:\tmp\TheyKnowDemo'
+    [string] $BuildDirectory = 'D:\tmp\TheyKnowYourPasswordsBuild',
+    [string] $OutputDirectory = 'D:\tmp\TheyKnowYourPasswordsDemo'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -58,7 +58,7 @@ $configText = $configText.Replace('../RankGuess拖网猜测', $rankGuessRoot)
 $configText = $configText.Replace('../PARD定向猜测', $pardRoot)
 Set-Content -LiteralPath (Join-Path $bundledService 'config.toml') -Value $configText -Encoding utf8NoBOM
 
-$extensionZip = Get-ChildItem -LiteralPath $browserRoot -Filter '*_chromium.zip' |
+$extensionZip = Get-ChildItem -LiteralPath $browserRoot -Filter 'they-know-your-passwords_*_chromium.zip' |
     Sort-Object LastWriteTime -Descending |
     Select-Object -First 1
 if (-not $extensionZip) {

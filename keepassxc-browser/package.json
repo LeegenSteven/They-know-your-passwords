@@ -1,7 +1,7 @@
 {
-  "name": "keepassxc-browser",
+  "name": "they-know-your-passwords",
   "version": "1.10.4",
-  "description": "KeePassXC-Browser",
+  "description": "They know your passwords browser extension",
   "main": "build.js",
   "devDependencies": {
     "@eslint/js": "^9.39.1",

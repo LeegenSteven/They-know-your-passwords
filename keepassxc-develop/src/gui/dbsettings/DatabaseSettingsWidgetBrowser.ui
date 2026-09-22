@@ -51,7 +51,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>KeePassXC-Browser settings</string>
+      <string>They know your passwords settings</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
@@ -63,7 +63,7 @@
          </sizepolicy>
         </property>
         <property name="toolTip">
-         <string>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</string>
+         <string>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</string>
         </property>
         <property name="text">
          <string>Disconnect all browsers</string>

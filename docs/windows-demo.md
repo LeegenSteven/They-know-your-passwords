@@ -12,8 +12,8 @@
 Ninja 在 Windows 上无法可靠扫描含中文字符的源码路径。先创建只指向同一工作区源码的 ASCII 目录联接，再在 Visual Studio x64 Developer Command Prompt 中执行：
 
 ```powershell
-New-Item -ItemType Junction -Path D:\tmp\TheyKnowSrc -Target 'D:\研究生\网络安全竞赛\keepassxc-develop'
-cmake -S D:\tmp\TheyKnowSrc -B D:\tmp\TheyKnowBuild3 -G Ninja `
+New-Item -ItemType Junction -Path D:\tmp\TheyKnowYourPasswordsSrc -Target 'D:\研究生\网络安全竞赛\keepassxc-develop'
+cmake -S D:\tmp\TheyKnowYourPasswordsSrc -B D:\tmp\TheyKnowYourPasswordsBuild -G Ninja `
   -DCMAKE_BUILD_TYPE=Release `
   -DCMAKE_TOOLCHAIN_FILE=D:\vcpkg\scripts\buildsystems\vcpkg.cmake `
   -DCMAKE_PREFIX_PATH=D:\Qt\6.8.3\msvc2022_64 `
@@ -21,7 +21,7 @@ cmake -S D:\tmp\TheyKnowSrc -B D:\tmp\TheyKnowBuild3 -G Ninja `
   -DWITH_TESTS=OFF -DKPXC_FEATURE_DOCS=OFF `
   -DKPXC_FEATURE_NETWORK=OFF -DKPXC_FEATURE_UPDATES=OFF `
   -DKPXC_FEATURE_SSHAGENT=OFF
-cmake --build D:\tmp\TheyKnowBuild3 --target KeePassXC keepassxc-proxy keepassxc-cli -j 4
+cmake --build D:\tmp\TheyKnowYourPasswordsBuild --target KeePassXC keepassxc-proxy keepassxc-cli -j 4
 ```
 
 关闭 KeePassXC 的网络功能不影响 Native Messaging，本地命名管道仍使用 Qt Network。
@@ -34,12 +34,12 @@ cmake --build D:\tmp\TheyKnowBuild3 --target KeePassXC keepassxc-proxy keepassxc
 $env:KEEPASSXC_RISK_PYTHON='D:\Anaconda3\envs\pytorch_cuda\python.exe'
 $env:KEEPASSXC_RISK_SERVICE='D:\研究生\网络安全竞赛\algo-service\server.py'
 $env:KEEPASSXC_RISK_CONFIG='D:\研究生\网络安全竞赛\algo-service\config.toml'
-& 'D:\tmp\TheyKnowBuild3\src\KeePassXC.exe'
+& 'D:\tmp\TheyKnowYourPasswordsBuild\src\KeePassXC.exe'
 ```
 
 也可在 KeePassXC“设置 → 浏览器集成 → 高级”填写同样的 Python、服务脚本和 TOML 路径。启动时服务会预热模型；stdout 只允许协议 JSON，宿主丢弃 stderr，避免诊断信息进入应用日志。
 
-仓库也提供 `scripts\start-demo.ps1`。它设置上述三个环境变量后启动 `D:\tmp\TheyKnowDemo\KeePassXC.exe`。
+仓库也提供 `scripts\start-demo.ps1`。它设置上述三个环境变量后启动 `D:\tmp\TheyKnowYourPasswordsDemo\KeePassXC.exe`。
 
 ## 加载扩展
 
@@ -56,10 +56,10 @@ node build.js --skip-translations
 若要生成包含 Qt/vcpkg 运行库、算法服务和已解压 Chromium 扩展的本地演示目录，执行：
 
 ```powershell
-.\scripts\package-demo.ps1 -BuildDirectory D:\tmp\TheyKnowBuild3 -OutputDirectory D:\tmp\TheyKnowDemo
+.\scripts\package-demo.ps1 -BuildDirectory D:\tmp\TheyKnowYourPasswordsBuild -OutputDirectory D:\tmp\TheyKnowYourPasswordsDemo
 ```
 
-模型权重不会复制进演示目录；生成的配置仍引用工作区中的只读算法资产。加载 `D:\tmp\TheyKnowDemo\extension-chromium` 后，运行 `D:\tmp\TheyKnowDemo\start-demo.ps1`。
+模型权重不会复制进演示目录；生成的配置仍引用工作区中的只读算法资产。加载 `D:\tmp\TheyKnowYourPasswordsDemo\extension-chromium` 后，运行 `D:\tmp\TheyKnowYourPasswordsDemo\start-demo.ps1`。
 
 ## 演示流程
 

@@ -32,7 +32,7 @@
    <item>
     <widget class="QCheckBox" name="enableBrowserSupport">
      <property name="toolTip">
-      <string>This is required for accessing your databases with KeePassXC-Browser</string>
+      <string>This is required for accessing your databases with They know your passwords</string>
      </property>
      <property name="text">
       <string>Enable browser integration</string>
@@ -400,7 +400,7 @@
           <string>Use a custom proxy location if you installed a proxy manually.</string>
          </property>
          <property name="text">
-          <string comment="Meant is the proxy for KeePassXC-Browser">Use a custom proxy location:</string>
+          <string comment="Meant is the proxy for They know your passwords">Use a custom proxy location:</string>
          </property>
         </widget>
        </item>

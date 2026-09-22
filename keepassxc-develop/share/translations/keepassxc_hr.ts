@@ -798,7 +798,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
 <context>
     <name>BrowserEntrySaveDialog</name>
     <message>
-        <source>KeePassXC-Browser Save Entry</source>
+        <source>They know your passwords Save Entry</source>
         <translation>Spremi Stavku KeePassXC-Preglednika</translation>
     </message>
     <message>
@@ -917,7 +917,7 @@ Moved %2 keys to custom data.</source>
         <translation>KeePassXC: Otkrivene zastarjele postavke integracije preglednika</translation>
     </message>
     <message>
-        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+        <source>Your They know your passwords settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
         <translation>Vaše KeePassXC postavke preglednika potrebno je premjestiti u postavke baze podataka.
@@ -932,7 +932,7 @@ To je potrebno za održavanje trenutnih veza preglednika.
         <translation>Dijalog</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
+        <source>This is required for accessing your databases with They know your passwords</source>
         <translation>Ovo je potrebno za pristup vašim bazama podataka pomoću  KeePassXC-Preglednika</translation>
     </message>
     <message>
@@ -1070,7 +1070,7 @@ To je potrebno za održavanje trenutnih veza preglednika.
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Koristi prilagođenu lokaciju proxy-a:</translation>
     </message>
     <message>
@@ -1123,7 +1123,7 @@ To je potrebno za održavanje trenutnih veza preglednika.
         <translation>Zbog Snap-ovog odvojenog pokrretanja, morate pokrenuti skriptu kako biste omogućili integraciju preglednika.&lt;br /&gt;Tu skriptu možete dobiti od %1</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
         <translation>KeePassXC-Preglednik potreban je za funkcioniranje integracije preglednika. &lt;br /&gt;Preuzmite ga na %1 i %2 i %3. %4</translation>
     </message>
     <message>
@@ -1615,7 +1615,7 @@ Ako nemate datoteku ključa, ostavite polje prazno.</translation>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
+        <source>They know your passwords settings</source>
         <translation>KeePassXC-Postavke preglednika</translation>
     </message>
     <message>
@@ -1623,7 +1623,7 @@ Ako nemate datoteku ključa, ostavite polje prazno.</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
         <translation type="unfinished"/>
     </message>
     <message>

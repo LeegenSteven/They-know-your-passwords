@@ -900,7 +900,7 @@ Ctrl+Shift+4 - Adresi kopyala&lt;br/&gt;
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC - Browser Access Request</source>
-        <translation>KeePassXC-Browser erişim isteği</translation>
+        <translation>They know your passwords erişim isteği</translation>
     </message>
     <message>
         <source>%1 is requesting access to the following entries:</source>
@@ -1123,8 +1123,8 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Pencere</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>KeePassXC-Browser tarafından veri tabanlarınıza erişilmesi için gereklidir.</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>They know your passwords tarafından veri tabanlarınıza erişilmesi için gereklidir.</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1257,7 +1257,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Özel vekil sunucu konumu kullanılsın:</translation>
     </message>
     <message>
@@ -1354,8 +1354,8 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Geçiş anahtarları ile localhost kullanılabilsin</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
-        <translation>Tarayıcı bütünleşmesinin çalışması için KeePassXC-Browser gereklidir. &lt;br /&gt;%1, %2 ve %3 tarayıcıları için indirebilirsiniz.</translation>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <translation>Tarayıcı bütünleşmesinin çalışması için They know your passwords gereklidir. &lt;br /&gt;%1, %2 ve %3 tarayıcıları için indirebilirsiniz.</translation>
     </message>
     <message>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
@@ -1842,8 +1842,8 @@ Bu dosya ile ilerlemek istediğinize emin misiniz?</translation>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>KeePassXC-Browser ayarları</translation>
+        <source>They know your passwords settings</source>
+        <translation>They know your passwords ayarları</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
@@ -1946,8 +1946,8 @@ This is only necessary if your database is a copy of another and the browser ext
 Bu işlem yalnızca veri tabanınız başka bir veri tabanının kopyası ise ve tarayıcı eklentisi bağlantı kuramıyorsa gerekir.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Eski KeePassHTTP öznitelikleri KeePassXC-Browser uyumlu özel verilere taşınsın</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>Eski KeePassHTTP öznitelikleri They know your passwords uyumlu özel verilere taşınsın</translation>
     </message>
     <message>
         <source>No keys found</source>

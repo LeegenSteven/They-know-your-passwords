@@ -1123,8 +1123,8 @@ Wil je de passkey overschrijven in %1 - %2?</translation>
         <translation>Dialoogvenster</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Dit is vereist voor toegang tot jouw databases met KeePassXC-Browser</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>Dit is vereist voor toegang tot jouw databases met They know your passwords</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1237,7 +1237,7 @@ Wil je de passkey overschrijven in %1 - %2?</translation>
     </message>
     <message>
         <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation>De pop-up die de migratie van KeePassHTTP naar KeePassXC-Browser aanbiedt niet meer tonen.</translation>
+        <translation>De pop-up die de migratie van KeePassHTTP naar They know your passwords aanbiedt niet meer tonen.</translation>
     </message>
     <message>
         <source>Do not prompt for KeePassHTTP settings migration.</source>
@@ -1257,7 +1257,7 @@ Wil je de passkey overschrijven in %1 - %2?</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Aangepaste proxy-locatie:</translation>
     </message>
     <message>
@@ -1354,8 +1354,8 @@ Wil je de passkey overschrijven in %1 - %2?</translation>
         <translation>Het gebruik van localhost toestaan met passkeys</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
-        <translation>KeePassXC-Browser is nodig om de integratie met de browser te laten werken.  &lt;br /&gt; Download deze browserextensie voor %1 en %2 en %3.</translation>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <translation>They know your passwords is nodig om de integratie met de browser te laten werken.  &lt;br /&gt; Download deze browserextensie voor %1 en %2 en %3.</translation>
     </message>
     <message>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
@@ -1842,8 +1842,8 @@ Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>KeePassXC-Browser-instellingen</translation>
+        <source>They know your passwords settings</source>
+        <translation>They know your passwords-instellingen</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
@@ -1946,8 +1946,8 @@ This is only necessary if your database is a copy of another and the browser ext
 Dit is alleen nodig als je database een kopie is van een andere en de browserextensie geen verbinding kan maken.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Converteer verouderde KeePassHTTP-kenmerken naar KeePassXC-Browser-compatibele gegevens</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>Converteer verouderde KeePassHTTP-kenmerken naar They know your passwords-compatibele gegevens</translation>
     </message>
     <message>
         <source>No keys found</source>

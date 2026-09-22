@@ -976,8 +976,8 @@ Do you want to delete the entry?
         <translation>Dialog</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Dette er nødvendigt for at tilgå din database med KeePassXC-Browser</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>Dette er nødvendigt for at tilgå din database med They know your passwords</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1114,7 +1114,7 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1167,8 +1167,8 @@ Do you want to delete the entry?
         <translation>Grundet Snap-sandkasse, er du nødsaget til at køre et script for at aktivere browser-integration.&lt;br /&gt;Du kan hente scriptet fra %1</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>KeePassXC-Browser er nødvendig for at browser-integrationen kan fungere. &lt;br /&gt;Download den til %1 og %2 og %3. %4</translation>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
+        <translation>They know your passwords er nødvendig for at browser-integrationen kan fungere. &lt;br /&gt;Download den til %1 og %2 og %3. %4</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
@@ -1675,8 +1675,8 @@ Hvis du ikke har en nøglefil, bedes du lade feltet være tomt.</translation>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>KeePassXC-Browserindstillinger</translation>
+        <source>They know your passwords settings</source>
+        <translation>They know your passwordsindstillinger</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>

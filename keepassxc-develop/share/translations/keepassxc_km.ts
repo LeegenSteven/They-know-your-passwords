@@ -1111,7 +1111,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>ការសន្ទនា</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
+        <source>This is required for accessing your databases with They know your passwords</source>
         <translation>ការធ្វើបែបនេះតម្រូវឱ្យចូលប្រើមូលដ្ឋានទិន្នន័យរបស់អ្នកជាមួយនឹងកម្មវិធីរុករក​តាមអ៊ីនធឺណិតរបស់ KeePassXC</translation>
     </message>
     <message>
@@ -1245,7 +1245,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>ប្រើប្រាស់ទីតាំងប្រូកស៊ីផ្ទាល់ខ្លួន៖</translation>
     </message>
     <message>
@@ -1343,7 +1343,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1823,7 +1823,7 @@ Are you sure you want to continue with this file?.</source>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
+        <source>They know your passwords settings</source>
         <translation>KeePassXC-ការកំណត់កម្មវិធីរុករកតាមអ៊ីនធឺណិត</translation>
     </message>
     <message>
@@ -1927,7 +1927,7 @@ This is only necessary if your database is a copy of another and the browser ext
 ការធ្វើបែបនេះ មានភាពចាំបាច់តែនៅក្នុងករណីដែលមូលដ្ឋានទិន្នន័យរបស់អ្នក គឺជាច្បាប់ចម្លងផ្សេងទៀត ហើយកម្មវិធីបន្ថែម​របស់កម្មវិធីរុករកតាមអ៊ីនធឺណិតមិនអាចតភ្ជាប់ទៅបានទេ។</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
         <translation>បំប្លែងលក្ខណៈ KeePassHTTP ចាស់ទៅជាទិន្នន័យផ្ទាល់ខ្លួនដែលត្រូវគ្នាជាមួយកម្មវិធីរុកតាមអ៊ីនធឺណិត KeePassXC</translation>
     </message>
     <message>

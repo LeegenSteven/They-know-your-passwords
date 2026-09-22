@@ -1123,8 +1123,8 @@ Vill du skriva över passnyckeln i %1 - %2?</translation>
         <translation>Dialog</translation>
     </message>
     <message>
-        <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Detta krävs för att KeePassXC-Browser ska kunna komma åt dina databaser</translation>
+        <source>This is required for accessing your databases with They know your passwords</source>
+        <translation>Detta krävs för att They know your passwords ska kunna komma åt dina databaser</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1257,7 +1257,7 @@ Vill du skriva över passnyckeln i %1 - %2?</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
-        <comment>Meant is the proxy for KeePassXC-Browser</comment>
+        <comment>Meant is the proxy for They know your passwords</comment>
         <translation>Använd en anpassad proxyplats:</translation>
     </message>
     <message>
@@ -1354,8 +1354,8 @@ Vill du skriva över passnyckeln i %1 - %2?</translation>
         <translation>Tillåt användning av localhost med passnycklar</translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
-        <translation>KeePassXC-Browser behövs för att webbläsarintegrationen ska fungera. &lt;br /&gt;Ladda ner det för %1 och %2 och %3.</translation>
+        <source>They know your passwords is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <translation>They know your passwords behövs för att webbläsarintegrationen ska fungera. &lt;br /&gt;Ladda ner det för %1 och %2 och %3.</translation>
     </message>
     <message>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
@@ -1843,8 +1843,8 @@ Vill du verkligen fortsätta med den här filen?</translation>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
-        <source>KeePassXC-Browser settings</source>
-        <translation>KeePassXC-Browser-inställningar</translation>
+        <source>They know your passwords settings</source>
+        <translation>They know your passwords-inställningar</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
@@ -1947,8 +1947,8 @@ This is only necessary if your database is a copy of another and the browser ext
 Detta är bara nödvändigt om databasen är en kopia av en annan och webbläsartillägget inte kan ansluta.</translation>
     </message>
     <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Konvertera äldre KeePassHTTP-attribut till KeePassXC-Browser-kompatibel anpassad data</translation>
+        <source>Convert legacy KeePassHTTP attributes to They know your passwords compatible custom data</source>
+        <translation>Konvertera äldre KeePassHTTP-attribut till They know your passwords-kompatibel anpassad data</translation>
     </message>
     <message>
         <source>No keys found</source>

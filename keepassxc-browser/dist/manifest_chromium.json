@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "They Know Your Passwords",
+    "name": "They know your passwords",
     "version": "1.10.4",
     "version_name": "1.10.4",
     "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqRWr0e2OP6bokMMXGA0VuNirnZTGznkbdAyVrKzm6LiJlNQVXgKdVisAD3RGh6A2d9ryn7ZY1+WQaM0B3zlXmPdnMvf1aSvvYSTWux/fMFIfpWWQk5FBRKwysGqrFTUO6XHyG6CmnFMjFHwfJcm0ImDEosSFpu3UEn1oOLKl8ZuJ55hP5MnK6s4RKgHSo7h1KjgOUt76z6A37O27+paYB9lP3yNCa/KUKg7arMXa2uBze8w62X+7l5p5GvEIEquUYFdXqjvlOMDiXEPRnEufqib22hOAjUhE5Je6e+U4CUHGIqh6JCnTEt3SSW1xO/uiRWpgU9q5Jl6PTd28yZb3iQIDAQAB",
@@ -24,7 +24,7 @@
             "38": "icons/keepassxc_38x38.png",
             "64": "icons/keepassxc_64x64.png"
         },
-        "default_title": "They Know Your Passwords",
+        "default_title": "They know your passwords",
         "default_popup": "popups/popup.html"
     },
     "options_ui": {

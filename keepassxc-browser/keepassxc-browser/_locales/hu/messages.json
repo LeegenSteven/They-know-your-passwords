@@ -1484,7 +1484,7 @@
     },
     "gettingStartedWelcomeText": {
         "message": "Üdvözlet a KeePassXC-böngészőben, a KeePassXC hivatalos böngészőbővítményében.",
-        "description": "Welcome to KeePassXC-Browser, the official browser extension for KeePassXC."
+        "description": "Welcome to They know your passwords, the official browser extension for KeePassXC."
     },
     "gettingStartedSecondWelcomeText": {
         "message": "Kérjük, nézze át az alapértelmezett beállításokat és ellenőrizze az összes kívánt opciót.",

@@ -53,10 +53,12 @@
 #include <QStringView>
 #include <QUrl>
 
+// Persisted KDBX custom-data keys. Keep the legacy values for database compatibility.
 const QString BrowserService::KEEPASSXCBROWSER_NAME = QStringLiteral("KeePassXC-Browser Settings");
 const QString BrowserService::KEEPASSXCBROWSER_OLD_NAME = QStringLiteral("keepassxc-browser Settings");
-static const QString KEEPASSXCBROWSER_GROUP_NAME = QStringLiteral("KeePassXC-Browser Passwords");
-static const QString PASSKEYS_DEFAULT_GROUP_NAME = QStringLiteral("KeePassXC-Browser Passkeys");
+static const QString BROWSER_GROUP_NAME = QStringLiteral("They know your passwords");
+static const QString LEGACY_BROWSER_GROUP_NAME = QStringLiteral("KeePassXC-Browser Passwords");
+static const QString PASSKEYS_DEFAULT_GROUP_NAME = QStringLiteral("They know your passwords Passkeys");
 static int KEEPASSXCBROWSER_DEFAULT_ICON = 1;
 static int KEEPASSXCBROWSER_PASSKEY_ICON = 13;
 // These are for the settings and password conversion
@@ -1175,7 +1177,7 @@ QList<Entry*> BrowserService::searchEntries(const QString& siteUrl,
                                             const StringPairList& keyList,
                                             bool passkey)
 {
-    // Check if database is connected with KeePassXC-Browser. If so, return browser key (otherwise empty)
+    // Check if the database is connected with They know your passwords. If so, return the browser key.
     auto databaseConnected = [&](const QSharedPointer<Database>& db) {
         for (const StringPair& keyPair : keyList) {
             const auto key = db->metadata()->customData()->value(
@@ -1365,14 +1367,14 @@ Group* BrowserService::getDefaultEntryGroup(const QSharedPointer<Database>& sele
     }
 
     for (auto* g : rootGroup->groupsRecursive(true)) {
-        if (g->name() == KEEPASSXCBROWSER_GROUP_NAME && !g->isRecycled()) {
+        if ((g->name() == BROWSER_GROUP_NAME || g->name() == LEGACY_BROWSER_GROUP_NAME) && !g->isRecycled()) {
             return db->rootGroup()->findGroupByUuid(g->uuid());
         }
     }
 
     auto* group = new Group();
     group->setUuid(QUuid::createUuid());
-    group->setName(KEEPASSXCBROWSER_GROUP_NAME);
+    group->setName(BROWSER_GROUP_NAME);
     group->setIcon(KEEPASSXCBROWSER_DEFAULT_ICON);
     group->setParent(rootGroup);
     return group;
