@@ -166,6 +166,10 @@ public:
         Browser_CustomBrowserType,
         Browser_CustomBrowserLocation,
         Browser_AllowLocalhostWithPasskeys,
+        Browser_RiskAssessmentEnabled,
+        Browser_RiskPythonExecutable,
+        Browser_RiskServiceScript,
+        Browser_RiskServiceConfig,
 #ifdef QT_DEBUG
         Browser_CustomExtensionId,
 #endif

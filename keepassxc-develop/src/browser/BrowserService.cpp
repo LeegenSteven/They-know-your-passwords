@@ -35,6 +35,7 @@
 #include "gui/UrlTools.h"
 #include "gui/osutils/OSUtils.h"
 #include "gui/passkeys/PasskeyImporter.h"
+#include "riskassess/RiskAssessmentService.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
@@ -89,6 +90,9 @@ BrowserService::BrowserService()
             &BrowserService::handleDatabaseUnlockDialogFinished);
 
     setEnabled(browserSettings()->isEnabled());
+    if (browserSettings()->isEnabled() && browserSettings()->riskAssessmentEnabled()) {
+        RiskAssessmentService::instance()->start();
+    }
 }
 
 BrowserService* BrowserService::instance()
@@ -105,8 +109,12 @@ void BrowserService::setEnabled(bool enabled)
         }
 
         m_browserHost->start();
+        if (browserSettings()->riskAssessmentEnabled()) {
+            RiskAssessmentService::instance()->start();
+        }
     } else {
         m_browserHost->stop();
+        RiskAssessmentService::instance()->stop();
     }
 }
 
@@ -565,6 +573,104 @@ void BrowserService::showPasswordGenerator(const KeyPairMessage& keyPairMessage)
 bool BrowserService::isPasswordGeneratorRequested() const
 {
     return m_passwordGenerator && m_passwordGenerator->isVisible();
+}
+
+void BrowserService::sendRiskResponse(const KeyPairMessage& keyPairMessage,
+                                      const QString& action,
+                                      const QSharedPointer<Database>& database,
+                                      const QJsonObject& response)
+{
+    QJsonObject currentResponse = response;
+    if (database && (!isDatabaseOpened() || getDatabase() != database)) {
+        currentResponse = {{"status", "UNAVAILABLE"},
+                           {"error_code", "STALE_DATABASE_SESSION"},
+                           {"level", "UNKNOWN"},
+                           {"calibrated", false},
+                           {"requestID", response.value("requestID")},
+                           {"inputRevision", response.value("inputRevision")}};
+    }
+    const auto responseRevision = response.value("inputRevision").toVariant().toLongLong();
+    if (keyPairMessage.socket && m_latestRiskInputRevision.value(keyPairMessage.socket, responseRevision) != responseRevision) {
+        currentResponse = {{"status", "UNAVAILABLE"},
+                           {"error_code", "STALE_INPUT_REVISION"},
+                           {"level", "UNKNOWN"},
+                           {"calibrated", false},
+                           {"requestID", response.value("requestID")},
+                           {"inputRevision", response.value("inputRevision")}};
+    }
+    if (!keyPairMessage.socket || !m_browserHost) {
+        return;
+    }
+    m_browserHost->sendClientMessage(
+        keyPairMessage.socket,
+        browserMessageBuilder()->buildResponse(action,
+                                               keyPairMessage.nonce,
+                                               currentResponse.toVariantMap(),
+                                               keyPairMessage.publicKey,
+                                               keyPairMessage.secretKey));
+}
+
+void BrowserService::assessPassword(const KeyPairMessage& keyPairMessage,
+                                    const QString& candidate,
+                                    const QString& context,
+                                    const QString& entryUuid,
+                                    const QString& requestId,
+                                    qint64 inputRevision)
+{
+    m_latestRiskInputRevision.insert(keyPairMessage.socket, inputRevision);
+    const auto database = getDatabase();
+    if (!database) {
+        sendRiskResponse(keyPairMessage,
+                         "assess-password",
+                         database,
+                         {{"status", "UNAVAILABLE"},
+                          {"error_code", "DATABASE_NOT_OPEN"},
+                          {"level", "UNKNOWN"},
+                          {"calibrated", false},
+                          {"requestID", requestId},
+                          {"inputRevision", inputRevision}});
+        return;
+    }
+    const QPointer<QLocalSocket> socket(keyPairMessage.socket);
+    RiskAssessmentService::instance()->assessPassword(
+        database, candidate, context, entryUuid, requestId, inputRevision,
+        [this, keyPairMessage, socket, database](const QJsonObject& response) {
+            if (!socket) {
+                return;
+            }
+            sendRiskResponse(keyPairMessage, "assess-password", database, response);
+        });
+}
+
+void BrowserService::recommendPassword(const KeyPairMessage& keyPairMessage,
+                                       const QString& context,
+                                       const QString& entryUuid,
+                                       const QString& requestId,
+                                       qint64 inputRevision)
+{
+    m_latestRiskInputRevision.insert(keyPairMessage.socket, inputRevision);
+    const auto database = getDatabase();
+    if (!database) {
+        sendRiskResponse(keyPairMessage,
+                         "recommend-password",
+                         database,
+                         {{"status", "UNAVAILABLE"},
+                          {"error_code", "DATABASE_NOT_OPEN"},
+                          {"level", "UNKNOWN"},
+                          {"calibrated", false},
+                          {"requestID", requestId},
+                          {"inputRevision", inputRevision}});
+        return;
+    }
+    const QPointer<QLocalSocket> socket(keyPairMessage.socket);
+    RiskAssessmentService::instance()->recommendPassword(
+        database, context, entryUuid, requestId, inputRevision,
+        [this, keyPairMessage, socket, database](const QJsonObject& response) {
+            if (!socket) {
+                return;
+            }
+            sendRiskResponse(keyPairMessage, "recommend-password", database, response);
+        });
 }
 
 QString BrowserService::storeKey(const QString& key)

@@ -341,7 +341,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="allowGetDatabaseEntriesRequest">
+       <widget class="QCheckBox" name="allowGetDatabaseEntriesRequest">
          <property name="toolTip">
           <string>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</string>
          </property>
@@ -349,6 +349,50 @@
           <string>Allow limited access to all entries in connected databases (ignores site access restrictions)</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="enableRiskAssessment">
+         <property name="toolTip">
+          <string>Runs RankGuess and PARD in a local child process over standard input and output.</string>
+         </property>
+         <property name="text">
+          <string>Enable local password risk assessment</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="riskPythonLabel">
+         <property name="text">
+          <string>Risk service Python executable (empty uses KEEPASSXC_RISK_PYTHON or python):</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="riskPythonExecutable">
+         <property name="placeholderText">
+          <string>D:\Anaconda3\envs\pytorch_cuda\python.exe</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="riskServiceLabel">
+         <property name="text">
+          <string>Risk service script (empty uses algo-service/server.py beside KeePassXC):</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="riskServiceScript"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="riskConfigLabel">
+         <property name="text">
+          <string>Risk service configuration (empty uses config.toml beside the script):</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="riskServiceConfig"/>
        </item>
        <item>
         <widget class="QCheckBox" name="useCustomProxy">

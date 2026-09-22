@@ -33,6 +33,8 @@ static const QString BROWSER_REQUEST_CHANGE_PUBLIC_KEYS = QStringLiteral("change
 static const QString BROWSER_REQUEST_CREATE_NEW_GROUP = QStringLiteral("create-new-group");
 static const QString BROWSER_REQUEST_DELETE_ENTRY = QStringLiteral("delete-entry");
 static const QString BROWSER_REQUEST_GENERATE_PASSWORD = QStringLiteral("generate-password");
+static const QString BROWSER_REQUEST_ASSESS_PASSWORD = QStringLiteral("assess-password");
+static const QString BROWSER_REQUEST_RECOMMEND_PASSWORD = QStringLiteral("recommend-password");
 static const QString BROWSER_REQUEST_GET_DATABASEHASH = QStringLiteral("get-databasehash");
 static const QString BROWSER_REQUEST_GET_DATABASE_GROUPS = QStringLiteral("get-database-groups");
 static const QString BROWSER_REQUEST_GET_LOGINS = QStringLiteral("get-logins");
@@ -92,6 +94,10 @@ QJsonObject BrowserAction::handleAction(QLocalSocket* socket, const QJsonObject&
         return handleGetLogins(json, action);
     } else if (action.compare(BROWSER_REQUEST_GENERATE_PASSWORD) == 0) {
         return handleGeneratePassword(socket, json, action);
+    } else if (action.compare(BROWSER_REQUEST_ASSESS_PASSWORD) == 0) {
+        return handleAssessPassword(socket, json, action);
+    } else if (action.compare(BROWSER_REQUEST_RECOMMEND_PASSWORD) == 0) {
+        return handleRecommendPassword(socket, json, action);
     } else if (action.compare(BROWSER_REQUEST_SET_LOGIN) == 0) {
         return handleSetLogin(json, action);
     } else if (action.compare(BROWSER_REQUEST_LOCK_DATABASE) == 0) {
@@ -284,6 +290,47 @@ QJsonObject BrowserAction::handleGeneratePassword(QLocalSocket* socket, const QJ
     KeyPairMessage keyPairMessage{socket, browserRequest.incrementedNonce, m_clientPublicKey, m_secretKey};
 
     browserService()->showPasswordGenerator(keyPairMessage);
+    return {};
+}
+
+QJsonObject BrowserAction::handleAssessPassword(QLocalSocket* socket, const QJsonObject& json, const QString& action)
+{
+    if (!m_associated) {
+        return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
+    }
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
+    }
+
+    KeyPairMessage keyPairMessage{socket, browserRequest.incrementedNonce, m_clientPublicKey, m_secretKey};
+    browserService()->assessPassword(keyPairMessage,
+                                     browserRequest.getString("candidate"),
+                                     browserRequest.getString("context"),
+                                     browserRequest.getString("entryUuid"),
+                                     browserRequest.getString("requestID"),
+                                     browserRequest.decrypted.value("inputRevision").toVariant().toLongLong());
+    return {};
+}
+
+QJsonObject BrowserAction::handleRecommendPassword(QLocalSocket* socket,
+                                                   const QJsonObject& json,
+                                                   const QString& action)
+{
+    if (!m_associated) {
+        return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
+    }
+    const auto browserRequest = decodeRequest(json);
+    if (browserRequest.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
+    }
+
+    KeyPairMessage keyPairMessage{socket, browserRequest.incrementedNonce, m_clientPublicKey, m_secretKey};
+    browserService()->recommendPassword(keyPairMessage,
+                                        browserRequest.getString("context"),
+                                        browserRequest.getString("entryUuid"),
+                                        browserRequest.getString("requestID"),
+                                        browserRequest.decrypted.value("inputRevision").toVariant().toLongLong());
     return {};
 }
 

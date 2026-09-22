@@ -257,6 +257,46 @@ void BrowserSettings::setAllowExpiredCredentials(bool enabled)
     config()->set(Config::Browser_AllowExpiredCredentials, enabled);
 }
 
+bool BrowserSettings::riskAssessmentEnabled()
+{
+    return config()->get(Config::Browser_RiskAssessmentEnabled).toBool();
+}
+
+void BrowserSettings::setRiskAssessmentEnabled(bool enabled)
+{
+    config()->set(Config::Browser_RiskAssessmentEnabled, enabled);
+}
+
+QString BrowserSettings::riskPythonExecutable()
+{
+    return config()->get(Config::Browser_RiskPythonExecutable).toString();
+}
+
+void BrowserSettings::setRiskPythonExecutable(const QString& location)
+{
+    config()->set(Config::Browser_RiskPythonExecutable, location);
+}
+
+QString BrowserSettings::riskServiceScript()
+{
+    return config()->get(Config::Browser_RiskServiceScript).toString();
+}
+
+void BrowserSettings::setRiskServiceScript(const QString& location)
+{
+    config()->set(Config::Browser_RiskServiceScript, location);
+}
+
+QString BrowserSettings::riskServiceConfig()
+{
+    return config()->get(Config::Browser_RiskServiceConfig).toString();
+}
+
+void BrowserSettings::setRiskServiceConfig(const QString& location)
+{
+    config()->set(Config::Browser_RiskServiceConfig, location);
+}
+
 bool BrowserSettings::browserSupport(BrowserShared::SupportedBrowsers browser)
 {
     return m_nativeMessageInstaller.isBrowserEnabled(browser);

@@ -70,6 +70,14 @@ public:
     void setAllowGetDatabaseEntriesRequest(bool enabled);
     bool allowExpiredCredentials();
     void setAllowExpiredCredentials(bool enabled);
+    bool riskAssessmentEnabled();
+    void setRiskAssessmentEnabled(bool enabled);
+    QString riskPythonExecutable();
+    void setRiskPythonExecutable(const QString& location);
+    QString riskServiceScript();
+    void setRiskServiceScript(const QString& location);
+    QString riskServiceConfig();
+    void setRiskServiceConfig(const QString& location);
 
     bool browserSupport(BrowserShared::SupportedBrowsers browser);
     void setBrowserSupport(BrowserShared::SupportedBrowsers browser, bool enabled);

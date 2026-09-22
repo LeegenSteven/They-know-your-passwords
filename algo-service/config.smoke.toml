@@ -1,0 +1,24 @@
+[service]
+timeout_ms = 3000
+
+[models]
+trawling_model_id = "rankguess"
+reuse_model_id = "pard-glca"
+generator_model_id = "keepassxc-password-generator"
+
+[rankguess]
+algorithm_file = "../RankGuess拖网猜测/MC.py"
+model_file = "../RankGuess拖网猜测/best_rankguess_guesser_csdn.pth"
+cache_dir = "mc_cache"
+sample_size = 1000
+batch_size = 100
+seed = 20260922
+device = "auto"
+
+[pard]
+algorithm_dir = "../PARD定向猜测"
+model_file = "../PARD定向猜测/best_model_02_csdn.pt"
+device = "auto"
+beam_width = 50
+top_k = 100
+use_amp = true

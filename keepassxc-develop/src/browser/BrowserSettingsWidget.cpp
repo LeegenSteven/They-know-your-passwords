@@ -63,6 +63,9 @@ BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
     connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), SLOT(validateProxyLocation()));
     connect(m_ui->customProxyLocation, SIGNAL(editingFinished()), SLOT(validateProxyLocation()));
     connect(m_ui->customProxyLocationBrowseButton, SIGNAL(clicked()), this, SLOT(showProxyLocationFileDialog()));
+    connect(m_ui->enableRiskAssessment, &QCheckBox::toggled, m_ui->riskPythonExecutable, &QWidget::setEnabled);
+    connect(m_ui->enableRiskAssessment, &QCheckBox::toggled, m_ui->riskServiceScript, &QWidget::setEnabled);
+    connect(m_ui->enableRiskAssessment, &QCheckBox::toggled, m_ui->riskServiceConfig, &QWidget::setEnabled);
 
     m_ui->messageWidget->setVisible(false);
     m_ui->messageWidget->setCloseButtonVisible(false);
@@ -120,6 +123,10 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->updateBinaryPath->setChecked(settings->updateBinaryPath());
     m_ui->allowGetDatabaseEntriesRequest->setChecked(settings->allowGetDatabaseEntriesRequest());
     m_ui->allowExpiredCredentials->setChecked(settings->allowExpiredCredentials());
+    m_ui->enableRiskAssessment->setChecked(settings->riskAssessmentEnabled());
+    m_ui->riskPythonExecutable->setText(settings->replaceHomePath(settings->riskPythonExecutable()));
+    m_ui->riskServiceScript->setText(settings->replaceHomePath(settings->riskServiceScript()));
+    m_ui->riskServiceConfig->setText(settings->replaceHomePath(settings->riskServiceConfig()));
     m_ui->chromeSupport->setChecked(settings->browserSupport(BrowserShared::CHROME));
     m_ui->chromiumSupport->setChecked(settings->browserSupport(BrowserShared::CHROMIUM));
     m_ui->firefoxSupport->setChecked(settings->browserSupport(BrowserShared::FIREFOX));
@@ -234,6 +241,10 @@ void BrowserSettingsWidget::saveSettings()
     settings->setUpdateBinaryPath(m_ui->updateBinaryPath->isChecked());
     settings->setAllowGetDatabaseEntriesRequest(m_ui->allowGetDatabaseEntriesRequest->isChecked());
     settings->setAllowExpiredCredentials(m_ui->allowExpiredCredentials->isChecked());
+    settings->setRiskAssessmentEnabled(m_ui->enableRiskAssessment->isChecked());
+    settings->setRiskPythonExecutable(settings->replaceTildeHomePath(m_ui->riskPythonExecutable->text().trimmed()));
+    settings->setRiskServiceScript(settings->replaceTildeHomePath(m_ui->riskServiceScript->text().trimmed()));
+    settings->setRiskServiceConfig(settings->replaceTildeHomePath(m_ui->riskServiceConfig->text().trimmed()));
     settings->setAlwaysAllowAccess(m_ui->alwaysAllowAccess->isChecked());
     settings->setAlwaysAllowUpdate(m_ui->alwaysAllowUpdate->isChecked());
     settings->setHttpAuthPermission(m_ui->httpAuthPermission->isChecked());

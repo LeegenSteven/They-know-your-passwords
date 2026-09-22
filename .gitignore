@@ -2,6 +2,7 @@
 build/
 build-*/
 out/
+.tools/
 CMakeUserPresets.json
 
 # Python caches and model-derived caches
@@ -27,4 +28,3 @@ reports/runtime/
 .idea/
 Thumbs.db
 .DS_Store
-

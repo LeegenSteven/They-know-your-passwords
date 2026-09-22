@@ -84,6 +84,17 @@ public:
     QString getCurrentTotp(const QString& uuid);
     void showPasswordGenerator(const KeyPairMessage& keyPairMessage);
     bool isPasswordGeneratorRequested() const;
+    void assessPassword(const KeyPairMessage& keyPairMessage,
+                        const QString& candidate,
+                        const QString& context,
+                        const QString& entryUuid,
+                        const QString& requestId,
+                        qint64 inputRevision);
+    void recommendPassword(const KeyPairMessage& keyPairMessage,
+                           const QString& context,
+                           const QString& entryUuid,
+                           const QString& requestId,
+                           qint64 inputRevision);
     QSharedPointer<Database> getDatabase(const QUuid& rootGroupUuid = {});
     QSharedPointer<Database> selectedDatabase();
     QList<QSharedPointer<Database>> getOpenDatabases();
@@ -209,6 +220,10 @@ private:
     void hideWindow() const;
     void raiseWindow(const bool force = false);
     void updateWindowState();
+    void sendRiskResponse(const KeyPairMessage& keyPairMessage,
+                          const QString& action,
+                          const QSharedPointer<Database>& database,
+                          const QJsonObject& response);
 
     QPointer<BrowserHost> m_browserHost;
     QHash<QString, QSharedPointer<BrowserAction>> m_browserClients;
@@ -220,6 +235,7 @@ private:
 
     QPointer<DatabaseWidget> m_currentDatabaseWidget;
     QPointer<PasswordGeneratorWidget> m_passwordGenerator;
+    QHash<QLocalSocket*, qint64> m_latestRiskInputRevision;
 
     Q_DISABLE_COPY(BrowserService);
 

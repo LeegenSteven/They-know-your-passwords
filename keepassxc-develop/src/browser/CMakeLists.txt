@@ -34,8 +34,10 @@ if(KPXC_FEATURE_BROWSER)
             BrowserShared.cpp
             CustomTableWidget.cpp
             NativeMessageInstaller.cpp
-            PasskeyUtils.cpp)
+            PasskeyUtils.cpp
+            ../riskassess/RiskAssessmentService.cpp)
 
     add_library(browser STATIC ${browser_SOURCES})
+    target_include_directories(browser PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..)
     target_link_libraries(browser Qt6::Core Qt6::Concurrent Qt6::Widgets Qt6::Network ${BOTAN_LIBRARIES})
 endif()

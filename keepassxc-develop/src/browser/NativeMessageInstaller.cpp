@@ -37,10 +37,13 @@ using namespace BrowserShared;
 namespace
 {
     const QString HOST_NAME = QStringLiteral("org.keepassxc.keepassxc_browser");
-    const QStringList ALLOWED_EXTENSIONS = QStringList() << QStringLiteral("keepassxc-browser@keepassxc.org");
+    const QStringList ALLOWED_EXTENSIONS = QStringList()
+                                           << QStringLiteral("keepassxc-browser@keepassxc.org")
+                                           << QStringLiteral("they-know-your-passwords@local.demo");
     const QStringList ALLOWED_ORIGINS = QStringList()
                                         << QStringLiteral("chrome-extension://pdffhmdngciaglkoonimfcmckehcpafo/")
-                                        << QStringLiteral("chrome-extension://oboonakemofpalcgghocfoadofidjkkk/");
+                                        << QStringLiteral("chrome-extension://oboonakemofpalcgghocfoadofidjkkk/")
+                                        << QStringLiteral("chrome-extension://ijlckofhohjbbifcfhpiglkmfndaaeol/");
 #if defined(Q_OS_MACOS)
     const QString TARGET_DIR_CHROME = QStringLiteral("/Library/Application Support/Google/Chrome/NativeMessagingHosts");
     const QString TARGET_DIR_CHROMIUM = QStringLiteral("/Library/Application Support/Chromium/NativeMessagingHosts");

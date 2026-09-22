@@ -1,0 +1,5 @@
+numpy==1.26.2
+tomli==2.2.1; python_version < "3.11"
+torch==2.8.0
+torch-geometric==2.6.1
+tqdm==4.67.1
