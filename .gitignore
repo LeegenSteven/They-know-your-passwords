@@ -1,0 +1,30 @@
+# Build outputs
+build/
+build-*/
+out/
+CMakeUserPresets.json
+
+# Python caches and model-derived caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+algo-service/mc_cache/
+algo-service/.venv/
+
+# Large/private assets supplied outside source control
+*.pth
+*.pt
+*.zip
+*.kdbx
+
+# Local reports and logs that may contain runtime metadata
+*.log
+reports/runtime/
+
+# IDE and OS files
+.vs/
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
