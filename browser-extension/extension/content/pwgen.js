@@ -110,7 +110,8 @@ kpxcPasswordGenerator.generate = async function(field) {
         return;
     }
 
-    kpxcPasswordGenerator.fill(field, await sendMessage('generate_password'));
+    await sendMessage('open_risk_panel');
+    kpxcUI.createNotification('info', '请在插件风险面板选择账号和网站约束，再生成与复检。');
 };
 
 kpxcPasswordGenerator.fill = function(elem, password) {

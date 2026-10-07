@@ -25,6 +25,7 @@
 
 #include <QJsonDocument>
 #include <QLocalSocket>
+#include <QUrl>
 
 const int BrowserAction::MaxUrlLength = 256;
 
@@ -94,7 +95,10 @@ QJsonObject BrowserAction::handleAction(QLocalSocket* socket, const QJsonObject&
         return handleGetLogins(json, action);
     } else if (action.compare(BROWSER_REQUEST_GENERATE_PASSWORD) == 0) {
         return handleGeneratePassword(socket, json, action);
-    } else if (action.compare(BROWSER_REQUEST_ASSESS_PASSWORD) == 0) {
+    } else if (action == "prepare-risk-candidate" || action == "confirm-risk-candidate"
+               || action == "cancel-risk-candidate") {
+        return handleRiskCandidate(socket, json, action);
+    } else if (action.compare(BROWSER_REQUEST_ASSESS_PASSWORD) == 0 || action == "assess-generic-password") {
         return handleAssessPassword(socket, json, action);
     } else if (action.compare(BROWSER_REQUEST_RECOMMEND_PASSWORD) == 0) {
         return handleRecommendPassword(socket, json, action);
@@ -303,13 +307,18 @@ QJsonObject BrowserAction::handleAssessPassword(QLocalSocket* socket, const QJso
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
+    const auto origin = QUrl(browserRequest.getString("origin"));
+    if ((origin.scheme() != "https" && origin.scheme() != "http") || origin.host().isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_NO_URL_PROVIDED);
+    }
     KeyPairMessage keyPairMessage{socket, browserRequest.incrementedNonce, m_clientPublicKey, m_secretKey};
     browserService()->assessPassword(keyPairMessage,
                                      browserRequest.getString("candidate"),
-                                     browserRequest.getString("context"),
+                                     action == "assess-generic-password" ? QStringLiteral("generic") : browserRequest.getString("context"),
                                      browserRequest.getString("entryUuid"),
                                      browserRequest.getString("requestID"),
-                                     browserRequest.decrypted.value("inputRevision").toVariant().toLongLong());
+                                     browserRequest.decrypted.value("inputRevision").toVariant().toLongLong(),
+                                     action, browserRequest.getString("pageId"));
     return {};
 }
 
@@ -325,17 +334,45 @@ QJsonObject BrowserAction::handleRecommendPassword(QLocalSocket* socket,
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
 
+    const auto origin = QUrl(browserRequest.getString("origin"));
+    if ((origin.scheme() != "https" && origin.scheme() != "http") || origin.host().isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_NO_URL_PROVIDED);
+    }
     KeyPairMessage keyPairMessage{socket, browserRequest.incrementedNonce, m_clientPublicKey, m_secretKey};
     browserService()->recommendPassword(keyPairMessage,
                                         browserRequest.getString("context"),
                                         browserRequest.getString("entryUuid"),
                                         browserRequest.getString("requestID"),
-                                        browserRequest.decrypted.value("inputRevision").toVariant().toLongLong());
+                                        browserRequest.decrypted.value("inputRevision").toVariant().toLongLong(),
+                                        browserRequest.decrypted);
+    return {};
+}
+
+QJsonObject BrowserAction::handleRiskCandidate(QLocalSocket* socket, const QJsonObject& json, const QString& action)
+{
+    if (!m_associated) {
+        return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
+    }
+    const auto request = decodeRequest(json);
+    if (request.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
+    }
+    const auto origin = QUrl(request.getString("origin"));
+    if ((origin.scheme() != "https" && origin.scheme() != "http") || origin.host().isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_NO_URL_PROVIDED);
+    }
+    KeyPairMessage message{socket, request.incrementedNonce, m_clientPublicKey, m_secretKey};
+    browserService()->riskCandidateAction(message, action, request.decrypted);
     return {};
 }
 
 QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString& action)
 {
+    // Risk-enabled credentials are saved only through host-bound candidate
+    // tokens after explicit website-success confirmation.
+    if (browserSettings()->riskAssessmentEnabled()) {
+        return getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
+    }
     if (!m_associated) {
         return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
     }

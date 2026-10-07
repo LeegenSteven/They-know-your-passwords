@@ -69,6 +69,7 @@ public:
     QJsonObject processClientMessage(QLocalSocket* socket, const QJsonObject& json);
 
 private:
+    QJsonObject handleRiskCandidate(QLocalSocket* socket, const QJsonObject& json, const QString& action);
     QJsonObject handleAction(QLocalSocket* socket, const QJsonObject& json);
     QJsonObject handleChangePublicKeys(const QJsonObject& json, const QString& action);
     QJsonObject handleGetDatabaseHash(const QJsonObject& json, const QString& action);

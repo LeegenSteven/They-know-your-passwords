@@ -214,6 +214,9 @@ page.getLoginId = async function(tab, returnSingle = true) {
 };
 
 page.setLoginId = async function(tab, loginId) {
+    if (tabs.getTabFromId(tab?.id)?.loginId !== loginId) {
+        await keepass.cancelRiskCandidate(tab, [ (tabs.getTabFromId(tab?.id)?.riskRevision ?? 0) + 1 ]);
+    }
     tabs.updateTabValues(tab?.id, { loginId: loginId });
 };
 

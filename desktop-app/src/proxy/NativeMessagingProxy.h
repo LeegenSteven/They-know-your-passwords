@@ -44,6 +44,7 @@ private:
 
 private:
     QScopedPointer<QLocalSocket> m_localSocket;
+    QByteArray m_socketBuffer;
 
     Q_DISABLE_COPY(NativeMessagingProxy)
 };

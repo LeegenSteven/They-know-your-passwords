@@ -1,6 +1,7 @@
 """Read-only adapter around the PARD source-conditioned student model."""
 
 import contextlib
+import hashlib
 import importlib.util
 import sys
 from pathlib import Path
@@ -30,6 +31,7 @@ class PardAdapter(ModelAdapter):
         self._model = None
         self._device = None
         self._model_version = "pard-glca-unknown"
+        self._model_hash = ""
 
     def _resolve(self, raw_path: str) -> Path:
         path = Path(raw_path)
@@ -40,6 +42,7 @@ class PardAdapter(ModelAdapter):
             "model_id": "pard-glca",
             "model_version": self._model_version,
             "algorithm_version": self._model_version,
+            "model_sha256": self._model_hash,
             "capabilities": [Capability.ASSESS_REUSE.value],
             "input_domain": {
                 "candidate": {"length": [1, 20], "charset": "ASCII 32-126"},
@@ -47,7 +50,9 @@ class PardAdapter(ModelAdapter):
             },
             "required_context": ["history"],
             "output_metrics": ["rank", "conditional_log_probability"],
-            "inference": {"batch": 1, "beam_width": self._beam_width, "top_k": self._top_k},
+            "inference": {"batch": 1, "beam_width": self._beam_width, "top_k": self._top_k,
+                          "cpu_threads": torch.get_num_threads(),
+                          "use_amp": self._use_amp, "use_seq": False, "use_align": False, "use_match": False},
         }
 
     def _select_device(self) -> torch.device:
@@ -85,6 +90,11 @@ class PardAdapter(ModelAdapter):
             self._demo_module = self._load_module("demo6_glca", demo_path)
             self._eval_module = self._load_module("risk_pard_eval", eval_path)
             checkpoint = torch.load(str(self._checkpoint_file), map_location="cpu", weights_only=True)
+            digest = hashlib.sha256()
+            with self._checkpoint_file.open('rb') as stream:
+                for block in iter(lambda: stream.read(1024 * 1024), b''):
+                    digest.update(block)
+            self._model_hash = digest.hexdigest()
             if checkpoint.get("architecture") != self._demo_module.GLCA_ARCHITECTURE:
                 raise AdapterError("UNAVAILABLE", "MODEL_ARCHITECTURE_MISMATCH", "unexpected PARD architecture")
             config = self._eval_module._load_checkpoint_config(str(self._checkpoint_file))
@@ -170,6 +180,7 @@ class PardAdapter(ModelAdapter):
                     usable_sources=len(valid_sources),
                     skipped_sources=skipped_sources,
                     top_k=selected_top_k,
+                    beam_width=selected_beam_width,
                 )
 
         best_rank = None
@@ -208,6 +219,7 @@ class PardAdapter(ModelAdapter):
             usable_sources=len(valid_sources),
             skipped_sources=skipped_sources,
             top_k=selected_top_k,
+            beam_width=selected_beam_width,
         )
 
     def _result(
@@ -219,6 +231,7 @@ class PardAdapter(ModelAdapter):
         usable_sources: int,
         skipped_sources: int,
         top_k: int,
+        beam_width: int,
     ) -> Dict[str, Any]:
         return {
             "mode": "REUSE",
@@ -232,6 +245,9 @@ class PardAdapter(ModelAdapter):
                 "best_rank": rank,
                 "best_source_index": source_index,
                 "top_k": top_k,
+                "beam_width": beam_width,
+                "search_budget": {"beam_width": beam_width, "top_k": top_k, "sources": usable_sources},
+                "evidence": "EXACT_REUSE" if exact_match else ("SEARCH_HIT" if rank else "SEARCH_MISS_UNKNOWN"),
                 "candidate_logprob": candidate_log_probability,
                 "usable_sources": usable_sources,
                 "skipped_sources": skipped_sources,

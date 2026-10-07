@@ -13,6 +13,7 @@ from typing import Any, Dict, Iterable, Optional
 
 import numpy as np
 import torch
+from .psm import estimate_interval
 
 from .base import AdapterError, Capability, ModelAdapter, validate_printable_ascii
 
@@ -30,6 +31,9 @@ class RankGuessAdapter(ModelAdapter):
         self._sample_size = int(config.get("sample_size", 100000))
         self._batch_size = int(config.get("batch_size", 1000))
         self._seed = int(config.get("seed", 20260922))
+        self._reference_cpu_threads = int(config.get("reference_cpu_threads", 1))
+        if not 1 <= self._reference_cpu_threads <= 64:
+            raise AdapterError("ERROR", "INVALID_CONFIG", "reference_cpu_threads must be between 1 and 64")
         self._device_name = str(config.get("device", "auto"))
         self._module = None
         self._model = None
@@ -48,6 +52,12 @@ class RankGuessAdapter(ModelAdapter):
             "model_id": "rankguess",
             "model_version": self._model_version,
             "algorithm_version": self._model_version,
+            "model_sha256": self._model_hash,
+            "inference": {"sample_size": self._sample_size, "batch_size": self._batch_size,
+                          "seed": self._seed, "reference_device": "cpu",
+                          "cpu_threads": self._reference_cpu_threads,
+                          "score_cpu_threads": torch.get_num_threads(),
+                          "score_precision": "float32-float64-recovery-v1"},
             "capabilities": [Capability.ASSESS_TRAWLING.value],
             "input_domain": {
                 "candidate": {"length": [5, 20], "charset": "ASCII 32-126"},
@@ -97,6 +107,7 @@ class RankGuessAdapter(ModelAdapter):
             "seed": self._seed,
             "generator_device": "cpu",
             "torch_version": torch.__version__,
+            "cpu_threads": self._reference_cpu_threads,
         }
 
     def _cache_path(self) -> Path:
@@ -119,14 +130,19 @@ class RankGuessAdapter(ModelAdapter):
         np.random.seed(self._seed)
         torch.manual_seed(self._seed)
         cpu = torch.device("cpu")
-        with contextlib.redirect_stdout(sys.stderr):
-            reference_model = self._module.load_model(str(self._model_file), cpu)
-            probabilities, guesses = self._module.monte_carlo_estimation(
-                reference_model,
-                cpu,
-                sample_size=self._sample_size,
-                batch_size=self._batch_size,
-            )
+        scoring_threads = torch.get_num_threads()
+        try:
+            torch.set_num_threads(self._reference_cpu_threads)
+            with contextlib.redirect_stdout(sys.stderr):
+                reference_model = self._module.load_model(str(self._model_file), cpu)
+                probabilities, guesses = self._module.monte_carlo_estimation(
+                    reference_model,
+                    cpu,
+                    sample_size=self._sample_size,
+                    batch_size=self._batch_size,
+                )
+        finally:
+            torch.set_num_threads(scoring_threads)
         self._ref_probs = np.asarray(probabilities, dtype=np.float64)
         self._ref_guesses = np.asarray(guesses, dtype=np.float64)
 
@@ -182,6 +198,17 @@ class RankGuessAdapter(ModelAdapter):
         if len(scored) != 1:
             raise AdapterError("ERROR", "INVALID_MODEL_OUTPUT", "RankGuess returned no score")
         probability = float(scored[0][1])
+        # The upstream helper exponentiates in float32. Long random inputs can
+        # underflow to zero although their log probability is finite. Reuse the
+        # same inference primitives and exponentiate in float64 in that case.
+        precision_recovered = probability == 0
+        if precision_recovered:
+            encoded = self._module.encode_password(candidate).unsqueeze(0).to(self._device)
+            with torch.no_grad():
+                logits = self._model(encoded[:, :-1])
+                log_probs = torch.nn.functional.log_softmax(logits, dim=-1)
+                total = log_probs.gather(2, encoded[:, 1:].unsqueeze(-1)).double().sum()
+                probability = float(torch.exp(total).cpu().item())
         raw_guess_number = float(
             self._module.get_guess_number(probability, self._ref_probs, self._ref_guesses)
         )
@@ -195,12 +222,14 @@ class RankGuessAdapter(ModelAdapter):
             "model_version": self._model_version,
             "algorithm_version": self._model_version,
             "metric_type": "estimated_guess_number",
+            "psm": estimate_interval(guess_number, table_capped),
             "native": {
                 "guess_number": guess_number,
                 "probability": probability,
                 "table_size": int(len(self._ref_probs)),
                 "clamped_low": raw_guess_number < 1.0,
                 "table_capped": table_capped,
+                "precision_recovered": precision_recovered,
             },
         }
 

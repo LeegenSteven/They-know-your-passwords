@@ -54,6 +54,7 @@
 #ifdef KPXC_FEATURE_BROWSER
 #include "EntryURLModel.h"
 #include "browser/BrowserService.h"
+#include "riskassess/RiskAssessmentWidget.h"
 #endif
 #include "gui/Clipboard.h"
 #include "gui/EditWidgetIcons.h"
@@ -155,6 +156,16 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
     setupProperties();
     setupHistory();
+#ifdef KPXC_FEATURE_BROWSER
+    m_riskWidget = new RiskAssessmentWidget(this);
+    addPage(tr("模型风险评估"), icons()->icon("health"), m_riskWidget);
+    connect(m_riskWidget, &RiskAssessmentWidget::candidateAccepted, m_mainUi->passwordEdit, &PasswordWidget::setText);
+    connect(m_riskWidget, &RiskAssessmentWidget::feedbackChanged, m_mainUi->riskFeedbackLabel, &QLabel::setText);
+    connect(m_mainUi->passwordEdit, &PasswordWidget::textChanged, m_riskWidget, &RiskAssessmentWidget::setCandidate);
+    connect(m_mainUi->usernameComboBox, &QComboBox::currentTextChanged, this, [this] {
+        m_riskWidget->setCandidate(m_mainUi->passwordEdit->text());
+    });
+#endif
     setupEntryUpdate();
 
     m_entryModifiedTimer.setSingleShot(true);
@@ -1016,6 +1027,10 @@ void EditEntryWidget::loadEntry(Entry* entry,
     }
 
     setForms(entry);
+#ifdef KPXC_FEATURE_BROWSER
+    m_riskWidget->load(m_db, entry, create);
+    setPageHidden(m_riskWidget, history);
+#endif
     setReadOnly(m_history);
 
     switchToPage(Page::Main);
@@ -1456,6 +1471,9 @@ void EditEntryWidget::clear()
 
     m_entry = nullptr;
     m_db.reset();
+#ifdef KPXC_FEATURE_BROWSER
+    m_riskWidget->load({});
+#endif
 
     m_mainUi->titleEdit->setText("");
     m_mainUi->passwordEdit->setText("");

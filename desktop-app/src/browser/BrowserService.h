@@ -24,6 +24,7 @@
 #include "config-keepassx.h"
 #include "core/Entry.h"
 #include "gui/PasswordGeneratorWidget.h"
+#include "riskassess/RiskCandidateStore.h"
 
 class QLocalSocket;
 
@@ -89,12 +90,16 @@ public:
                         const QString& context,
                         const QString& entryUuid,
                         const QString& requestId,
-                        qint64 inputRevision);
+                        qint64 inputRevision,
+                        const QString& action = "assess-password",
+                        const QString& pageId = {});
     void recommendPassword(const KeyPairMessage& keyPairMessage,
                            const QString& context,
                            const QString& entryUuid,
                            const QString& requestId,
-                           qint64 inputRevision);
+                           qint64 inputRevision,
+                           const QJsonObject& binding = {});
+    void riskCandidateAction(const KeyPairMessage& message, const QString& action, const QJsonObject& params);
     QSharedPointer<Database> getDatabase(const QUuid& rootGroupUuid = {});
     QSharedPointer<Database> selectedDatabase();
     QList<QSharedPointer<Database>> getOpenDatabases();
@@ -160,6 +165,7 @@ private slots:
     void handleDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
 
 private:
+    RiskCandidateStore m_riskCandidates;
     enum Access
     {
         Denied,
@@ -235,7 +241,7 @@ private:
 
     QPointer<DatabaseWidget> m_currentDatabaseWidget;
     QPointer<PasswordGeneratorWidget> m_passwordGenerator;
-    QHash<QLocalSocket*, qint64> m_latestRiskInputRevision;
+    QHash<QString, qint64> m_latestRiskInputRevision;
 
     Q_DISABLE_COPY(BrowserService);
 

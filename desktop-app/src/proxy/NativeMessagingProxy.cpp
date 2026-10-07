@@ -84,7 +84,7 @@ void NativeMessagingProxy::setupStandardInput()
 void NativeMessagingProxy::transferStdinMessage(const QString& msg)
 {
     if (m_localSocket && m_localSocket->state() == QLocalSocket::ConnectedState) {
-        m_localSocket->write(msg.toUtf8(), msg.length());
+        m_localSocket->write(msg.toUtf8() + '\n');
         m_localSocket->flush();
     }
 }
@@ -106,8 +106,16 @@ void NativeMessagingProxy::setupLocalSocket()
 
 void NativeMessagingProxy::transferSocketMessage()
 {
-    auto msg = m_localSocket->readAll();
-    if (!msg.isEmpty()) {
+    m_socketBuffer.append(m_localSocket->readAll());
+    if (m_socketBuffer.size() > BrowserShared::NATIVEMSG_MAX_LENGTH) {
+        QCoreApplication::quit();
+        return;
+    }
+    while (m_socketBuffer.contains('\n')) {
+        const auto end = m_socketBuffer.indexOf('\n');
+        const auto msg = m_socketBuffer.left(end);
+        m_socketBuffer.remove(0, end + 1);
+        if (msg.isEmpty()) { continue; }
         // Explicitly write the message length as 1 byte chunks
         uint len = msg.size();
         std::cout.write(reinterpret_cast<char*>(&len), sizeof(len));

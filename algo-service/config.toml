@@ -13,6 +13,7 @@ cache_dir = "mc_cache"
 sample_size = 100000
 batch_size = 1000
 seed = 20260922
+reference_cpu_threads = 1
 device = "auto"
 
 [pard]

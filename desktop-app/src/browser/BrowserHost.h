@@ -19,6 +19,7 @@
 #define KEEPASSXC_NATIVEMESSAGINGHOST_H
 
 #include <QJsonObject>
+#include <QHash>
 #include <QObject>
 #include <QPointer>
 
@@ -52,8 +53,10 @@ private:
     void sendClientData(QLocalSocket* socket, const QString& data);
 
 private:
+    friend class TestRiskAssessment;
     QPointer<QLocalServer> m_localServer;
     QList<QLocalSocket*> m_socketList;
+    QHash<QLocalSocket*, QByteArray> m_readBuffers;
 };
 
 #endif // KEEPASSXC_NATIVEMESSAGINGHOST_H

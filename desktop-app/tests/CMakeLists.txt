@@ -165,6 +165,11 @@ if(KPXC_FEATURE_FDOSECRETS)
 endif()
 
 if(KPXC_FEATURE_BROWSER)
+    add_executable(riskfixture RiskFixture.cpp)
+    set_target_properties(riskfixture PROPERTIES WIN32_EXECUTABLE FALSE)
+    target_link_libraries(riskfixture ${TEST_LIBRARIES})
+    add_unit_test(NAME testriskassessment SOURCES TestRiskAssessment.cpp
+        LIBS browser ${TEST_LIBRARIES})
     add_unit_test(NAME testbrowser SOURCES TestBrowser.cpp
         LIBS browser ${TEST_LIBRARIES})
 

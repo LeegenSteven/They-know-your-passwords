@@ -66,62 +66,11 @@ keepass.addCredentials = async function(tab, args = []) {
 };
 
 keepass.updateCredentials = async function(tab, args = []) {
-    try {
-        const [ entryId, username, password, url, group, groupUuid ] = args;
-
-        if (containsPlaceholder(username) || containsPlaceholder(password)) {
-            logError('References are not allowed in username or password');
-            return CreationError.REFERENCES;
-        }
-
-        const taResponse = await keepass.testAssociation(tab);
-        if (!taResponse) {
-            browserAction.showDefault(tab);
-            return [];
-        }
-
-        const kpAction = kpActions.SET_LOGIN;
-        const [ dbid ] = keepass.getCryptoKey();
-        const nonce = keepassClient.getNonce();
-
-        const messageData = {
-            action: kpAction,
-            id: dbid,
-            login: username,
-            password: password,
-            url: url,
-            submitUrl: url
-        };
-
-        if (entryId) {
-            messageData.uuid = entryId;
-        }
-
-        if (!entryId && page.settings.downloadFaviconAfterSave) {
-            messageData.downloadFavicon = 'true';
-        }
-
-        if (group && groupUuid) {
-            messageData.group = group;
-            messageData.groupUuid = groupUuid;
-        }
-
-        const response = await keepassClient.sendMessage(kpAction, tab, messageData, nonce);
-        if (response) {
-            // KeePassXC versions lower than 2.5.0 will have an empty parsed.error
-            let successMessage = response.error;
-            if (response.error === 'success' || response.error === '') {
-                successMessage = entryId ? CreationError.UPDATED : CreationError.CREATED;
-            }
-
-            return successMessage;
-        } else {
-            return CreationError.GENERAL;
-        }
-    } catch (err) {
-        logError(`updateCredentials failed: ${err}`);
-        return [];
-    }
+    const [ entryId, username, password ] = args;
+    const revision = (tabs.getTabFromId(tab.id)?.riskRevision ?? 0) + 1;
+    const response = await keepass.prepareRiskCandidate(tab,
+        [ password, entryId ? 'change' : 'new', revision, { entryUuid: entryId ?? '', account: username } ]);
+    return response?.candidateToken ? 'REVIEW_REQUIRED' : CreationError.GENERAL;
 };
 
 keepass.retrieveCredentials = async function(tab, args = []) {
@@ -223,135 +172,171 @@ keepass.generatePassword = async function(tab) {
     }
 };
 
+
 keepass.getRiskEntryUuid = function(tab) {
-    const tabState = tabs.getTabFromId(tab?.id);
-    if (!tabState) {
-        return '';
-    }
-    if (tabState.loginId) {
-        return tabState.loginId;
-    }
-    return tabState.credentials?.length === 1 ? tabState.credentials[0].uuid : '';
+    const state = tabs.getTabFromId(tab?.id);
+    return state?.loginId || (state?.credentials?.length === 1 ? state.credentials[0].uuid : '');
 };
 
 keepass.validateRiskTab = async function(tab) {
-    if (!tab?.id) {
-        return undefined;
-    }
-    const activeTab = await browser.tabs.get(tab.id);
-    if (!activeTab?.active || !/^https?:\/\//i.test(activeTab.url ?? '')) {
-        return undefined;
-    }
-    return activeTab;
+    if (!tab?.id) { return undefined; }
+    const current = await browser.tabs.get(tab.id);
+    return current?.active && /^https?:\/\//i.test(current.url ?? '') ? current : undefined;
+};
+
+keepass.riskError = (code, revision = 0) =>
+    ({ status: 'UNAVAILABLE', error_code: code, level: 'UNKNOWN', inputRevision: revision });
+
+keepass.riskBinding = function(tab, context, revision, options = {}) {
+    const state = tabs.getTabFromId(tab.id);
+    const entryUuid = context === 'new' ? '' : (options.entryUuid ?? keepass.getRiskEntryUuid(tab));
+    const entry = state?.credentials?.find((item) => item.uuid === entryUuid);
+    return {
+        context, entryUuid, account: context === 'new' ? (options.account ?? '') : (entry?.login ?? ''),
+        origin: new URL(tab.url).origin, pageId: String(tab.id), inputRevision: revision,
+        constraints: options.constraints ?? {}
+    };
+};
+
+keepass.riskSend = async function(tab, action, data) {
+    const revision = data.inputRevision ?? 0;
+    if (!await keepass.testAssociation(tab)) { return keepass.riskError('NOT_ASSOCIATED', revision); }
+    try {
+        const response = await keepassClient.sendMessage(action, tab, {
+            ...data, action, requestID: keepassClient.getRequestId()
+        }, keepassClient.getNonce(), true);
+        return { ...response, inputRevision: revision, status: response?.status ?? 'UNAVAILABLE',
+            error_code: response?.error_code ?? (response?.status ? undefined : 'NATIVE_REQUEST_FAILED') };
+    } catch (_err) { return keepass.riskError('NATIVE_REQUEST_FAILED', revision); }
 };
 
 keepass.assessPassword = async function(tab, args = []) {
-    const [ candidate, context = 'new', inputRevision = 0 ] = args;
-    const activeTab = await keepass.validateRiskTab(tab);
-    if (!activeTab || typeof candidate !== 'string') {
-        return { status: 'UNAVAILABLE', error_code: 'SOURCE_NOT_ALLOWED', level: 'UNKNOWN' };
-    }
-    if (!await keepass.testAssociation(activeTab)) {
-        return { status: 'UNAVAILABLE', error_code: 'NOT_ASSOCIATED', level: 'UNKNOWN' };
-    }
+    const [ candidate, context = 'new', revision = 0, options = {} ] = args;
+    const current = await keepass.validateRiskTab(tab);
+    if (!current || typeof candidate !== 'string') { return keepass.riskError('SOURCE_NOT_ALLOWED', revision); }
+    return keepass.riskSend(current, 'assess-password',
+        { ...keepass.riskBinding(current, context, revision, options), candidate });
+};
 
-    const kpAction = kpActions.ASSESS_PASSWORD;
-    const nonce = keepassClient.getNonce();
-    const messageData = {
-        action: kpAction,
-        candidate: candidate,
-        context: context,
-        entryUuid: keepass.getRiskEntryUuid(activeTab),
-        origin: new URL(activeTab.url).origin,
-        requestID: keepassClient.getRequestId(),
-        inputRevision: inputRevision
-    };
-    return await keepassClient.sendMessage(kpAction, activeTab, messageData, nonce, true);
+keepass.assessGenericPassword = async function(tab, args = []) {
+    const [ candidate, revision = 0 ] = args;
+    const current = await keepass.validateRiskTab(tab);
+    if (!current || typeof candidate !== 'string') { return keepass.riskError('SOURCE_NOT_ALLOWED', revision); }
+    const response = await keepass.riskSend(current, 'assess-generic-password',
+        { candidate, context: 'generic', inputRevision: revision, pageId: String(current.id), origin: new URL(current.url).origin });
+    // Content receives a numerical estimate only, without vault metadata.
+    return { status: response.status, error_code: response.error_code, inputRevision: revision,
+        psm: response.psm, native: response.native, calibrated: false, level: 'UNKNOWN' };
+};
+
+keepass.rememberRiskCandidate = function(tab, binding, response) {
+    if (!response?.candidateToken || !response?.candidate) { return; }
+    tabs.updateTabValues(tab.id, { riskPending: {
+        ...binding, candidate: response.candidate, candidateToken: response.candidateToken,
+        databaseHash: keepass.databaseHash, createdAt: Date.now(), result: {
+            status: response.status, resultStatus: response.resultStatus,
+            trawling: response.trawling, reuse: response.reuse
+        }
+    } });
 };
 
 keepass.recommendPassword = async function(tab, args = []) {
-    const [ context = 'change', inputRevision = 0 ] = args;
-    const activeTab = await keepass.validateRiskTab(tab);
-    if (!activeTab) {
-        return { status: 'UNAVAILABLE', error_code: 'SOURCE_NOT_ALLOWED' };
+    const [ context = 'change', revision = 0, options = {} ] = args;
+    const current = await keepass.validateRiskTab(tab);
+    if (!current) { return keepass.riskError('SOURCE_NOT_ALLOWED', revision); }
+    await keepass.cancelRiskCandidate(current, [ revision ]);
+    const binding = keepass.riskBinding(current, context, revision, options);
+    if (!binding.account || (context === 'change' && !binding.entryUuid)) {
+        return keepass.riskError('SELECT_ACCOUNT_REQUIRED', revision);
     }
-    if (!await keepass.testAssociation(activeTab)) {
-        return { status: 'UNAVAILABLE', error_code: 'NOT_ASSOCIATED' };
-    }
+    const state = tabs.getTabFromId(current.id);
+    state.riskRevision = revision;
+    const response = await keepass.riskSend(current, 'recommend-password', binding);
+    if (state.riskRevision !== revision) { return keepass.riskError('STALE_INPUT_REVISION', revision); }
+    keepass.rememberRiskCandidate(current, binding, response);
+    return response;
+};
 
-    const kpAction = kpActions.RECOMMEND_PASSWORD;
-    const nonce = keepassClient.getNonce();
-    const messageData = {
-        action: kpAction,
-        context: context,
-        entryUuid: keepass.getRiskEntryUuid(activeTab),
-        origin: new URL(activeTab.url).origin,
-        requestID: keepassClient.getRequestId(),
-        inputRevision: inputRevision
-    };
-    return await keepassClient.sendMessage(kpAction, activeTab, messageData, nonce, true);
+keepass.prepareRiskCandidate = async function(tab, args = []) {
+    const [ candidate, context = 'new', revision = 0, options = {} ] = args;
+    const current = await keepass.validateRiskTab(tab);
+    if (!current) { return keepass.riskError('SOURCE_NOT_ALLOWED', revision); }
+    await keepass.cancelRiskCandidate(current, [ revision ]);
+    const binding = keepass.riskBinding(current, context, revision, options);
+    if (!binding.account || (context === 'change' && !binding.entryUuid)) {
+        return keepass.riskError('SELECT_ACCOUNT_REQUIRED', revision);
+    }
+    const state = tabs.getTabFromId(current.id);
+    state.riskRevision = revision;
+    const response = await keepass.riskSend(current, 'prepare-risk-candidate', { ...binding, candidate });
+    if (state.riskRevision !== revision) { return keepass.riskError('STALE_INPUT_REVISION', revision); }
+    keepass.rememberRiskCandidate(current, binding, response);
+    return response;
 };
 
 keepass.stageRiskCandidate = async function(tab, args = []) {
-    const [ candidate, inputRevision = 0 ] = args;
-    const activeTab = await keepass.validateRiskTab(tab);
-    if (!activeTab || typeof candidate !== 'string' || candidate.length === 0) {
-        return { status: 'UNAVAILABLE', error_code: 'SOURCE_NOT_ALLOWED' };
-    }
-    tabs.updateTabValues(activeTab.id, {
-        riskPending: {
-            candidate: candidate,
-            inputRevision: inputRevision,
-            origin: new URL(activeTab.url).origin,
-            createdAt: Date.now()
-        }
-    });
+    const [ _candidate, revision = 0, targetIndex ] = args;
+    const current = await keepass.validateRiskTab(tab);
+    const pending = tabs.getTabFromId(current?.id)?.riskPending;
+    if (!pending || pending.inputRevision !== revision) { return keepass.riskError('NO_PENDING_CANDIDATE', revision); }
     try {
-        await browser.tabs.sendMessage(activeTab.id, { action: 'fill_risk_candidate', candidate: candidate });
-    } catch (_err) {
-        tabs.updateTabValues(activeTab.id, { riskPending: undefined });
-        return { status: 'UNAVAILABLE', error_code: 'PAGE_FILL_FAILED' };
-    }
-    return { status: 'OK' };
+        const filled = await browser.tabs.sendMessage(current.id, {
+            action: 'fill_risk_candidate', candidate: pending.candidate, targetIndex
+        });
+        return filled?.status === 'OK' ? filled : keepass.riskError(filled?.error_code ?? 'SELECT_TARGET_FIELD', revision);
+    } catch (_err) { return keepass.riskError('PAGE_FILL_FAILED', revision); }
 };
 
 keepass.getPendingRiskCandidate = async function(tab) {
-    const activeTab = await keepass.validateRiskTab(tab);
-    const pending = tabs.getTabFromId(activeTab?.id)?.riskPending;
-    if (!activeTab || !pending || Date.now() - pending.createdAt > 10 * 60 * 1000
-        || pending.origin !== new URL(activeTab.url).origin) {
-        return { status: 'UNAVAILABLE', error_code: 'NO_PENDING_CANDIDATE' };
+    const current = await keepass.validateRiskTab(tab);
+    const state = tabs.getTabFromId(current?.id);
+    const pending = state?.riskPending;
+    if (!pending || Date.now() - pending.createdAt > 600000
+        || pending.origin !== new URL(current.url).origin || pending.databaseHash !== keepass.databaseHash
+        || (pending.context === 'change' && keepass.getRiskEntryUuid(current) && keepass.getRiskEntryUuid(current) !== pending.entryUuid)) {
+        if (state) { state.riskPending = undefined; }
+        return keepass.riskError('NO_PENDING_CANDIDATE');
     }
-    return { status: 'OK', candidate: pending.candidate, inputRevision: pending.inputRevision };
+    return { status: 'OK', ...pending };
 };
 
 keepass.confirmRiskCandidate = async function(tab, args = []) {
-    const [ inputRevision ] = args;
-    const activeTab = await keepass.validateRiskTab(tab);
-    const tabState = tabs.getTabFromId(activeTab?.id);
-    const pending = tabState?.riskPending;
-    if (!activeTab || !pending || Date.now() - pending.createdAt > 10 * 60 * 1000
-        || pending.origin !== new URL(activeTab.url).origin) {
-        return { status: 'UNAVAILABLE', error_code: 'NO_PENDING_CANDIDATE' };
+    const [ revision, websiteSucceeded = false, acknowledgeUnknown = false ] = args;
+    const current = await keepass.validateRiskTab(tab);
+    const pending = await keepass.getPendingRiskCandidate(tab);
+    if (!current || pending.status !== 'OK') { return keepass.riskError('NO_PENDING_CANDIDATE', revision); }
+    if (pending.inputRevision !== revision || !Number.isInteger(revision)) {
+        return keepass.riskError('STALE_INPUT_REVISION', revision);
     }
-    if (!Number.isInteger(inputRevision) || pending.inputRevision !== inputRevision) {
-        return { status: 'UNAVAILABLE', error_code: 'STALE_INPUT_REVISION' };
+    const response = await keepass.riskSend(current, 'confirm-risk-candidate', {
+        ...pending, candidate: undefined, result: undefined, websiteSucceeded, acknowledgeUnknown
+    });
+    if (response.status === 'OK' || !['CONFIRMATION_REQUIRED', 'DATABASE_SAVE_FAILED', 'SAVE_TARGET_REQUIRED'].includes(response.error_code)) {
+        tabs.updateTabValues(current.id, { riskPending: undefined });
     }
+    if (response.status === 'OK') { await page.clearLogins(current.id); }
+    return response;
+};
 
-    const entryUuid = keepass.getRiskEntryUuid(activeTab);
-    const entry = tabState.credentials?.find((item) => item.uuid === entryUuid);
-    if (!entry) {
-        return { status: 'UNAVAILABLE', error_code: 'NO_SELECTED_ENTRY' };
+keepass.cancelRiskCandidate = async function(tab, args = []) {
+    const [ revision = 0 ] = args;
+    const state = tabs.getTabFromId(tab?.id);
+    const pending = state?.riskPending;
+    if (state) { state.riskPending = undefined; state.riskRevision = revision; }
+    if (keepass.isAssociated() && /^https?:\/\//i.test(tab?.url ?? '')) {
+        return keepass.riskSend(tab, 'cancel-risk-candidate', {
+            candidateToken: pending?.candidateToken ?? '', origin: new URL(tab.url).origin,
+            pageId: String(tab.id), inputRevision: revision
+        });
     }
-    const result = await keepass.updateCredentials(
-        activeTab,
-        [ entry.uuid, entry.login, pending.candidate, activeTab.url ]
-    );
-    if (result === CreationError.UPDATED) {
-        tabs.updateTabValues(activeTab.id, { riskPending: undefined });
-        return { status: 'OK' };
-    }
-    return { status: 'UNAVAILABLE', error_code: 'SAVE_REJECTED' };
+    return { status: 'OK', inputRevision: revision };
+};
+
+keepass.getRiskContext = async function(tab) {
+    return {
+        accounts: (tabs.getTabFromId(tab?.id)?.credentials ?? []).map(({ uuid, login }) => ({ uuid, login })),
+        selected: keepass.getRiskEntryUuid(tab)
+    };
 };
 
 keepass.associate = async function(tab) {

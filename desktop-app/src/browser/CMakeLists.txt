@@ -35,7 +35,9 @@ if(KPXC_FEATURE_BROWSER)
             CustomTableWidget.cpp
             NativeMessageInstaller.cpp
             PasskeyUtils.cpp
-            ../riskassess/RiskAssessmentService.cpp)
+            ../riskassess/RiskAssessmentService.cpp
+            ../riskassess/RiskCandidateStore.cpp
+            ../riskassess/RiskAssessmentWidget.cpp)
 
     add_library(browser STATIC ${browser_SOURCES})
     target_include_directories(browser PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..)

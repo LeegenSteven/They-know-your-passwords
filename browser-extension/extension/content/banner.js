@@ -369,6 +369,10 @@ kpxcBanner.updateCredentials = async function(credentials = {}) {
 };
 
 kpxcBanner.verifyResult = async function(code) {
+    if (code === 'REVIEW_REQUIRED') {
+        kpxcUI.createNotification('info', '候选已评估。请打开扩展面板，在网站操作成功后确认保存；当前阈值待验证。');
+        return;
+    }
     if (code === CreationError.GENERAL) {
         kpxcUI.createNotification('error', tr('rememberErrorCannotSaveCredentials'));
     } else if (code === CreationError.REFERENCES) {

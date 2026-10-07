@@ -12,6 +12,7 @@ kpxcForm.submitTriggered = false;
 
 // Activate the Credential Banner if credentials are found from form submit
 kpxcForm.activateCredentialBanner = async function(usernameValue, passwordInputs, passwordField) {
+    if (kpxc.riskWorkflowActive) { kpxcForm.submitTriggered = false; return; }
     let passwordValue = '';
     // Check if the form has three password fields -> a possible password change form
     if (passwordInputs && passwordInputs.length >= 2) {

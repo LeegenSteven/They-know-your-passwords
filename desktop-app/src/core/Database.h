@@ -102,6 +102,7 @@ public:
 
     bool isInitialized() const;
     bool isModified() const;
+    quint64 contentRevision() const { return m_contentRevision; }
     bool hasNonDataChanges() const;
     bool isSaving();
 
@@ -252,6 +253,7 @@ private:
     QMutex m_saveMutex;
     QPointer<FileWatcher> m_fileWatcher;
     bool m_modified = false;
+    quint64 m_contentRevision = 0;
     bool m_hasNonDataChange = false;
     QString m_keyError;
     bool m_isTemporaryDatabase = false;

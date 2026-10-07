@@ -253,7 +253,9 @@ keepassClient.sendMessage = async function(kpAction, tab, messageData, nonce, en
         request['requestID'] = messageData.requestID;
     }
 
-    const response = await keepassClient.sendNativeMessage(request, enableTimeout);
+    const response = await keepassClient.sendNativeMessage(request, enableTimeout,
+        /^(assess-|recommend-|prepare-risk-|confirm-risk-|cancel-risk-)/.test(kpAction)
+            ? 182000 + (messageData.constraints?.budgetMs ?? 3000) : undefined);
     const incrementedNonce = keepassClient.incrementedNonce(nonce);
 
     return keepassClient.handleResponse(response, incrementedNonce, tab);
@@ -424,6 +426,10 @@ function onDisconnected() {
 keepassClient.onNativeMessage = function(response) {
     // Handle database lock/unlock status
     if (response.action === kpActions.DATABASE_LOCKED || response.action === kpActions.DATABASE_UNLOCKED) {
+        for (const state of tabs.tabList.values()) {
+            state.riskPending = undefined;
+            state.riskRevision = (state.riskRevision ?? 0) + 1;
+        }
         keepass.updateDatabase();
         return;
     }

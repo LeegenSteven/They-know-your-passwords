@@ -539,6 +539,9 @@ kpxc.prepareCredentials = async function() {
  * @param {boolean} useBanner       If banner is disabled, save directly
  */
 kpxc.rememberCredentials = async function(usernameValue, passwordValue, urlValue, oldCredentials, useBanner = true) {
+    // A prepared candidate already has an explicit website-success confirmation
+    // flow. Avoid opening a second save banner over the form on submit.
+    if (kpxc.riskWorkflowActive || (window.self === window.top && await sendMessage('risk_has_pending'))) { return; }
     const credentials = (oldCredentials !== undefined && oldCredentials.length > 0) ? oldCredentials : kpxc.credentials;
     if (passwordValue === '') {
         logDebug('Error: Empty password.');
@@ -932,11 +935,42 @@ browser.runtime.onMessage.addListener(async function(req, sender) {
             sendMessage('page_set_manual_fill', ManualFill.PASSWORD);
             await kpxc.receiveCredentialsIfNecessary();
             kpxcFill.fillInFromActiveElement(true); // passOnly to true
+        } else if (req.action === 'risk_target_fields' && window.self === window.top) {
+            return Array.from(document.querySelectorAll('input[type="password"]'))
+                .filter((field) => field.offsetParent !== null && !field.disabled && !field.readOnly)
+                .map((field, index) => ({ index, label: field.labels?.[0]?.textContent?.trim()
+                    || field.getAttribute('aria-label') || field.name || ('口令输入框 ' + (index + 1)) }));
         } else if (req.action === 'fill_risk_candidate' && window.self === window.top) {
-            const active = document.activeElement?.getLowerCaseAttribute?.('type') === 'password'
-                ? document.activeElement
-                : kpxc.inputs.find((input) => input.getLowerCaseAttribute('type') === 'password');
-            kpxcPasswordGenerator.fill(active, req.candidate);
+            const fields = Array.from(document.querySelectorAll('input[type="password"]'))
+                .filter((field) => field.offsetParent !== null && !field.disabled && !field.readOnly);
+            const newFields = fields.filter((field) => field.autocomplete === 'new-password'
+                || /new|confirm|repeat|新|确认/i.test(field.name + ' ' + field.id + ' ' + field.placeholder));
+            let targets = newFields;
+            if (Number.isInteger(req.targetIndex) && fields[req.targetIndex]) {
+                targets = [ fields[req.targetIndex] ];
+                const confirmation = newFields.find((field) => field !== targets[0] && /confirm|repeat|确认/i.test(field.name + ' ' + field.id));
+                if (confirmation) { targets.push(confirmation); }
+            } else if (fields.length === 1) {
+                targets = fields;
+            } else if (newFields.length < 1 || newFields.length > 2) {
+                return { status: 'UNAVAILABLE', error_code: 'SELECT_TARGET_FIELD' };
+            }
+            if (!targets.length) { return { status: 'UNAVAILABLE', error_code: 'SELECT_TARGET_FIELD' }; }
+            if (typeof req.candidate !== 'string' || targets.some((field) => field.maxLength >= 0
+                && req.candidate.length > field.maxLength)) {
+                return { status: 'UNAVAILABLE', error_code: 'FIELD_LENGTH_CONFLICT' };
+            }
+            // Fill exactly the identified new/confirmation fields. The legacy
+            // generator also fills the next password field, which is unsafe on
+            // forms containing current and new passwords in an unusual order.
+            for (const field of targets) {
+                field.value = req.candidate;
+                field.dispatchEvent(new Event('input', { bubbles: true }));
+                field.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            kpxc.riskWorkflowActive = true;
+            kpxcUserAutocomplete.closeList();
+            return { status: 'OK', filledCount: targets.length };
         } else if (req.action === 'fill_totp') {
             await kpxc.reconnect();
             await kpxc.receiveCredentialsIfNecessary();
@@ -1029,3 +1063,45 @@ const isIframeAllowed = async function() {
         return false;
     }
 };
+
+
+// Only generic strength can be requested by a page content script.
+if (window.self === window.top) {
+    let strengthTimer;
+    let strengthRevision = 0;
+    document.addEventListener('input', (event) => {
+        const field = event.target;
+        if (!(field instanceof HTMLInputElement) || !event.isTrusted) { return; }
+        kpxc.riskWorkflowActive = false;
+        if (field.type !== 'password') {
+            if (['text', 'email'].includes(field.type)) { sendMessage('risk_input_changed'); }
+            return;
+        }
+        const revision = ++strengthRevision;
+        clearTimeout(strengthTimer);
+        sendMessage('risk_input_changed');
+        let badge = field.nextElementSibling;
+        if (!badge?.classList.contains('tkyp-strength')) {
+            badge = document.createElement('span');
+            badge.className = 'tkyp-strength';
+            badge.setAttribute('role', 'status');
+            field.after(badge);
+        }
+        badge.textContent = '输入已变化，等待评估';
+        strengthTimer = setTimeout(async () => {
+            badge.textContent = '正在评估通用强度…';
+            let response;
+            try { response = await sendMessage('assess_generic_password', [ field.value, revision ]); }
+            catch (_err) { response = { status: 'UNAVAILABLE' }; }
+            if (revision !== strengthRevision || !field.isConnected) { return; }
+            const psm = response?.psm;
+            if (response?.status !== 'OK' || !psm) {
+                badge.textContent = '强度未知：' + (response?.error_code ?? response?.status ?? 'UNAVAILABLE');
+            } else if (psm.evidence === 'REFERENCE_TABLE_LOWER_BOUND') {
+                badge.textContent = '估计猜测次数 ≥ ' + Number(psm.lower_bound).toExponential(2) + '；参考表截断，待验证';
+            } else {
+                badge.textContent = 'PSM 第 ' + psm.band + '/6 档；估计区间，待验证';
+            }
+        }, 500);
+    }, true);
+}

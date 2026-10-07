@@ -9,12 +9,28 @@ kpxcEvent.onMessage = async function(request, sender) {
             'recommend_password',
             'risk_confirm_save',
             'risk_get_pending',
-            'risk_stage_candidate'
+            'risk_stage_candidate',
+            'risk_prepare_candidate', 'risk_cancel_candidate', 'risk_get_context'
         ]);
         if (riskActions.has(request.action)) {
             const extensionOrigin = browser.runtime.getURL('');
             if (sender?.id !== browser.runtime.id || !sender?.url?.startsWith(extensionOrigin)) {
                 return { status: 'UNAVAILABLE', error_code: 'SOURCE_NOT_ALLOWED' };
+            }
+        }
+        if (['assess_generic_password', 'risk_input_changed', 'risk_has_pending', 'open_risk_panel'].includes(request.action)) {
+            const tab = sender?.tab;
+            if (sender?.id !== browser.runtime.id || sender.frameId !== 0 || !tab?.id
+                || !/^https?:\/\//i.test(sender.url ?? '')
+                || new URL(sender.url).origin !== new URL(tab.url).origin) {
+                return { status: 'UNAVAILABLE', error_code: 'SOURCE_NOT_ALLOWED' };
+            }
+            if (request.action === 'risk_input_changed') {
+                const state = tabs.getTabFromId(tab.id);
+                state.riskRevision = (state?.riskRevision ?? 0) + 1;
+                // Candidate fill events are dispatched by the extension; a real user edit cancels it.
+                if (state?.riskPending) { await keepass.cancelRiskCandidate(tab, [ state.riskRevision ]); }
+                return { status: 'OK' };
             }
         }
         if (!Object.hasOwn(sender, 'tab') || sender?.tab?.id < 1) {
@@ -260,6 +276,13 @@ kpxcEvent.messageHandlers = {
     'add_credentials': keepass.addCredentials,
     'associate': keepass.associate,
     'assess_password': keepass.assessPassword,
+    'assess_generic_password': keepass.assessGenericPassword,
+    'risk_input_changed': async () => ({ status: 'OK' }),
+    'risk_has_pending': async (tab) => {
+        const pending = tabs.getTabFromId(tab.id)?.riskPending;
+        return !!pending && Date.now() - pending.createdAt <= 600000
+            && pending.origin === new URL(tab.url).origin && pending.databaseHash === keepass.databaseHash;
+    },
     'banner_get_position': page.getBannerPosition,
     'banner_set_position': page.setBannerPosition,
     'check_database_hash': keepass.checkDatabaseHash,
@@ -269,7 +292,8 @@ kpxcEvent.messageHandlers = {
     'disable_automatic_reconnect': keepass.disableAutomaticReconnect,
     'fill_http_auth': page.fillHttpAuth,
     'frame_message': kpxcEvent.sendBackToTabs,
-    'generate_password': keepass.generatePassword,
+    'generate_password': async () => { await browser.action.openPopup(); return undefined; },
+    'open_risk_panel': async () => { await browser.action.openPopup(); return { status: 'OK' }; },
     'get_color_theme': kpxcEvent.getColorTheme,
     'get_connected_database': kpxcEvent.onGetConnectedDatabase,
     'get_database_hash': keepass.getDatabaseHash,
@@ -317,6 +341,9 @@ kpxcEvent.messageHandlers = {
     'risk_confirm_save': keepass.confirmRiskCandidate,
     'risk_get_pending': keepass.getPendingRiskCandidate,
     'risk_stage_candidate': keepass.stageRiskCandidate,
+    'risk_prepare_candidate': keepass.prepareRiskCandidate,
+    'risk_cancel_candidate': keepass.cancelRiskCandidate,
+    'risk_get_context': keepass.getRiskContext,
     'show_default_browseraction': browserAction.showDefault,
     'update_credentials': keepass.updateCredentials,
     'username_field_detected': kpxcEvent.onUsernameFieldDetected,

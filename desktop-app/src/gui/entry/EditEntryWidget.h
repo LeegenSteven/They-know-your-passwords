@@ -50,6 +50,7 @@ class OpenSSHKey;
 #endif
 #ifdef KPXC_FEATURE_BROWSER
 class EntryURLModel;
+class RiskAssessmentWidget;
 #endif
 
 namespace Ui
@@ -205,6 +206,7 @@ private:
 #endif
 #ifdef KPXC_FEATURE_BROWSER
     bool m_browserSettingsChanged;
+    RiskAssessmentWidget* m_riskWidget;
     QWidget* const m_browserWidget;
     EntryURLModel* const m_additionalURLsDataModel;
 #endif

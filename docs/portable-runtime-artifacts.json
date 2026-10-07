@@ -1,0 +1,170 @@
+[
+  {
+    "file": "python-3.12.10-embed-amd64.zip",
+    "sha256": "4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3"
+  },
+  {
+    "file": "aiohappyeyeballs-2.7.1-py3-none-any.whl",
+    "sha256": "9243213661e29250eb41368e5daa826fc017156c3b8a11440826b2e3ed376472"
+  },
+  {
+    "file": "aiohttp-3.14.4-cp312-cp312-win_amd64.whl",
+    "sha256": "69dcb02d33dfe415d5ee342cc63b7d320efcaf4b761701c7bd7bfb91c715481a"
+  },
+  {
+    "file": "aiosignal-1.4.0-py3-none-any.whl",
+    "sha256": "053243f8b92b990551949e63930a839ff0cf0b0ebbe0597b0f3fb19e1a0fe82e"
+  },
+  {
+    "file": "async_timeout-5.0.1-py3-none-any.whl",
+    "sha256": "39e3809566ff85354557ec2398b55e096c8364bacac9405a7a1fa429e77fe76c"
+  },
+  {
+    "file": "attrs-26.1.0-py3-none-any.whl",
+    "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309"
+  },
+  {
+    "file": "certifi-2026.7.22-py3-none-any.whl",
+    "sha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775"
+  },
+  {
+    "file": "charset_normalizer-3.5.2-cp312-cp312-win_amd64.whl",
+    "sha256": "780fbe7cab297b81dad9fb8dc5eb003c0468ffb0d9e5f65068c53a34661a96bc"
+  },
+  {
+    "file": "colorama-0.4.6-py2.py3-none-any.whl",
+    "sha256": "4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"
+  },
+  {
+    "file": "contourpy-1.3.3-cp312-cp312-win_amd64.whl",
+    "sha256": "8153b8bfc11e1e4d75bcb0bff1db232f9e10b274e0929de9d608027e0d34ff8b"
+  },
+  {
+    "file": "cycler-0.12.1-py3-none-any.whl",
+    "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30"
+  },
+  {
+    "file": "filelock-3.19.1-py3-none-any.whl",
+    "sha256": "d38e30481def20772f5baf097c122c3babc4fcdb7e14e57049eb9d88c6dc017d"
+  },
+  {
+    "file": "fonttools-4.66.1-cp312-cp312-win_amd64.whl",
+    "sha256": "261d8dc95845e751f975fe8d6075600593ee253470d46d1b84801688051b09f6"
+  },
+  {
+    "file": "frozenlist-1.8.0-cp312-cp312-win_amd64.whl",
+    "sha256": "34187385b08f866104f0c0617404c8eb08165ab1272e884abc89c112e9c00746"
+  },
+  {
+    "file": "fsspec-2025.7.0-py3-none-any.whl",
+    "sha256": "8b012e39f63c7d5f10474de957f3ab793b47b45ae7d39f2fb735f8bbe25c0e21"
+  },
+  {
+    "file": "idna-3.20-py3-none-any.whl",
+    "sha256": "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c"
+  },
+  {
+    "file": "importlib_resources-7.1.0-py3-none-any.whl",
+    "sha256": "1bd7b48b4088eddb2cd16382150bb515af0bd2c70128194392725f82ad2c96a1"
+  },
+  {
+    "file": "jinja2-3.1.6-py3-none-any.whl",
+    "sha256": "85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67"
+  },
+  {
+    "file": "kiwisolver-1.5.1-cp312-cp312-win_amd64.whl",
+    "sha256": "06a6917674de9e0fe3f66f5430787f59a9f2ddb64af9b714eaec547e29ef5c19"
+  },
+  {
+    "file": "markupsafe-3.0.4-cp312-cp312-win_amd64.whl",
+    "sha256": "11935df9bf455ed0c04eb87bcd720f02b1fe5e02128a9430f23aed6f93336fc7"
+  },
+  {
+    "file": "matplotlib-3.8.4-cp312-cp312-win_amd64.whl",
+    "sha256": "7a6769f58ce51791b4cb8b4d7642489df347697cd3e23d88266aaaee93b41d9a"
+  },
+  {
+    "file": "mpmath-1.3.0-py3-none-any.whl",
+    "sha256": "a0b2b9fe80bbcd81a6647ff13108738cfb482d481d826cc0e02f5b35e5c88d2c"
+  },
+  {
+    "file": "multidict-6.9.1-cp312-cp312-win_amd64.whl",
+    "sha256": "a16a1dc8529f9e734a41c3b856f3eae7ebacdc061dde3f8a844e0c7889c97203"
+  },
+  {
+    "file": "networkx-3.5-py3-none-any.whl",
+    "sha256": "0030d386a9a06dee3565298b4a734b68589749a544acbb6c412dc9e2489ec6ec"
+  },
+  {
+    "file": "numpy-1.26.2-cp312-cp312-win_amd64.whl",
+    "sha256": "b04f5dc6b3efdaab541f7857351aac359e6ae3c126e2edb376929bd3b7f92d7e"
+  },
+  {
+    "file": "packaging-26.3-py3-none-any.whl",
+    "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+  },
+  {
+    "file": "pillow-12.3.0-cp312-cp312-win_amd64.whl",
+    "sha256": "a2b55dd6b2a4c4b7d87ffa56bdb33fdc5fdb9a462173861a7bc097f17d91cb09"
+  },
+  {
+    "file": "propcache-0.5.4-cp312-cp312-win_amd64.whl",
+    "sha256": "98914de2c4d7f0f9f4a8c6ea4bf05841f4175796941e3ef7d47eb718f22311fb"
+  },
+  {
+    "file": "psutil-7.2.2-cp37-abi3-win_amd64.whl",
+    "sha256": "eb7e81434c8d223ec4a219b5fc1c47d0417b12be7ea866e24fb5ad6e84b3d988"
+  },
+  {
+    "file": "pyparsing-3.3.3-py3-none-any.whl",
+    "sha256": "ece8c00a69cf01b45d0b1dedabb469c90d8caf996d4fda40f147627a122849a4"
+  },
+  {
+    "file": "python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+    "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427"
+  },
+  {
+    "file": "requests-2.34.2-py3-none-any.whl",
+    "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0"
+  },
+  {
+    "file": "six-1.17.0-py2.py3-none-any.whl",
+    "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274"
+  },
+  {
+    "file": "sympy-1.14.0-py3-none-any.whl",
+    "sha256": "e091cc3e99d2141a0ba2847328f5479b05d94a6635cb96148ccb3f34671bd8f5"
+  },
+  {
+    "file": "tomli-2.2.1-cp312-cp312-win_amd64.whl",
+    "sha256": "7fc04e92e1d624a4a63c76474610238576942d6b8950a2d7f908a340494e67e4"
+  },
+  {
+    "file": "torch_geometric-2.6.1-py3-none-any.whl",
+    "sha256": "8faeb353f9655f7dbec44c5e0b44c721773bdfb279994da96b9b8b12fd30f427"
+  },
+  {
+    "file": "torch-2.8.0+cpu-cp312-cp312-win_amd64.whl",
+    "sha256": "2be20b2c05a0cce10430cc25f32b689259640d273232b2de357c35729132256d"
+  },
+  {
+    "file": "tqdm-4.67.1-py3-none-any.whl",
+    "sha256": "26445eca388f82e72884e0d580d5464cd801a3ea01e63e5601bdff9ba6a48de2"
+  },
+  {
+    "file": "typing_extensions-4.14.1-py3-none-any.whl",
+    "sha256": "d1e1e3b58374dc93031d6eda2420a48ea44a36c2b4766a4fdeb3710755731d76"
+  },
+  {
+    "file": "urllib3-2.8.0-py3-none-any.whl",
+    "sha256": "0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3"
+  },
+  {
+    "file": "yarl-1.25.1-cp312-cp312-win_amd64.whl",
+    "sha256": "7d575b54cb3863ef9bc290ea4b009999d55dc237326131e4853cf33e888fee03"
+  },
+  {
+    "file": "zipp-4.1.1-py3-none-any.whl",
+    "sha256": "8979f52d874162f485ff2981e3891f3a3317b7a3dd43ff1e1775b9304f307a9c"
+  }
+]

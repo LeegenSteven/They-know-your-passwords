@@ -1,0 +1,39 @@
+{
+  "version": "v0.2.0",
+  "scope": "windows-x64-portable-cpu",
+  "runtime": {
+    "python": "3.12.10",
+    "torch": "2.8.0+cpu",
+    "pyg": "2.6.1",
+    "isolated": 1,
+    "outsidePackagePaths": 0,
+    "scoreThreads": 4,
+    "referenceThreads": 1
+  },
+  "calibrated": false,
+  "pythonTests": 10,
+  "browserBusinessTests": 5,
+  "browsers": {
+    "chrome": {
+      "complete": true,
+      "checks": 32,
+      "passed": 32,
+      "trace": false,
+      "screenshots": false
+    },
+    "edge": {
+      "complete": true,
+      "checks": 32,
+      "passed": 32,
+      "trace": false,
+      "screenshots": false
+    }
+  },
+  "models": {
+    "ready": "OK",
+    "coldStartMs": 8750,
+    "beamMs": 9219,
+    "numericPassed": 4,
+    "numericCases": 4
+  }
+}

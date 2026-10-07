@@ -12,10 +12,12 @@ __pycache__/
 algo-service/mc_cache/
 algo-service/.venv/
 mcp-server/.venv/
+.runtime/
 
 # Large/private assets supplied outside source control
 *.pth
 *.pt
+*.bin
 *.zip
 *.kdbx
 

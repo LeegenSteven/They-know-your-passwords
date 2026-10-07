@@ -81,14 +81,26 @@ void BrowserHost::readProxyMessage()
         setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(&max), sizeof(max));
     }
 
-    QJsonParseError error;
-    auto json = QJsonDocument::fromJson(socket->readAll(), &error);
-    if (json.isNull()) {
-        qWarning() << "Failed to read proxy message: " << error.errorString();
+    auto& buffer = m_readBuffers[socket];
+    buffer.append(socket->readAll());
+    if (buffer.size() > BrowserShared::NATIVEMSG_MAX_LENGTH) {
+        buffer.clear();
+        socket->disconnectFromServer();
         return;
     }
-
-    emit clientMessageReceived(socket, json.object());
+    // Local sockets are byte streams. A read may contain partial or several
+    // messages, especially when input invalidation overlaps model replies.
+    while (buffer.contains('\n')) {
+        const auto end = buffer.indexOf('\n');
+        const auto line = buffer.left(end);
+        buffer.remove(0, end + 1);
+        const auto json = QJsonDocument::fromJson(line);
+        if (!json.isObject()) {
+            socket->disconnectFromServer();
+            return;
+        }
+        emit clientMessageReceived(socket, json.object());
+    }
 }
 
 void BrowserHost::broadcastClientMessage(const QJsonObject& json)
@@ -108,7 +120,7 @@ void BrowserHost::sendClientMessage(QLocalSocket* socket, const QJsonObject& jso
 void BrowserHost::sendClientData(QLocalSocket* socket, const QString& data)
 {
     if (socket && socket->isValid() && socket->state() == QLocalSocket::ConnectedState) {
-        QByteArray arr = data.toUtf8();
+        QByteArray arr = data.toUtf8() + '\n';
         socket->write(arr.constData(), arr.length());
         socket->flush();
     }
@@ -118,4 +130,5 @@ void BrowserHost::proxyDisconnected()
 {
     auto socket = qobject_cast<QLocalSocket*>(QObject::sender());
     m_socketList.removeOne(socket);
+    m_readBuffers.remove(socket);
 }

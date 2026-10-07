@@ -104,18 +104,39 @@
           <option value="change" selected>修改口令</option>
           <option value="audit">存量复检</option>
         </select>
+        <label for="risk-account-select">目标账号（修改/审计）</label>
+        <select id="risk-account-select" class="form-select form-select-sm"><option value="">请选择账号</option></select>
+        <label for="risk-account">新建账号</label>
+        <input id="risk-account" type="text" class="form-control form-control-sm" autocomplete="off">
+        <details><summary>网站约束与评估预算</summary>
+          <label>最短长度 <input id="risk-min" type="number" min="5" max="20" value="5"></label>
+          <label>最长长度 <input id="risk-max" type="number" min="5" max="20" value="20"></label>
+          <label>生成长度 <input id="risk-length" type="number" min="5" max="20" value="20"></label>
+          <label><input id="risk-lower" type="checkbox" checked>小写</label>
+          <label><input id="risk-upper" type="checkbox" checked>大写</label>
+          <label><input id="risk-digits" type="checkbox" checked>数字</label>
+          <label><input id="risk-symbols" type="checkbox" checked>符号</label>
+          <label>禁用字符 <input id="risk-forbidden" type="text" autocomplete="off"></label>
+          <label>评估预算 <select id="risk-budget"><option value="3000">3 秒</option><option value="30000">30 秒（显式延长）</option><option value="120000">120 秒（显式延长）</option></select></label>
+        </details>
         <label for="risk-candidate">待评估口令</label>
         <input id="risk-candidate" class="form-control form-control-sm" type="password" autocomplete="new-password">
         <div class="risk-actions">
           <button id="risk-assess-button" class="btn btn-sm btn-primary">评估</button>
-          <button id="risk-recommend-button" class="btn btn-sm btn-success">安全推荐</button>
+          <button id="risk-recommend-button" class="btn btn-sm btn-success">随机生成与复检</button>
+          <button id="risk-prepare-button" class="btn btn-sm btn-primary">复检并准备此口令</button>
         </div>
+        <div id="risk-bands" aria-label="六档 PSM">1: [1,10³) · 2: [10³,10⁶) · 3: [10⁶,10⁹) · 4: [10⁹,10¹²) · 5: [10¹²,10¹⁵) · 6: [10¹⁵,∞)</div>
+        <label>目标输入框 <select id="risk-target"><option value="">自动识别新口令/确认框</option></select></label>
+        <button id="risk-fill-button" class="btn btn-sm btn-primary">填入候选</button>
         <div id="risk-result" role="status" aria-live="polite">尚未评估</div>
         <label id="risk-confirm-label">
           <input id="risk-confirm-success" type="checkbox">
-          我确认网站已成功修改口令
+          我确认网站已成功注册或修改口令
         </label>
-        <button id="risk-save-button" class="btn btn-sm btn-warning" disabled>确认并更新 KeePassXC</button>
+        <label><input id="risk-acknowledge" type="checkbox">我了解未标定、搜索未命中或参考表截断仍属待验证</label>
+        <button id="risk-cancel-button" class="btn btn-sm">取消候选</button>
+        <button id="risk-save-button" class="btn btn-sm btn-warning" disabled>确认并保存到口令库</button>
       </section>
 
       <div id="error-encountered">

@@ -1080,6 +1080,7 @@ bool Database::hasNonDataChanges() const
 
 void Database::markAsModified()
 {
+    ++m_contentRevision;
     m_modified = true;
     if (modifiedSignalEnabled() && !m_modifiedTimer.isActive()) {
         // Small time delay prevents numerous consecutive saves due to repeated signals

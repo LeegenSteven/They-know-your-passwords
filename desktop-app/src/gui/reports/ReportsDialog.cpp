@@ -23,6 +23,7 @@
 #include "ReportsPageStatistics.h"
 #ifdef KPXC_FEATURE_BROWSER
 #include "ReportsPageBrowserStatistics.h"
+#include "ReportsPageRisk.h"
 #include "ReportsPagePasskeys.h"
 #include "ReportsWidgetBrowserStatistics.h"
 #include "ReportsWidgetPasskeys.h"
@@ -75,6 +76,7 @@ ReportsDialog::ReportsDialog(QWidget* parent)
 #ifdef KPXC_FEATURE_BROWSER
     addPage(m_passkeysPage);
     addPage(m_browserStatPage);
+    addPage(QSharedPointer<IReportsPage>(new ReportsPageRisk));
 #endif
     addPage(m_hibpPage);
 

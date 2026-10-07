@@ -15,6 +15,13 @@ from concurrent.futures import Future, ThreadPoolExecutor
 from pathlib import Path
 from typing import Any, Dict
 
+# Inference imports must not create or update bytecode in read-only assets.
+sys.dont_write_bytecode = True
+# Bound scoring threads before importing torch. Reference-table generation
+# separately uses its configured thread count and restores scoring threads.
+os.environ.setdefault("OMP_NUM_THREADS", "4")
+os.environ.setdefault("MKL_NUM_THREADS", "4")
+
 try:
     import tomllib  # type: ignore
 except ImportError:
@@ -35,6 +42,9 @@ class JsonLineServer:
         self._registry = ModelRegistry(self._config, self._config_path.parent)
         self._executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="risk-inference")
         self._write_lock = threading.Lock()
+        # Adapter imports temporarily redirect process-global sys.stdout. The
+        # protocol reader must retain its original stream during warmup.
+        self._protocol_stdout = sys.stdout
         self._state_lock = threading.Lock()
         self._ready = not warmup
         self._loading = warmup
@@ -66,12 +76,13 @@ class JsonLineServer:
 
     def _write(self, response: Dict[str, Any]) -> None:
         with self._write_lock:
-            sys.stdout.write(json.dumps(response, ensure_ascii=False, separators=(",", ":")) + "\n")
-            sys.stdout.flush()
+            self._protocol_stdout.write(json.dumps(response, ensure_ascii=False, separators=(",", ":")) + "\n")
+            self._protocol_stdout.flush()
 
     def _error(self, request_id: Any, status: str, code: str, detail: str = "") -> Dict[str, Any]:
         safe_status = status if status in ALLOWED_STATUSES else "ERROR"
-        response = {"id": request_id, "status": safe_status, "error_code": code}
+        response = {"id": request_id, "status": safe_status, "error_code": code,
+                    "level": "UNKNOWN", "calibrated": False}
         if detail:
             response["detail"] = detail
         return response
@@ -133,14 +144,12 @@ class JsonLineServer:
         return response
 
     def _complete(self, request_id: str, future: Future) -> None:
-        pending = self._pending.get(request_id)
+        with self._state_lock:
+            pending = self._pending.pop(request_id, None)
         if pending is None:
             return
         timer = pending["timer"]
         timer.cancel()
-        self._pending.pop(request_id, None)
-        if pending["timed_out"]:
-            return
         try:
             response = future.result()
         except AdapterError as error:
@@ -151,10 +160,12 @@ class JsonLineServer:
         self._write(response)
 
     def _timeout(self, request_id: str) -> None:
-        pending = self._pending.get(request_id)
+        with self._state_lock:
+            pending = self._pending.pop(request_id, None)
         if pending is None:
             return
-        pending["timed_out"] = True
+        if pending.get("future") is not None:
+            pending["future"].cancel()
         self._write(self._error(request_id, "TIMEOUT", "TIMEOUT", "request exceeded its deadline"))
 
     def _submit(self, request: Dict[str, Any]) -> None:
@@ -163,12 +174,16 @@ class JsonLineServer:
         if not isinstance(timeout_ms, int) or timeout_ms < 1 or timeout_ms > 120000:
             self._write(self._error(request_id, "ERROR", "INVALID_REQUEST", "invalid timeout_ms"))
             return
-        if request_id in self._pending:
-            self._write(self._error(request_id, "ERROR", "DUPLICATE_REQUEST_ID", "request id is already pending"))
-            return
         timer = threading.Timer(timeout_ms / 1000.0, self._timeout, args=(request_id,))
-        self._pending[request_id] = {"timer": timer, "timed_out": False}
+        with self._state_lock:
+            if request_id in self._pending:
+                self._write(self._error(request_id, "ERROR", "DUPLICATE_REQUEST_ID", "request id is already pending"))
+                return
+            self._pending[request_id] = {"timer": timer}
         future = self._executor.submit(self._execute, request)
+        with self._state_lock:
+            if request_id in self._pending:
+                self._pending[request_id]["future"] = future
         future.add_done_callback(lambda completed: self._complete(request_id, completed))
         timer.start()
 
@@ -235,7 +250,10 @@ class JsonLineServer:
             protocol_thread.join()
         else:
             self._read_requests()
-        for pending in list(self._pending.values()):
+        with self._state_lock:
+            pending_requests = list(self._pending.values())
+            self._pending.clear()
+        for pending in pending_requests:
             pending["timer"].cancel()
         self._executor.shutdown(wait=True, cancel_futures=False)
         self._registry.dispose()

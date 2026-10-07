@@ -30,6 +30,7 @@ public:
     ~RiskAssessmentService() override;
 
     static RiskAssessmentService* instance();
+    static QString vaultRevision(const QSharedPointer<Database>& database);
 
     void start();
     void stop();
@@ -45,7 +46,8 @@ public:
                            const QString& entryUuid,
                            const QString& requestId,
                            qint64 inputRevision,
-                           Reply reply);
+                           Reply reply,
+                           const QJsonObject& constraints = {});
 
 private:
     struct HistorySnapshot
@@ -63,6 +65,7 @@ private:
         QTimer* timer = nullptr;
         QByteArray line;
         bool written = false;
+        int timeoutMs = 3000;
     };
 
     HistorySnapshot collectHistory(const QSharedPointer<Database>& database,
@@ -78,6 +81,7 @@ private:
     void writePending();
     void handleStdout();
     void failAll(const QString& errorCode);
+    void probeReadiness();
     QString pythonExecutable() const;
     QString serviceScript() const;
     QString serviceConfig() const;
@@ -85,6 +89,10 @@ private:
     QProcess* m_process;
     QByteArray m_stdoutBuffer;
     QHash<QString, PendingRequest> m_pending;
+    QTimer* m_coldTimer;
+    QTimer* m_probeTimer;
+    bool m_ready = false;
+    friend class TestRiskAssessment;
 };
 
 #endif // KEEPASSXC_RISKASSESSMENTSERVICE_H

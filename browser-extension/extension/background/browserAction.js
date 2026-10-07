@@ -5,6 +5,9 @@ const browserAction = {};
 
 browserAction.show = async function(tab, popupData) {
     popupData ??= page.popupData;
+    if (tabs.getTabFromId(tab?.id)?.riskPending) {
+        popupData = { ...popupData, popup: 'popup' };
+    }
     page.popupData = popupData;
 
     browserActionWrapper.setIcon({
@@ -13,10 +16,13 @@ browserAction.show = async function(tab, popupData) {
     });
 
     if (popupData.popup && tab?.id) {
-        browserActionWrapper.setPopup({
-            popup: `popups/${popupData.popup}.html`,
-            tabId: tab.id
-        });
+        const path = `popups/${popupData.popup}.html`;
+        // Chrome closes an open action popup when setPopup is called, including
+        // an unchanged URL. Status refresh must preserve the confirmation UI.
+        const currentPopup = await browserActionWrapper.getPopup({ tabId: tab.id });
+        if (currentPopup !== browser.runtime.getURL(path)) {
+            await browserActionWrapper.setPopup({ popup: path, tabId: tab.id });
+        }
 
         let badgeText = '';
         const currentTab = tabs.getTabFromId(tab.id);
@@ -60,7 +66,7 @@ browserAction.showDefault = async function(tab) {
     }
 
     const currentTab = tabs.getTabFromId(tab?.id);
-    if (currentTab?.loginList.length > 0) {
+    if (currentTab?.loginList.length > 0 && !currentTab?.riskPending) {
         popupData.iconType = 'normal';
         popupData.popup = 'popup_login';
         browserAction.setBadgeText(tab?.id, currentTab?.loginList.length);

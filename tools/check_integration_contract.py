@@ -37,7 +37,7 @@ def main() -> int:
     manifests = [json.loads(read(path)) for path in manifest_paths]
     chromium_manifest = manifests[0]
 
-    for protocol_action in ("assess-password", "recommend-password"):
+    for protocol_action in ("assess-password", "recommend-password", "assess-generic-password", "prepare-risk-candidate", "confirm-risk-candidate", "cancel-risk-candidate"):
         assert protocol_action in action
         assert protocol_action in extension
     assert "STALE_INPUT_REVISION" in read("desktop-app/src/browser/BrowserService.cpp")
@@ -47,9 +47,9 @@ def main() -> int:
     assert "EXACT_REUSE" in service
     assert "sender?.url?.startsWith(extensionOrigin)" in event
     assert "risk-confirm-success" in popup
-    assert "我确认网站已成功修改口令" in popup
-    assert "pending.inputRevision !== inputRevision" in extension
-    assert "args: [ riskInputRevision ]" in read(
+    assert "我确认网站已成功注册或修改口令" in popup
+    assert "pending.inputRevision !== revision" in extension
+    assert "risk_confirm_save" in read(
         "browser-extension/extension/popups/popup.js"
     )
 

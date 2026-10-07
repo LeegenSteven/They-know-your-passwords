@@ -1,73 +1,32 @@
-# Windows 构建与演示
+# Windows 本机运行与构建
 
-## 已验证工具版本
+交付目录为 `D:\研究生\网络安全竞赛\out\TheyKnowYourPasswords`。双击 `They know your passwords.lnk` 或 `启动软件.cmd`，按 `first-use.md` 创建个人口令库、加载 Chrome/Edge 插件并关联。主口令由用户在软件中输入。
 
-- Visual Studio Build Tools 2022 17.14.41，MSVC 19.44.35229。
-- CMake 3.29.2，Ninja 1.12.0。
-- Qt 6.8.3 `win64_msvc2022_64`，含 Declarative、ImageFormats、SVG、Tools 和 Translations。
-- Python 3.9.25，PyTorch 2.8.0+cu129，torch-geometric 2.6.1，tomli 2.2.1。
+`check-environment.ps1` 检查版本、运行文件、CUDA 和 Native Messaging 注册，不读库。注册已为本机完成；移动运行包后重新运行 `register-browsers.ps1`。
 
-## 配置桌面客户端
+## 运行环境
 
-Ninja 在 Windows 上无法可靠扫描含中文字符的源码路径。先创建只指向同一工作区源码的 ASCII 目录联接，再在 Visual Studio x64 Developer Command Prompt 中执行：
+独立 `.runtime` 用 `--system-site-packages` 复用 `D:\Anaconda3\envs\pytorch_cuda` 的 Python 3.9.25、numpy 1.26.2、torch 2.8.0+cu129；仅补 tomli 2.2.1、torch-geometric 2.6.1，没有重装 CUDA。包内 runtime 是本机补充环境，迁机需重新配置和验收。
 
-```powershell
-New-Item -ItemType Junction -Path D:\tmp\TheyKnowYourPasswordsSrc -Target 'D:\研究生\网络安全竞赛\desktop-app'
-cmake -S D:\tmp\TheyKnowYourPasswordsSrc -B D:\tmp\TheyKnowYourPasswordsBuild -G Ninja `
-  -DCMAKE_BUILD_TYPE=Release `
-  -DCMAKE_TOOLCHAIN_FILE=D:\vcpkg\scripts\buildsystems\vcpkg.cmake `
-  -DCMAKE_PREFIX_PATH=D:\Qt\6.8.3\msvc2022_64 `
-  -DVCPKG_TARGET_TRIPLET=x64-windows `
-  -DWITH_TESTS=OFF -DKPXC_FEATURE_DOCS=OFF `
-  -DKPXC_FEATURE_NETWORK=OFF -DKPXC_FEATURE_UPDATES=OFF `
-  -DKPXC_FEATURE_SSHAGENT=OFF
-cmake --build D:\tmp\TheyKnowYourPasswordsBuild --target KeePassXC keepassxc-proxy keepassxc-cli -j 4
-```
+包内含 Qt/vcpkg 运行库、算法服务、只读算法资产副本和权重、相对 TOML 配置、固定 ID Chromium 扩展、快捷方式、注册和检查脚本。启动入口清理 PATH 并设置 Qt 插件路径，避免与 Anaconda 等 DLL 冲突。个人配置位于运行包 settings，算法采用 stdio，GUI 异步，冷启动上限 180 秒。
 
-关闭 KeePassXC 的网络功能不影响 Native Messaging，本地命名管道仍使用 Qt Network。
+## 开发者重建
 
-## 配置算法服务
-
-模型文件保留在原算法目录，不复制到仓库。可用环境变量启动：
+现有 ASCII 源码联接为 `D:\tmp\TheyKnowYourPasswordsSrc`，指向 desktop-app；构建目录为 `D:\tmp\TheyKnowYourPasswordsBuild`。在导入 Visual Studio 2022 x64 开发环境的 PowerShell 7 中执行：
 
 ```powershell
-$env:KEEPASSXC_RISK_PYTHON='D:\Anaconda3\envs\pytorch_cuda\python.exe'
-$env:KEEPASSXC_RISK_SERVICE='D:\研究生\网络安全竞赛\algo-service\server.py'
-$env:KEEPASSXC_RISK_CONFIG='D:\研究生\网络安全竞赛\algo-service\config.toml'
-& 'D:\tmp\TheyKnowYourPasswordsBuild\src\TheyKnowYourPasswords.exe'
+cmake -S D:\tmp\TheyKnowYourPasswordsSrc -B D:\tmp\TheyKnowYourPasswordsBuild -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=D:\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_PREFIX_PATH=D:\Qt\6.8.3\msvc2022_64 -DVCPKG_TARGET_TRIPLET=x64-windows -DWITH_TESTS=ON -DWITH_GUI_TESTS=OFF -DKPXC_FEATURE_DOCS=OFF -DKPXC_FEATURE_NETWORK=OFF -DKPXC_FEATURE_UPDATES=OFF -DKPXC_FEATURE_SSHAGENT=OFF
+cmake --build D:\tmp\TheyKnowYourPasswordsBuild --target KeePassXC keepassxc-cli keepassxc-proxy testriskassessment riskfixture -j4
+.\scripts\setup-runtime.ps1
+.\scripts\package-demo.ps1
 ```
 
-也可在 KeePassXC“设置 → 浏览器集成 → 高级”填写同样的 Python、服务脚本和 TOML 路径。启动时服务会预热模型；stdout 只允许协议 JSON，宿主丢弃 stderr，避免诊断信息进入应用日志。
+Qt 6.8.3/MSVC 19.44/vcpkg 已验证。算法两个原目录只读，禁止直接执行 MC.py 或训练入口。模型不进入 Git 历史；按所有者 2026-10-07 的明确要求，公开 Release 软件包包含中性命名副本。独立 CPU 发行包的构建和下载见 [distribution.md](distribution.md)。
 
-仓库也提供 `scripts\start-demo.ps1`。它设置上述三个环境变量后启动 `D:\tmp\TheyKnowYourPasswordsPackage\TheyKnowYourPasswords.exe`。
+## 验证
 
-## 加载扩展
+Python 域/PSM/协议测试从根目录运行 `.runtime\Scripts\python.exe -m unittest discover -s algo-service/tests -v`；MCP 测试从 mcp-server 目录运行 `.venv\Scripts\python.exe -m unittest discover -s tests -v`。扩展辅助业务测试 `node --test browser-extension/tests/risk-flow.test.cjs`。
 
-扩展构建命令：
+实际浏览器验收从 browser-extension 目录运行 `node tests/real-browser-acceptance.cjs chrome` 和 edge。可用 TKYP_TEST_PACKAGE 指定换路径后的发行目录、TKYP_TEST_REPORTS 指定报告目录。需安装的 Chrome/Edge 支持 Extensions.loadUnpacked 调试命令；使用独立测试配置和专用命名管道，不关闭个人软件，不开截图/追踪，报告只输出状态和计数。验收前为目标包运行注册脚本，结束恢复个人运行包的注册。
 
-```powershell
-cd browser-extension
-npm install
-node build.js --skip-translations
-```
-
-运行 `npm run debug:chromium` 可把带固定公钥的 Chromium 清单复制到开发目录。随后在 Chrome 或 Edge 的扩展管理页面启用开发者模式，选择“加载已解压的扩展”，目录为 `browser-extension\extension`。固定 ID 应显示为 `ijlckofhohjbbifcfhpiglkmfndaaeol`。在桌面客户端的浏览器设置中启用 Chrome/Edge 后重新生成 Native Messaging 清单。
-
-若要生成包含 Qt/vcpkg 运行库、算法服务和已解压 Chromium 扩展的本地演示目录，执行：
-
-```powershell
-.\scripts\package-demo.ps1 -BuildDirectory D:\tmp\TheyKnowYourPasswordsBuild -OutputDirectory D:\tmp\TheyKnowYourPasswordsPackage
-```
-
-模型权重不会复制进演示目录；生成的配置仍引用工作区中的只读算法资产。加载 `D:\tmp\TheyKnowYourPasswordsPackage\extension-chromium` 后，运行 `D:\tmp\TheyKnowYourPasswordsPackage\start-demo.ps1`。
-
-## 演示流程
-
-1. 启动 KeePassXC，打开或创建演示 KDBX，并完成扩展关联。
-2. 打开虚构账号的 HTTPS 修改口令页，点击扩展图标。
-3. 在“口令风险评估”中选择场景，输入候选并评估；未标定结果显示为未知，精确复用显示高风险。
-4. 点击“安全推荐”。候选经宿主生成并完成必要复检后填入页面。
-5. 先在网站提交修改。只有网站确认成功后，勾选“我确认网站已成功修改口令”，再点击“确认并更新 KeePassXC”。
-6. 锁定口令库并刷新面板，展示 `STALE_DATABASE_SESSION` 或数据库未打开状态；停止算法服务可展示 `UNAVAILABLE`；越域输入展示 `OUT_OF_DOMAIN`。
-
-正式演示前使用虚构账号。不要在终端、截图或录屏中展示候选、历史口令、主密钥或派生密钥。
+模型冒烟 `tools/smoke_real_models.py` 与 MCP tools/smoke_real_models.py 只生成内存中的虚构输入；不运行大效果集。验收结果见 validation-report.md，模型与结果身份见 model-provenance.md。未标定、超时、越域和未命中始终未知。

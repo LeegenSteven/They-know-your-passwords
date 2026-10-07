@@ -46,6 +46,9 @@ class AlgorithmServiceClient:
     def from_environment(cls) -> "AlgorithmServiceClient":
         project_root = Path(__file__).resolve().parents[2]
         default_model_python = Path(r"D:\Anaconda3\envs\pytorch_cuda\python.exe")
+        project_python = project_root / ".runtime" / "Scripts" / "python.exe"
+        if project_python.is_file():
+            default_model_python = project_python
         python_path = Path(
             os.environ.get(
                 "TYP_ALGORITHM_PYTHON",
@@ -60,7 +63,7 @@ class AlgorithmServiceClient:
         )
         raw_timeout = os.environ.get("TYP_MCP_STARTUP_TIMEOUT_MS", "180000")
         try:
-            startup_timeout_ms = min(max(int(raw_timeout), 1_000), 600_000)
+            startup_timeout_ms = min(max(int(raw_timeout), 1_000), 180_000)
         except ValueError:
             startup_timeout_ms = 180_000
         return cls(python_path, service_path, config_path, startup_timeout_ms=startup_timeout_ms)
@@ -179,7 +182,10 @@ class AlgorithmServiceClient:
         deadline = time.monotonic() + budget_ms / 1000.0
         last_response: JsonObject = {"status": "LOADING", "ready": False}
         while time.monotonic() < deadline:
-            last_response = await self.call("ping", timeout_ms=2_000)
+            remaining_ms = max(1, round((deadline - time.monotonic()) * 1000))
+            # Interpreter imports and Windows CUDA warmup belong to the cold
+            # start deadline, not the ordinary inference deadline.
+            last_response = await self.call("ping", timeout_ms=remaining_ms)
             if last_response.get("status") != "LOADING":
                 return last_response
             await asyncio.sleep(0.25)
