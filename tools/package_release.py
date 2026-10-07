@@ -19,6 +19,7 @@ def main():
     parser.add_argument("--package", required=True)
     parser.add_argument("--output", default="out/releases/v0.2.0")
     parser.add_argument("--version", default="v0.2.0")
+    parser.add_argument("--launch-fix", action="store_true", help="Also package entry-point replacements for existing installations")
     args = parser.parse_args()
     package = Path(args.package).resolve()
     output = Path(args.output).resolve()
@@ -50,9 +51,18 @@ def main():
                 archive.write(path, str(Path("TheyKnowYourPasswords-Chromium") / path.relative_to(extension_root)))
         archive.write(package / "first-use.md", "TheyKnowYourPasswords-Chromium/INSTALL.md")
         archive.write(package / "licenses/browser-extension.LICENSE", "TheyKnowYourPasswords-Chromium/LICENSE")
+    assets = [software, extension]
+    if args.launch_fix:
+        repair = output / ("TKYP-Launch-Fix-" + args.version + ".zip")
+        with zipfile.ZipFile(repair, "w", zipfile.ZIP_DEFLATED, compresslevel=5) as archive:
+            for name in ("Launch.cmd", "启动软件.cmd", "Setup.cmd", "首次配置.cmd",
+                         "CheckEnvironment.cmd", "start-demo.ps1", "first-use.md", "package-manifest.json"):
+                archive.write(package / name, str(Path("TheyKnowYourPasswords") / name))
+            archive.writestr("INSTALL.md", "# Startup repair\n\nExtract beside your existing TheyKnowYourPasswords folder and replace the eight included files.\nYour database, settings, models and software binaries are unchanged. Then run Launch.cmd.\n")
+        assets.append(repair)
     checksums = []
     report = {"version": args.version, "assets": [], "scope": manifest["scope"]}
-    for path in (software, extension):
+    for path in assets:
         if path.stat().st_size >= 2 * 1024**3:
             raise ValueError("GitHub Release asset exceeds 2 GiB")
         with zipfile.ZipFile(path) as archive:

@@ -47,3 +47,9 @@ Chrome/Edge 各 32/32，新增默认 3 秒 CPU 超时显式 UNKNOWN、不准备�
 可复核脱敏摘要：release-acceptance-v0.2.0.json。发行包完整性按 Release 的 SHA256SUMS.txt 核验；个人 GUI 建库/主口令设置和首次正常浏览器加载/关联由用户完成，未验证其他机器的所有 Windows/硬件组合。
 
 公开发布复核：v0.2.0 两附件匿名下载成功，SHA-256 与本地及 GitHub 摘要一致；从下载 ZIP 重新解压，18 个关键组件、Qt CLI 和独立 Python/CPU 推理库验证通过。发布凭据摘要见 release-publication-v0.2.0.json。
+
+## v0.2.1 启动入口修复
+
+用户实际下载目录的 v0.2.0 启动脚本退出 0，但 3.28 秒后主窗口 visible=false。此前闭环测试直接启动 exe，未覆盖双击 CMD 入口；原“启动入口通过”的记录不足以证明窗口可见。
+
+修复 Start-Process 的 Hidden 为 Normal，增加窗口出现检查、失败提示停留、配置失败中断和环境检查入口。tools/verify_windows_launch.py 通过 Windows PowerShell 5 实际执行 CMD，用独立随机命名管道和空白配置检查原下载目录 19/19、发行目录 16/16；窗口需可见、非最小化且透明度大于零。缺文件时保留提示，不关闭已有软件。测试正常关闭专属 PID 对应的空白窗口，恢复浏览器注册，不读取个人库或窗口文字。摘要见 launch-acceptance-v0.2.1.json。

@@ -5,7 +5,8 @@ $packagePath = (Resolve-Path -LiteralPath $PackageDirectory).Path
 $portable = Test-Path -LiteralPath (Join-Path $packagePath 'runtime\python.exe')
 $rankModel = if ($portable) { 'algorithms\rankguess\engine-a.bin' } else { 'algorithms\rankguess\best_rankguess_guesser_csdn.pth' }
 $pardModel = if ($portable) { 'algorithms\pard\engine-b.bin' } else { 'algorithms\pard\best_model_02_csdn.pt' }
-$files = @('TheyKnowYourPasswords.exe', 'they-know-your-passwords-proxy.exe', 'they-know-your-passwords-cli.exe',
+$files = @('Launch.cmd', '启动软件.cmd', 'Setup.cmd', '首次配置.cmd', 'CheckEnvironment.cmd', 'start-demo.ps1',
+    'TheyKnowYourPasswords.exe', 'they-know-your-passwords-proxy.exe', 'they-know-your-passwords-cli.exe',
     'algo-service\server.py', 'algo-service\config.toml', 'algo-service\adapters\rankguess.py',
     'algo-service\adapters\pard.py', 'algo-service\adapters\psm.py', 'extension-chromium\manifest.json',
     'algorithms\rankguess\MC.py', $rankModel,

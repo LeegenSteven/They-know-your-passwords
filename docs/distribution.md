@@ -4,10 +4,10 @@
 
 ## 两个下载包
 
-- `TKYP-Windows-x64-v0.2.0.zip`：Windows x64 桌面软件、Qt/MSVC 运行库、独立 Python 3.12.10、PyTorch 2.8.0 CPU、模型、相对配置、浏览器宿主与首次使用说明。无需安装 Python、Anaconda、CUDA、Qt 或编译器。
-- `TKYP-Chrome-Edge-v0.2.0.zip`：Chrome/Edge 固定 ID 插件和加载说明。插件需配合软件使用，主口令在桌面软件中设置。
+- `TKYP-Windows-x64-v0.2.1.zip`：Windows x64 桌面软件、Qt/MSVC 运行库、独立 Python 3.12.10、PyTorch 2.8.0 CPU、模型、相对配置、浏览器宿主与首次使用说明。无需安装 Python、Anaconda、CUDA、Qt 或编译器。
+- `TKYP-Chrome-Edge-v0.2.1.zip`：Chrome/Edge 固定 ID 插件和加载说明。插件需配合软件使用，主口令在桌面软件中设置。
 
-从 [v0.2.0 Release](https://github.com/LeegenSteven/They-know-your-passwords/releases/tag/v0.2.0) 下载上述附件。GitHub 的绿色 Code / Download ZIP 和 Source code 附件是源码，不包含完整运行环境。
+从 [v0.2.1 Release](https://github.com/LeegenSteven/They-know-your-passwords/releases/tag/v0.2.1) 下载上述附件。GitHub 的绿色 Code / Download ZIP 和 Source code 附件是源码，不包含完整运行环境。
 
 完整解压软件到有写权限的目录，双击 `Setup.cmd`（或“首次配置.cmd”）。之后双击 `Launch.cmd`（或“启动软件.cmd”）。在 Chrome/Edge 开发者模式加载解压后的插件目录，批准桌面软件与口令库关联；浏览器要求的加载/关联和用户主口令设置需首次手动完成。移动软件目录后重新运行 Setup.cmd。
 

@@ -129,9 +129,10 @@ foreach ($name in @('register-browsers.ps1', 'check-environment.ps1')) {
 }
 Copy-Item -LiteralPath (Join-Path $repositoryRoot 'docs\first-use.md') -Destination $OutputDirectory -Force
 
-$launchCmd = '@echo off' + [Environment]::NewLine + 'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0start-demo.ps1"'
-Set-Content -LiteralPath (Join-Path $OutputDirectory '启动软件.cmd') -Value $launchCmd -Encoding ascii
-Set-Content -LiteralPath (Join-Path $OutputDirectory 'Launch.cmd') -Value $launchCmd -Encoding ascii
+foreach ($name in @('Launch.cmd', '启动软件.cmd')) {
+    Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Launch.cmd') -Destination (Join-Path $OutputDirectory $name) -Force
+}
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'CheckEnvironment.cmd') -Destination $OutputDirectory -Force
 if (-not $Portable) {
     $shellObject = New-Object -ComObject WScript.Shell
     $shortcut = $shellObject.CreateShortcut((Join-Path $OutputDirectory 'They know your passwords.lnk'))
@@ -141,12 +142,9 @@ if (-not $Portable) {
     $shortcut.Save()
 }
 
-$firstUseCmd = '@echo off' + [Environment]::NewLine +
-    'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0register-browsers.ps1"' + [Environment]::NewLine +
-    'call "%~dp0Launch.cmd"' + [Environment]::NewLine +
-    'notepad.exe "%~dp0first-use.md"'
-Set-Content -LiteralPath (Join-Path $OutputDirectory '首次配置.cmd') -Value $firstUseCmd -Encoding ascii
-Set-Content -LiteralPath (Join-Path $OutputDirectory 'Setup.cmd') -Value $firstUseCmd -Encoding ascii
+foreach ($name in @('Setup.cmd', '首次配置.cmd')) {
+    Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Setup.cmd') -Destination (Join-Path $OutputDirectory $name) -Force
+}
 $licenses = Join-Path $OutputDirectory 'licenses'
 New-Item -ItemType Directory -Path $licenses -Force | Out-Null
 Get-ChildItem -LiteralPath (Join-Path $repositoryRoot 'desktop-app') -Filter 'LICENSE*' | Copy-Item -Destination $licenses -Force

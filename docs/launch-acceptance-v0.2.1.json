@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "version": "v0.2.1",
+  "originalReproduction": {
+    "exitCode": 0,
+    "elapsedMs": 3281,
+    "mainWindowVisible": false
+  },
+  "downloadedCopy": {
+    "complete": true,
+    "vaults": 0,
+    "screenshots": false,
+    "checks": [
+      {
+        "check": "Setup.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1016
+      },
+      {
+        "check": "Setup.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "chrome-setup-registers-current-package",
+        "passed": true
+      },
+      {
+        "check": "edge-setup-registers-current-package",
+        "passed": true
+      },
+      {
+        "check": "chinese-setup-alias-identical",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 578
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "repeat-uses-same-instance",
+        "passed": true
+      },
+      {
+        "check": "启动软件.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 531
+      },
+      {
+        "check": "启动软件.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "minimized-instance-restored",
+        "passed": true
+      },
+      {
+        "check": "missing-file-nonzero-exit",
+        "passed": true
+      },
+      {
+        "check": "failure-keeps-error-visible",
+        "passed": true
+      },
+      {
+        "check": "failure-does-not-close-existing-test-desktop",
+        "passed": true
+      },
+      {
+        "check": "normal-test-instance-closed",
+        "passed": true
+      },
+      {
+        "check": "legacy-hidden-instance-reproduced",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 641
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "legacy-instance-recovered-without-restart",
+        "passed": true
+      }
+    ],
+    "test_instance_closed": true,
+    "registration_restored": true
+  },
+  "releaseStage": {
+    "complete": true,
+    "vaults": 0,
+    "screenshots": false,
+    "checks": [
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 703
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 531
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "repeat-uses-same-instance",
+        "passed": true
+      },
+      {
+        "check": "启动软件.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 531
+      },
+      {
+        "check": "启动软件.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "minimized-instance-restored",
+        "passed": true
+      },
+      {
+        "check": "missing-file-nonzero-exit",
+        "passed": true
+      },
+      {
+        "check": "failure-keeps-error-visible",
+        "passed": true
+      },
+      {
+        "check": "failure-does-not-close-existing-test-desktop",
+        "passed": true
+      },
+      {
+        "check": "normal-test-instance-closed",
+        "passed": true
+      },
+      {
+        "check": "legacy-hidden-instance-reproduced",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 609
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "legacy-instance-recovered-without-restart",
+        "passed": true
+      }
+    ],
+    "test_instance_closed": true
+  },
+  "originalRuntimeComponentsUnchanged": 18,
+  "modelsChanged": false,
+  "personalDatabasesRead": false
+}
