@@ -47,6 +47,11 @@ def main():
     user.GetWindow.restype = wintypes.HWND
     user.GetLayeredWindowAttributes.argtypes = [wintypes.HWND, ctypes.POINTER(wintypes.DWORD),
                                               ctypes.POINTER(wintypes.BYTE), ctypes.POINTER(wintypes.DWORD)]
+    user.GetWindowDisplayAffinity.argtypes = [wintypes.HWND, ctypes.POINTER(wintypes.DWORD)]
+    user.GetWindowRect.argtypes = [wintypes.HWND, ctypes.POINTER(wintypes.RECT)]
+    user.MonitorFromRect.argtypes = [ctypes.POINTER(wintypes.RECT), wintypes.DWORD]
+    user.MonitorFromRect.restype = wintypes.HANDLE
+    user.SetWindowPos.argtypes = [wintypes.HWND, wintypes.HWND, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int, wintypes.UINT]
     user.ShowWindow.argtypes = [wintypes.HWND, ctypes.c_int]
     user.PostMessageW.argtypes = [wintypes.HWND, wintypes.UINT, wintypes.WPARAM, wintypes.LPARAM]
     kernel.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
@@ -104,7 +109,7 @@ def main():
                     alpha = wintypes.BYTE(255)
                     color, flags = wintypes.DWORD(), wintypes.DWORD()
                     layered = user.GetLayeredWindowAttributes(hwnd, ctypes.byref(color), ctypes.byref(alpha), ctypes.byref(flags))
-                    opaque = not layered or not (flags.value & 2) or alpha.value > 0
+                    opaque = not layered or not (flags.value & 2) or alpha.value == 255
                     found.append((hwnd, bool(user.IsWindowVisible(hwnd)), bool(user.IsIconic(hwnd)), opaque))
             return True
         user.EnumWindows(visit, 0)
@@ -113,10 +118,23 @@ def main():
     def shown(pid):
         deadline = time.monotonic() + 3
         while time.monotonic() < deadline:
-            if any(visible and not minimized and opaque for _, visible, minimized, opaque in windows(pid)):
+            if any(visible and not minimized and opaque and on_screen(hwnd)
+                   for hwnd, visible, minimized, opaque in windows(pid)):
                 return True
             time.sleep(0.1)
         return False
+
+    def on_screen(hwnd):
+        rect = wintypes.RECT()
+        user.GetWindowRect(hwnd, ctypes.byref(rect))
+        return bool(user.MonitorFromRect(ctypes.byref(rect), 0))
+
+    def affinity(pid):
+        for hwnd, *_ in windows(pid):
+            value = wintypes.DWORD(0xffffffff)
+            if user.GetWindowDisplayAffinity(hwnd, ctypes.byref(value)):
+                return value.value
+        return None
 
     def command(name, extra=()):
         # All arguments are local, generated paths; credentials never enter the command line.
@@ -130,11 +148,20 @@ def main():
         record(name + '-exit-success', result.returncode == 0,
                elapsed_ms=round((time.monotonic() - start) * 1000))
         pid = bind_pid()
-        record(name + '-visible-opaque-main-window', shown(pid))
+        displayed = shown(pid)
+        if not displayed:
+            for hwnd, visible, minimized, opaque in windows(pid):
+                rect = wintypes.RECT()
+                user.GetWindowRect(hwnd, ctypes.byref(rect))
+                print(json.dumps({'diagnostic': 'display-state-only', 'visible': visible, 'minimized': minimized,
+                                  'opaque': opaque, 'on_screen': on_screen(hwnd),
+                                  'rect': [rect.left, rect.top, rect.right, rect.bottom]}), flush=True)
+        record(name + '-visible-opaque-main-window', displayed)
         return pid
 
     try:
         test_pid = launch('Setup.cmd' if args.setup else 'Launch.cmd')
+        record('local-startup-blocks-capture-by-default', affinity(test_pid) == 0x11)
         if args.setup:
             expected = str(package / 'native-messaging' / 'org.keepassxc.keepassxc_browser.json')
             for index, (key_path, _, _) in enumerate(registry_before):
@@ -149,7 +176,11 @@ def main():
         user.ShowWindow(hwnd, 6)  # Minimize this empty test window only.
         test_pid = launch('启动软件.cmd')
         record('minimized-instance-restored', shown(test_pid))
-
+        hwnd = windows(test_pid)[0][0]
+        user.SetWindowPos(hwnd, None, 30000, 30000, 800, 600, 0x14)
+        record('offscreen-window-reproduced', not on_screen(hwnd))
+        test_pid = launch('Launch.cmd')
+        record('offscreen-window-restored', shown(test_pid))
         missing = output / 'intentionally-missing.exe'
         failure = subprocess.Popen(command('Launch.cmd', ['-KeePassExecutable', str(missing)]),
             env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
@@ -187,6 +218,25 @@ def main():
                not any(visible for _, visible, *_ in windows(test_pid)) and bind_pid() == legacy.pid)
         test_pid = launch('Launch.cmd')
         record('legacy-instance-recovered-without-restart', test_pid == legacy.pid and shown(test_pid))
+        protected_pid = test_pid
+        test_pid = launch('Launch-Remote.cmd')
+        record('remote-request-normally-restarts-protected-instance', test_pid != protected_pid)
+        record('remote-window-allows-capture-without-taking-screenshots', affinity(test_pid) == 0)
+        remote_pid = test_pid
+        test_pid = launch('远程启动.cmd')
+        record('remote-repeat-reuses-instance', test_pid == remote_pid and affinity(test_pid) == 0)
+        if args.setup:
+            test_pid = launch('Setup-Remote.cmd')
+            record('remote-setup-reuses-capture-enabled-instance', test_pid == remote_pid and affinity(test_pid) == 0)
+        record('remote-setup-alias-identical', (package / 'Setup-Remote.cmd').read_bytes() == (package / '远程首次配置.cmd').read_bytes())
+        for hwnd, *_ in windows(test_pid):
+            user.PostMessageW(hwnd, 0x0010, 0, 0)
+        deadline = time.monotonic() + 3
+        while lock.exists() and time.monotonic() < deadline:
+            time.sleep(0.1)
+        record('remote-test-instance-closed-normally', not lock.exists())
+        test_pid = launch('Launch.cmd')
+        record('local-startup-restores-capture-protection', affinity(test_pid) == 0x11)
         report['complete'] = True
     finally:
         if test_pid is None and lock.exists():

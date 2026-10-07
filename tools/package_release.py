@@ -56,9 +56,10 @@ def main():
         repair = output / ("TKYP-Launch-Fix-" + args.version + ".zip")
         with zipfile.ZipFile(repair, "w", zipfile.ZIP_DEFLATED, compresslevel=5) as archive:
             for name in ("Launch.cmd", "启动软件.cmd", "Setup.cmd", "首次配置.cmd",
+                         "Launch-Remote.cmd", "远程启动.cmd", "Setup-Remote.cmd", "远程首次配置.cmd", "window-display.ps1",
                          "CheckEnvironment.cmd", "start-demo.ps1", "first-use.md", "package-manifest.json"):
                 archive.write(package / name, str(Path("TheyKnowYourPasswords") / name))
-            archive.writestr("INSTALL.md", "# Startup repair\n\nExtract beside your existing TheyKnowYourPasswords folder and replace the eight included files.\nYour database, settings, models and software binaries are unchanged. Then run Launch.cmd.\n")
+            archive.writestr("INSTALL.md", "# Startup repair\n\nExtract beside your existing TheyKnowYourPasswords folder and replace the included files.\nYour database, settings, models and software binaries are unchanged. Use Launch.cmd on a local monitor; use Launch-Remote.cmd for remote/shared viewing.\n")
         assets.append(repair)
     checksums = []
     report = {"version": args.version, "assets": [], "scope": manifest["scope"]}

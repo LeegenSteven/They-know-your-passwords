@@ -4,16 +4,18 @@
 
 ## 直接下载使用
 
-从 [v0.2.1 发布页](https://github.com/LeegenSteven/They-know-your-passwords/releases/tag/v0.2.1) 下载这两部分：
+从 [v0.2.2 发布页](https://github.com/LeegenSteven/They-know-your-passwords/releases/tag/v0.2.2) 下载这两部分：
 
 | 下载 | 内容 |
 | --- | --- |
-| [Windows x64 软件包](https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.1/TKYP-Windows-x64-v0.2.1.zip) | 桌面软件、两模型、独立 Python/CPU 推理库及浏览器宿主，无需另装 Anaconda/CUDA |
-| [Chrome / Edge 插件包](https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.1/TKYP-Chrome-Edge-v0.2.1.zip) | 解压后在浏览器开发者模式加载，配合软件使用 |
+| [Windows x64 软件包](https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.2/TKYP-Windows-x64-v0.2.2.zip) | 桌面软件、两模型、独立 Python/CPU 推理库及浏览器宿主，无需另装 Anaconda/CUDA |
+| [Chrome / Edge 插件包](https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.2/TKYP-Chrome-Edge-v0.2.2.zip) | 解压后在浏览器开发者模式加载，配合软件使用 |
 
 完整解压软件后双击 **Setup.cmd / 首次配置.cmd**，在软件中设置自己的主口令；加载插件后批准口令库关联。有历史口令的 CPU 复检请在界面主动选择 30/120 秒预算，默认 3 秒超时保持未知。以后双击 Launch.cmd / 启动软件.cmd。[首次使用](docs/first-use.md) · [分发与校验](docs/distribution.md)。GitHub 的 Code / Download ZIP 是源码，直接使用请下载上面的 Release 附件。
 
 ## 当前交付形态
+
+通过远程或共享画面使用时，首次双击 **Setup-Remote.cmd / 远程首次配置.cmd**，以后双击 **Launch-Remote.cmd / 远程启动.cmd**。普通入口默认禁止屏幕捕获，远程画面会过滤软件窗口；远程入口允许本次会话被共享工具捕获。退出后用普通入口恢复屏幕保护。
 
 项目由四个本地组件组成：
 

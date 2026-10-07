@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param([string] $PythonExecutable, [string] $KeePassExecutable, [string] $ServiceScript,
       [string] $ServiceConfig, [string] $ConfigDirectory, [string[]] $DatabaseFiles = @(),
+      [switch] $AllowScreenCapture,
       [ValidateRange(1, 60)][int] $LaunchTimeoutSeconds = 15)
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
@@ -34,8 +35,9 @@ $env:PATH = $root + ';' + $env:SystemRoot + '\System32;' + $env:SystemRoot
 $env:QT_PLUGIN_PATH = $root
 $env:QT_QPA_PLATFORM_PLUGIN_PATH = Join-Path $root 'platforms'
 $arguments = @('--config', ('"' + $settings + '"'), '--localconfig', ('"' + $local + '"'))
+if ($AllowScreenCapture) { $arguments += '--allow-screencapture' }
 $arguments += $DatabaseFiles | ForEach-Object { '"' + $_ + '"' }
-function Get-ExistingDesktop {
+function Find-ExistingDesktop {
     $lockUser = $env:USERNAME
     if (-not $lockUser) { $lockUser = $env:USER }
     if (-not $lockUser) { $lockUser = '' }
@@ -49,60 +51,53 @@ function Get-ExistingDesktop {
     $instance = Get-Process -Id $instanceId -ErrorAction SilentlyContinue
     if (-not $instance -or $instance.SessionId -ne (Get-Process -Id $PID).SessionId -or
         $instance.ProcessName -ne [IO.Path]::GetFileNameWithoutExtension($KeePassExecutable)) { return }
-    if ($instance.MainWindowHandle -eq [IntPtr]::Zero) {
-        # Recover a v0.2.0 SW_HIDE window. Only inspect top-level Qt windows of
-        # the PID in this user's single-instance lock; never read window text.
-        if (-not ('TkypLaunchWindow' -as [type])) {
-            Add-Type -TypeDefinition @'
-using System;
-using System.Runtime.InteropServices;
-using System.Text;
-public static class TkypLaunchWindow {
-    delegate bool Callback(IntPtr window, IntPtr state);
-    [DllImport("user32.dll")] static extern bool EnumWindows(Callback callback, IntPtr state);
-    [DllImport("user32.dll")] static extern uint GetWindowThreadProcessId(IntPtr window, out uint process);
-    [DllImport("user32.dll")] static extern IntPtr GetWindow(IntPtr window, uint command);
-    [DllImport("user32.dll", CharSet=CharSet.Unicode)] static extern int GetClassName(IntPtr window, StringBuilder name, int size);
-    [DllImport("user32.dll")] static extern bool GetWindowRect(IntPtr window, out Rect rect);
-    [DllImport("user32.dll")] static extern bool ShowWindow(IntPtr window, int command);
-    [DllImport("user32.dll")] static extern bool SetForegroundWindow(IntPtr window);
-    struct Rect { public int Left, Top, Right, Bottom; }
-    public static void Restore(int process) {
-        EnumWindows(delegate(IntPtr window, IntPtr state) {
-            uint owner; GetWindowThreadProcessId(window, out owner);
-            if (owner != process || GetWindow(window, 4) != IntPtr.Zero) return true;
-            var name = new StringBuilder(256); GetClassName(window, name, name.Capacity);
-            Rect rect; GetWindowRect(window, out rect);
-            if (name.ToString().EndsWith("QWindowIcon") && rect.Right-rect.Left >= 200 && rect.Bottom-rect.Top >= 150) {
-                ShowWindow(window, 9); SetForegroundWindow(window);
-            }
-            return true;
-        }, IntPtr.Zero);
-    }
+    return $instance
 }
-'@
-        }
-        [TkypLaunchWindow]::Restore($instance.Id)
-        $instance.Refresh()
+. (Join-Path $PSScriptRoot 'window-display.ps1')
+# The legacy GUI cannot change capture protection while already running.
+# Only normal close is permitted: unsaved-data prompts may refuse restart.
+$previous = Find-ExistingDesktop
+if ($AllowScreenCapture -and $previous -and -not [TkypDesktopWindow]::CaptureAllowed($previous.Id)) {
+    Write-Output 'Remote display requested. Closing the protected instance normally before restarting.'
+    [TkypDesktopWindow]::Restore($previous.Id)
+    if (-not $previous.CloseMainWindow() -or -not $previous.WaitForExit(3000)) {
+        throw 'The existing instance has not closed. Save pending changes and exit it normally, then run Launch-Remote.cmd. No process was forcibly stopped.'
     }
-    if ($instance.MainWindowHandle -ne [IntPtr]::Zero) { return $instance }
 }
 # This is the user's interactive desktop, not the background algorithm worker.
 # SW_HIDE suppresses Qt's first native show even when Qt considers it visible;
 # subsequent single-instance activations then also fail to display that window.
 $desktop = Start-Process -FilePath $KeePassExecutable -ArgumentList $arguments -WorkingDirectory $root -WindowStyle Normal -PassThru
 $deadline = [DateTime]::UtcNow.AddSeconds($LaunchTimeoutSeconds)
+$readyChecks = 0
 do {
     $desktop.Refresh()
     if ($desktop.HasExited) {
         if ($desktop.ExitCode -ne 0) { throw "Desktop launch failed (exit code $($desktop.ExitCode)). Run check-environment.ps1." }
         # The second invocation exits after asking the existing instance to show.
-        $existing = Get-ExistingDesktop
-        if ($existing) { Write-Output 'Desktop window is open (existing instance).'; return }
-    } elseif ($desktop.MainWindowHandle -ne [IntPtr]::Zero) {
-        Write-Output 'Desktop window is open.'
-        return
+        $existing = Find-ExistingDesktop
+        if ($existing) {
+            [TkypDesktopWindow]::Restore($existing.Id)
+            if ([TkypDesktopWindow]::Ready($existing.Id, $AllowScreenCapture.IsPresent)) {
+                $readyChecks++
+                if ($readyChecks -ge 3) { Write-Output 'Desktop window is shown (existing instance).'; return }
+            } else {
+                $readyChecks = 0
+            }
+        }
+    } else {
+        [TkypDesktopWindow]::Restore($desktop.Id)
+        if ([TkypDesktopWindow]::Ready($desktop.Id, $AllowScreenCapture.IsPresent)) {
+            $readyChecks++
+            if ($readyChecks -ge 3) {
+                if ($AllowScreenCapture) { Write-Output 'Desktop window is shown. Remote viewing is enabled for this session.' }
+                else { Write-Output 'Desktop window is shown. Screen sharing is blocked by default; use Launch-Remote.cmd for remote viewing.' }
+                return
+            }
+        } else {
+            $readyChecks = 0
+        }
     }
     Start-Sleep -Milliseconds 200
 } while ([DateTime]::UtcNow -lt $deadline)
-throw 'No desktop window appeared within the startup timeout. Run check-environment.ps1; if an old instance is hidden, open it from the system tray or exit it there and retry.'
+throw 'The desktop window is not displayed on the current screen within the startup timeout. Run CheckEnvironment.cmd. For remote/shared viewing, use Launch-Remote.cmd.'

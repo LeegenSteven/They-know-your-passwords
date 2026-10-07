@@ -1,0 +1,377 @@
+{
+  "schema": 1,
+  "version": "v0.2.2",
+  "originalReproduction": {
+    "captureAffinity": 17,
+    "localWindowVisible": true,
+    "remoteUserCouldSeeWindow": false
+  },
+  "humanConfirmation": {
+    "remoteUserCouldSeeWindow": true,
+    "answer": "现在能看到",
+    "captureAffinity": 0
+  },
+  "downloadedCopy": {
+    "complete": true,
+    "vaults": 0,
+    "screenshots": false,
+    "checks": [
+      {
+        "check": "Setup.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1469
+      },
+      {
+        "check": "Setup.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "local-startup-blocks-capture-by-default",
+        "passed": true
+      },
+      {
+        "check": "chrome-setup-registers-current-package",
+        "passed": true
+      },
+      {
+        "check": "edge-setup-registers-current-package",
+        "passed": true
+      },
+      {
+        "check": "chinese-setup-alias-identical",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1062
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "repeat-uses-same-instance",
+        "passed": true
+      },
+      {
+        "check": "启动软件.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1063
+      },
+      {
+        "check": "启动软件.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "minimized-instance-restored",
+        "passed": true
+      },
+      {
+        "check": "offscreen-window-reproduced",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1078
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "offscreen-window-restored",
+        "passed": true
+      },
+      {
+        "check": "missing-file-nonzero-exit",
+        "passed": true
+      },
+      {
+        "check": "failure-keeps-error-visible",
+        "passed": true
+      },
+      {
+        "check": "failure-does-not-close-existing-test-desktop",
+        "passed": true
+      },
+      {
+        "check": "normal-test-instance-closed",
+        "passed": true
+      },
+      {
+        "check": "legacy-hidden-instance-reproduced",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1047
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "legacy-instance-recovered-without-restart",
+        "passed": true
+      },
+      {
+        "check": "Launch-Remote.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1297
+      },
+      {
+        "check": "Launch-Remote.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "remote-request-normally-restarts-protected-instance",
+        "passed": true
+      },
+      {
+        "check": "remote-window-allows-capture-without-taking-screenshots",
+        "passed": true
+      },
+      {
+        "check": "远程启动.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1078
+      },
+      {
+        "check": "远程启动.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "remote-repeat-reuses-instance",
+        "passed": true
+      },
+      {
+        "check": "Setup-Remote.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1344
+      },
+      {
+        "check": "Setup-Remote.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "remote-setup-reuses-capture-enabled-instance",
+        "passed": true
+      },
+      {
+        "check": "remote-setup-alias-identical",
+        "passed": true
+      },
+      {
+        "check": "remote-test-instance-closed-normally",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1234
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "local-startup-restores-capture-protection",
+        "passed": true
+      }
+    ],
+    "test_instance_closed": true,
+    "registration_restored": true
+  },
+  "releaseStage": {
+    "complete": true,
+    "vaults": 0,
+    "screenshots": false,
+    "checks": [
+      {
+        "check": "Setup.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1515
+      },
+      {
+        "check": "Setup.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "local-startup-blocks-capture-by-default",
+        "passed": true
+      },
+      {
+        "check": "chrome-setup-registers-current-package",
+        "passed": true
+      },
+      {
+        "check": "edge-setup-registers-current-package",
+        "passed": true
+      },
+      {
+        "check": "chinese-setup-alias-identical",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1063
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "repeat-uses-same-instance",
+        "passed": true
+      },
+      {
+        "check": "启动软件.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1062
+      },
+      {
+        "check": "启动软件.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "minimized-instance-restored",
+        "passed": true
+      },
+      {
+        "check": "offscreen-window-reproduced",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1063
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "offscreen-window-restored",
+        "passed": true
+      },
+      {
+        "check": "missing-file-nonzero-exit",
+        "passed": true
+      },
+      {
+        "check": "failure-keeps-error-visible",
+        "passed": true
+      },
+      {
+        "check": "failure-does-not-close-existing-test-desktop",
+        "passed": true
+      },
+      {
+        "check": "normal-test-instance-closed",
+        "passed": true
+      },
+      {
+        "check": "legacy-hidden-instance-reproduced",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1047
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "legacy-instance-recovered-without-restart",
+        "passed": true
+      },
+      {
+        "check": "Launch-Remote.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1266
+      },
+      {
+        "check": "Launch-Remote.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "remote-request-normally-restarts-protected-instance",
+        "passed": true
+      },
+      {
+        "check": "remote-window-allows-capture-without-taking-screenshots",
+        "passed": true
+      },
+      {
+        "check": "远程启动.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1062
+      },
+      {
+        "check": "远程启动.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "remote-repeat-reuses-instance",
+        "passed": true
+      },
+      {
+        "check": "Setup-Remote.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1360
+      },
+      {
+        "check": "Setup-Remote.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "remote-setup-reuses-capture-enabled-instance",
+        "passed": true
+      },
+      {
+        "check": "remote-setup-alias-identical",
+        "passed": true
+      },
+      {
+        "check": "remote-test-instance-closed-normally",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1234
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "local-startup-restores-capture-protection",
+        "passed": true
+      }
+    ],
+    "test_instance_closed": true,
+    "registration_restored": true
+  },
+  "identity": {
+    "runtimeAlgorithmModelFilesUnchanged": 18,
+    "pluginFilesUnchanged": 190,
+    "portableManifestFiles": 29
+  },
+  "scope": {
+    "vaults": 0,
+    "screenshots": false,
+    "personalDatabasesRead": false,
+    "forcedTermination": false
+  },
+  "additionalExploration": {
+    "externalLayeredStyleMutation": "not validated; excluded from supported regression cases",
+    "remainingScope": "Qt startup, hidden/minimized/offscreen recovery and capture-affinity modes"
+  }
+}

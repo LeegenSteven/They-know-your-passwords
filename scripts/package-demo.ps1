@@ -124,7 +124,7 @@ foreach ($document in @('validation-report.md', 'model-provenance.md', 'threat-m
     Copy-Item -LiteralPath (Join-Path $repositoryRoot ('docs\' + $document)) -Destination $documentationDirectory -Force
 }
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'start-demo.ps1') -Destination $OutputDirectory -Force
-foreach ($name in @('register-browsers.ps1', 'check-environment.ps1')) {
+foreach ($name in @('register-browsers.ps1', 'check-environment.ps1', 'window-display.ps1')) {
     Copy-Item -LiteralPath (Join-Path $PSScriptRoot $name) -Destination $OutputDirectory -Force
 }
 Copy-Item -LiteralPath (Join-Path $repositoryRoot 'docs\first-use.md') -Destination $OutputDirectory -Force
@@ -133,6 +133,12 @@ foreach ($name in @('Launch.cmd', '启动软件.cmd')) {
     Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Launch.cmd') -Destination (Join-Path $OutputDirectory $name) -Force
 }
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'CheckEnvironment.cmd') -Destination $OutputDirectory -Force
+foreach ($name in @('Launch-Remote.cmd','远程启动.cmd')) {
+    Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Launch-Remote.cmd') -Destination (Join-Path $OutputDirectory $name) -Force
+}
+foreach ($name in @('Setup-Remote.cmd','远程首次配置.cmd')) {
+    Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Setup-Remote.cmd') -Destination (Join-Path $OutputDirectory $name) -Force
+}
 if (-not $Portable) {
     $shellObject = New-Object -ComObject WScript.Shell
     $shortcut = $shellObject.CreateShortcut((Join-Path $OutputDirectory 'They know your passwords.lnk'))
