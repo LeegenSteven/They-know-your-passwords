@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "checkedUtc": "2026-10-07T06:50:43.8339924Z",
+  "releaseUrl": "https://github.com/LeegenSteven/They-know-your-passwords/releases/tag/v0.2.1",
+  "tag": "v0.2.1",
+  "sourceCommit": "cedec4b35b1e7bd796ddab7524db7c5ec34ab07c",
+  "draft": false,
+  "latestTag": "v0.2.1",
+  "assets": [
+    {
+      "name": "SHA256SUMS.txt",
+      "bytes": 284,
+      "digest": "sha256:794431f8c72a11941929360b4861277624fc9aa39bea981b5011e4269bb89824",
+      "state": "uploaded",
+      "downloadUrl": "https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.1/SHA256SUMS.txt"
+    },
+    {
+      "name": "TKYP-Chrome-Edge-v0.2.1.zip",
+      "bytes": 1070617,
+      "digest": "sha256:b5bbdf4da870785301cf6b87185c688741eab0c4f73251cb94a607f275b2a539",
+      "state": "uploaded",
+      "downloadUrl": "https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.1/TKYP-Chrome-Edge-v0.2.1.zip"
+    },
+    {
+      "name": "TKYP-Launch-Fix-v0.2.1.zip",
+      "bytes": 8484,
+      "digest": "sha256:1b154aeebcdd245fb22dc55a785a4d576db3135814d0ef815f7ff0104b42c05d",
+      "state": "uploaded",
+      "downloadUrl": "https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.1/TKYP-Launch-Fix-v0.2.1.zip"
+    },
+    {
+      "name": "TKYP-Windows-x64-v0.2.1.zip",
+      "bytes": 268596483,
+      "digest": "sha256:03ac8489498e83081eda2d5fff25f7a693b5e614994ce6a0e5648bca745aae96",
+      "state": "uploaded",
+      "downloadUrl": "https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.1/TKYP-Windows-x64-v0.2.1.zip"
+    }
+  ],
+  "downloadVerification": {
+    "anonymousAssetsVerified": 3,
+    "extractedComponentsVerified": 24,
+    "repairAppliedToOriginalEntryPoints": true,
+    "packageScope": "windows-x64-portable-cpu",
+    "modelsChanged": false
+  },
+  "publicStartupAcceptance": {
+    "complete": true,
+    "vaults": 0,
+    "screenshots": false,
+    "checks": [
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1500
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 547
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "repeat-uses-same-instance",
+        "passed": true
+      },
+      {
+        "check": "启动软件.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 547
+      },
+      {
+        "check": "启动软件.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "minimized-instance-restored",
+        "passed": true
+      },
+      {
+        "check": "missing-file-nonzero-exit",
+        "passed": true
+      },
+      {
+        "check": "failure-keeps-error-visible",
+        "passed": true
+      },
+      {
+        "check": "failure-does-not-close-existing-test-desktop",
+        "passed": true
+      },
+      {
+        "check": "normal-test-instance-closed",
+        "passed": true
+      },
+      {
+        "check": "legacy-hidden-instance-reproduced",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 656
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "legacy-instance-recovered-without-restart",
+        "passed": true
+      }
+    ],
+    "test_instance_closed": true
+  },
+  "pluginIdentity": {
+    "pluginFilesUnchanged": 190,
+    "pluginDocumentationChanged": [
+      "TheyKnowYourPasswords-Chromium/INSTALL.md"
+    ],
+    "modelsChanged": false
+  },
+  "personalDatabasesRead": false
+}
