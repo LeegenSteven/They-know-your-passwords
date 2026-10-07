@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import tempfile
 import time
 import uuid
 
@@ -143,8 +144,14 @@ def main():
 
     def launch(name):
         start = time.monotonic()
-        result = subprocess.run(command(name), env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                                creationflags=subprocess.CREATE_NO_WINDOW, timeout=25)
+        # GUI children inherit standard handles; a pipe would wait for GUI exit.
+        # A private temporary file preserves empty-instance diagnostics without that wait.
+        with tempfile.TemporaryFile() as diagnostic:
+            result = subprocess.run(command(name), env=env, stdout=diagnostic, stderr=subprocess.STDOUT,
+                                    creationflags=subprocess.CREATE_NO_WINDOW, timeout=25)
+            if result.returncode:
+                diagnostic.seek(0)
+                print(diagnostic.read().decode(errors='replace'), flush=True)
         record(name + '-exit-success', result.returncode == 0,
                elapsed_ms=round((time.monotonic() - start) * 1000))
         pid = bind_pid()

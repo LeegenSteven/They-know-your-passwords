@@ -1,0 +1,27 @@
+{
+  "version": "v0.2.2",
+  "assets": [
+    {
+      "file": "TKYP-Windows-x64-v0.2.2.zip",
+      "bytes": 268600946,
+      "files": 17391,
+      "sha256": "ef89a36657a792736a29b1b2458fd3ce75ccc020c1e416a2559693bdcb222ba9",
+      "crc": "OK"
+    },
+    {
+      "file": "TKYP-Chrome-Edge-v0.2.2.zip",
+      "bytes": 1070946,
+      "files": 191,
+      "sha256": "fe2d3a0fe4b903ecb05708b7f398a054d465d02cdc7ec8448a8bef81921c036f",
+      "crc": "OK"
+    },
+    {
+      "file": "TKYP-Launch-Fix-v0.2.2.zip",
+      "bytes": 11996,
+      "files": 14,
+      "sha256": "125612226d5992f618b79c02ee2dec5c50ba3fc91113af6d77887ee18540bdc7",
+      "crc": "OK"
+    }
+  ],
+  "scope": "windows-x64-portable-cpu"
+}

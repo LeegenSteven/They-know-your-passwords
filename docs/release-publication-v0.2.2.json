@@ -1,0 +1,275 @@
+{
+  "schema": 1,
+  "tag": "v0.2.2",
+  "releaseUrl": "https://github.com/LeegenSteven/They-know-your-passwords/releases/tag/v0.2.2",
+  "sourceCommit": "d77e228bf950643a17e2585650ea5d90df9958f6",
+  "latestTag": "v0.2.2",
+  "draft": false,
+  "assets": [
+    {
+      "browser_download_url": "https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.2/SHA256SUMS.txt",
+      "digest": "sha256:05fb56d80a601f6f55ac31b766cd56a46074330205480f34d1b09f297e07b103",
+      "name": "SHA256SUMS.txt",
+      "size": 284,
+      "state": "uploaded"
+    },
+    {
+      "browser_download_url": "https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.2/TKYP-Chrome-Edge-v0.2.2.zip",
+      "digest": "sha256:fe2d3a0fe4b903ecb05708b7f398a054d465d02cdc7ec8448a8bef81921c036f",
+      "name": "TKYP-Chrome-Edge-v0.2.2.zip",
+      "size": 1070946,
+      "state": "uploaded"
+    },
+    {
+      "browser_download_url": "https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.2/TKYP-Launch-Fix-v0.2.2.zip",
+      "digest": "sha256:125612226d5992f618b79c02ee2dec5c50ba3fc91113af6d77887ee18540bdc7",
+      "name": "TKYP-Launch-Fix-v0.2.2.zip",
+      "size": 11996,
+      "state": "uploaded"
+    },
+    {
+      "browser_download_url": "https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.2/TKYP-Windows-x64-v0.2.2.zip",
+      "digest": "sha256:ef89a36657a792736a29b1b2458fd3ce75ccc020c1e416a2559693bdcb222ba9",
+      "name": "TKYP-Windows-x64-v0.2.2.zip",
+      "size": 268600946,
+      "state": "uploaded"
+    }
+  ],
+  "downloadVerification": {
+    "anonymousAssetsVerified": 3,
+    "checksumsVerified": true,
+    "extractedComponentsVerified": 29,
+    "patchMatchesFullSoftware": true,
+    "packageScope": "windows-x64-portable-cpu",
+    "modelsChanged": false
+  },
+  "publicStartupAcceptance": {
+    "complete": true,
+    "vaults": 0,
+    "screenshots": false,
+    "checks": [
+      {
+        "check": "Setup.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1547
+      },
+      {
+        "check": "Setup.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "local-startup-blocks-capture-by-default",
+        "passed": true
+      },
+      {
+        "check": "chrome-setup-registers-current-package",
+        "passed": true
+      },
+      {
+        "check": "edge-setup-registers-current-package",
+        "passed": true
+      },
+      {
+        "check": "chinese-setup-alias-identical",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1094
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "repeat-uses-same-instance",
+        "passed": true
+      },
+      {
+        "check": "启动软件.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1078
+      },
+      {
+        "check": "启动软件.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "minimized-instance-restored",
+        "passed": true
+      },
+      {
+        "check": "offscreen-window-reproduced",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1094
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "offscreen-window-restored",
+        "passed": true
+      },
+      {
+        "check": "missing-file-nonzero-exit",
+        "passed": true
+      },
+      {
+        "check": "failure-keeps-error-visible",
+        "passed": true
+      },
+      {
+        "check": "failure-does-not-close-existing-test-desktop",
+        "passed": true
+      },
+      {
+        "check": "normal-test-instance-closed",
+        "passed": true
+      },
+      {
+        "check": "legacy-hidden-instance-reproduced",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1078
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "legacy-instance-recovered-without-restart",
+        "passed": true
+      },
+      {
+        "check": "Launch-Remote.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1297
+      },
+      {
+        "check": "Launch-Remote.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "remote-request-normally-restarts-protected-instance",
+        "passed": true
+      },
+      {
+        "check": "remote-window-allows-capture-without-taking-screenshots",
+        "passed": true
+      },
+      {
+        "check": "远程启动.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1063
+      },
+      {
+        "check": "远程启动.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "remote-repeat-reuses-instance",
+        "passed": true
+      },
+      {
+        "check": "Setup-Remote.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1343
+      },
+      {
+        "check": "Setup-Remote.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "remote-setup-reuses-capture-enabled-instance",
+        "passed": true
+      },
+      {
+        "check": "remote-setup-alias-identical",
+        "passed": true
+      },
+      {
+        "check": "remote-test-instance-closed-normally",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1250
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "local-startup-restores-capture-protection",
+        "passed": true
+      }
+    ],
+    "test_instance_closed": true,
+    "registration_restored": true
+  },
+  "priorPublicAttempt": {
+    "complete": false,
+    "vaults": 0,
+    "screenshots": false,
+    "checks": [
+      {
+        "check": "Setup.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 2453
+      },
+      {
+        "check": "Setup.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "local-startup-blocks-capture-by-default",
+        "passed": true
+      },
+      {
+        "check": "chrome-setup-registers-current-package",
+        "passed": true
+      },
+      {
+        "check": "edge-setup-registers-current-package",
+        "passed": true
+      },
+      {
+        "check": "chinese-setup-alias-identical",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": false,
+        "elapsed_ms": 15719
+      }
+    ],
+    "registration_restored": true
+  },
+  "diagnostics": {
+    "priorTimeout": "Observed once on repeated launch; not reproduced with a new empty configuration. Original report retained.",
+    "temporaryDiagnosticPipe": "Interrupted owned test helper after GUI handles held a diagnostic output pipe; diagnostics now use a private temporary file.",
+    "userRegistryExplicitlyRestored": {
+      "chrome": true,
+      "edge": true
+    },
+    "currentUserRemoteLaunch": "existing instance shown successfully"
+  },
+  "humanConfirmation": {
+    "remoteVisible": true,
+    "answer": "现在能看到"
+  },
+  "personalDatabasesRead": false,
+  "screenshots": false,
+  "modelsChanged": false,
+  "pluginFilesUnchanged": 190
+}
