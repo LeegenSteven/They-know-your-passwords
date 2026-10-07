@@ -1,0 +1,17 @@
+{
+  "release": "https://github.com/LeegenSteven/They-know-your-passwords/releases/tag/v0.2.0",
+  "tag": "v0.2.0",
+  "sourceCommit": "579c2791bec638c85cd26f145146af9b4711741c",
+  "publishedUtc": "2026-10-07T01:45:25Z",
+  "public": true,
+  "anonymousDownload": "OK",
+  "assets": 2,
+  "remoteAndDownloadedSHA256": "MATCH",
+  "extractedComponents": 18,
+  "downloadedCLI": "OK",
+  "downloadedPython": "3.12.10",
+  "downloadedTorch": "2.8.0+cpu",
+  "downloadedCUDA": false,
+  "chromeChecks": 32,
+  "edgeChecks": 32
+}
