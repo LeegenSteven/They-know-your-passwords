@@ -15,9 +15,30 @@ QJsonObject failure(const QString& code)
 }
 }
 
-QJsonObject RiskCandidateStore::prepare(const QSharedPointer<Database>& database, QObject* connection,
-                                       const QJsonObject& binding, const QJsonObject& assessment)
+quint64 RiskCandidateStore::beginRequest(QObject* connection, const QJsonObject& binding)
 {
+    // Never reuse a generation after lock, disconnect, or another global clear.
+    if (++m_requestGeneration == 0) { ++m_requestGeneration; }
+    const auto page = binding.value("pageId").toString();
+    const auto origin = binding.value("origin").toString();
+    if (connection && !page.isEmpty() && !origin.isEmpty()) {
+        m_requests[connection].insert(page, {origin, m_requestGeneration});
+    }
+    return m_requestGeneration;
+}
+
+QJsonObject RiskCandidateStore::prepare(const QSharedPointer<Database>& database, QObject* connection,
+                                       const QJsonObject& binding, const QJsonObject& assessment, quint64 requestGeneration)
+{
+    if (requestGeneration != 0) {
+        const auto requests = m_requests.constFind(connection);
+        if (requests == m_requests.cend()) { return failure("STALE_RISK_REQUEST"); }
+        const auto request = requests->constFind(binding.value("pageId").toString());
+        if (request == requests->cend() || request->generation != requestGeneration
+            || request->origin != binding.value("origin").toString()) {
+            return failure("STALE_RISK_REQUEST");
+        }
+    }
     if (!database || !connection || assessment.value("status") != "OK"
         || assessment.value("candidate").toString().isEmpty()) {
         return failure("CANDIDATE_NOT_READY");
@@ -131,13 +152,47 @@ QJsonObject RiskCandidateStore::confirm(const QSharedPointer<Database>& database
     return {{"status", "OK"}, {"saved", true}, {"created", create}, {"entryUuid", candidate.targetUuid}};
 }
 
-void RiskCandidateStore::cancel(QObject* connection, const QString& token)
+void RiskCandidateStore::cancel(QObject* connection, const QJsonObject& binding, bool invalidateRequests)
 {
+    const auto page = binding.value("pageId").toString();
+    const auto origin = binding.value("origin").toString();
+    const auto token = binding.value("candidateToken").toString();
+    if (!connection || page.isEmpty() || origin.isEmpty() || (!invalidateRequests && token.isEmpty())) {
+        return;
+    }
+    if (invalidateRequests) {
+        auto requests = m_requests.find(connection);
+        if (requests != m_requests.end()) {
+            const auto request = requests->find(page);
+            if (request != requests->end() && request->origin == origin) {
+                requests->erase(request);
+                if (requests->isEmpty()) { m_requests.erase(requests); }
+            }
+        }
+    }
     for (auto it = m_candidates.begin(); it != m_candidates.end();) {
-        if (it->connection == connection && (token.isEmpty() || it.key() == token)) {
+        if (it->connection == connection && it->binding.value("pageId").toString() == page
+            && it->binding.value("origin").toString() == origin && (token.isEmpty() || it.key() == token)) {
             it = m_candidates.erase(it);
         } else { ++it; }
     }
 }
 
-void RiskCandidateStore::clear() { m_candidates.clear(); }
+void RiskCandidateStore::clearConnection(QObject* connection)
+{
+    if (!connection) {
+        return;
+    }
+    m_requests.remove(connection);
+    for (auto it = m_candidates.begin(); it != m_candidates.end();) {
+        if (it->connection == connection) {
+            it = m_candidates.erase(it);
+        } else { ++it; }
+    }
+}
+
+void RiskCandidateStore::clear()
+{
+    m_candidates.clear();
+    m_requests.clear();
+}

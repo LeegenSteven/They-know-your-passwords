@@ -4,14 +4,16 @@
 
 ## 直接下载使用
 
-从 [v0.2.2 发布页](https://github.com/LeegenSteven/They-know-your-passwords/releases/tag/v0.2.2) 下载这两部分：
+从 [v0.2.3 发布页](https://github.com/LeegenSteven/They-know-your-passwords/releases/tag/v0.2.3) 下载这两部分：
 
 | 下载 | 内容 |
 | --- | --- |
-| [Windows x64 软件包](https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.2/TKYP-Windows-x64-v0.2.2.zip) | 桌面软件、两模型、独立 Python/CPU 推理库及浏览器宿主，无需另装 Anaconda/CUDA |
-| [Chrome / Edge 插件包](https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.2/TKYP-Chrome-Edge-v0.2.2.zip) | 解压后在浏览器开发者模式加载，配合软件使用 |
+| [Windows x64 软件包](https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.3/TKYP-Windows-x64-v0.2.3.zip) | 桌面软件、两模型、独立 Python/CPU 推理库及浏览器宿主，无需另装 Anaconda/CUDA |
+| [Chrome / Edge 插件包](https://github.com/LeegenSteven/They-know-your-passwords/releases/download/v0.2.3/TKYP-Chrome-Edge-v0.2.3.zip) | 解压后在浏览器开发者模式加载，配合软件使用 |
 
 完整解压软件后双击 **Setup.cmd / 首次配置.cmd**，在软件中设置自己的主口令；加载插件后批准口令库关联。有历史口令的 CPU 复检请在界面主动选择 30/120 秒预算，默认 3 秒超时保持未知。以后双击 Launch.cmd / 启动软件.cmd。[首次使用](docs/first-use.md) · [分发与校验](docs/distribution.md)。GitHub 的 Code / Download ZIP 是源码，直接使用请下载上面的 Release 附件。
+
+v0.2.3 包含候选文档绑定与跨标签页取消隔离修复，插件版本为 1.10.5。2026-10-22 使用新软件、真实 CPU 模型和 Native Messaging，Chrome/Edge 各 46/46 完整闭环通过。旧版用户请配套更新软件和插件，运行 Setup 更新宿主注册，再用新软件打开原 KDBX。测试范围与脱敏证据见 [验收记录](docs/validation-report.md#v023-真实模型与-native-messaging-发行验收)。
 
 ## 当前交付形态
 
@@ -40,7 +42,7 @@
 - 常驻 JSON Lines 算法服务、模型注册、预热、串行推理、缓存、超时和故障状态。
 - 两类风险指标的独立解释，未知、越域、未命中和未标定结果不会显示为低风险。
 - 桌面客户端异步调用、历史筛选、输入修订校验和过期结果拒绝。
-- 浏览器端风险面板、候选口令暂存、来源校验和确认保存流程。
+- 浏览器端风险面板、候选口令暂存、页面文档绑定和确认保存流程；导航、断连及锁库使旧请求失效，取消只作用于指定页面候选。
 - Chrome/Edge 与 Firefox 扩展包构建。
 - Windows Release 构建、演示目录打包和本地启动脚本。
 - MCP stdio 服务、Agent 配置模板和不加载模型的协议测试。

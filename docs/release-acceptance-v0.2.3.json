@@ -1,0 +1,876 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "version": "v0.2.3",
+  "extensionVersion": "1.10.5",
+  "baseCommit": "f1a723b32719d5123dccb65bc8f7a86a886742b5",
+  "complete": true,
+  "nativeMessaging": "real",
+  "models": "real-packaged-cpu",
+  "registrationRestored": true,
+  "personalVaultRead": false,
+  "personalBrowserProfileUsed": false,
+  "screenshots": false,
+  "trace": false,
+  "video": false,
+  "sourceIdentity": [
+    {
+      "file": "background/client.js",
+      "sha256": "656b61f3f82c1bd923a31cb6a95651a9b28f274267dc65ff4feb20d844db9cda",
+      "matchesSource": true
+    },
+    {
+      "file": "background/keepass.js",
+      "sha256": "1cf75e9f3ded74eca767cdbe8b1eb99e6f03143a348947926ae8b3b70e2d041c",
+      "matchesSource": true
+    },
+    {
+      "file": "background/tabs.js",
+      "sha256": "790f240175cfe7eb01462695cbcf79741c7466c2b2f8a2552889303609b22acf",
+      "matchesSource": true
+    },
+    {
+      "file": "background/background_service.js",
+      "sha256": "acca969f6ff75c990639fbe60a9ab458534df8f6dcf5ebb6c1b60b322e679854",
+      "matchesSource": true
+    },
+    {
+      "file": "content/they-know-your-passwords-browser.js",
+      "sha256": "c50a46f1d4b630607729b8ec43621339ff935fb485568550b04d93e89f0685f9",
+      "matchesSource": true
+    }
+  ],
+  "browsers": {
+    "chrome": {
+      "browserVersion": "155.0.8059.85",
+      "passed": 46,
+      "failed": 0,
+      "checks": [
+        {
+          "check": "independent-encrypted-vault-created",
+          "passed": true
+        },
+        {
+          "check": "release-desktop-running",
+          "passed": true
+        },
+        {
+          "check": "fixed-extension-loaded",
+          "passed": true
+        },
+        {
+          "check": "native-associated-unlocked",
+          "passed": true
+        },
+        {
+          "check": "real-page-debounced-generic-feedback",
+          "passed": true
+        },
+        {
+          "check": "actual-native-generic-assessment",
+          "passed": true,
+          "status": "OK"
+        },
+        {
+          "check": "actual-native-generation",
+          "passed": true,
+          "status": "OK",
+          "tokenPrepared": true
+        },
+        {
+          "check": "p1-real-native-second-tab-candidate-prepared",
+          "passed": true,
+          "status": "OK",
+          "prepared": true
+        },
+        {
+          "check": "p1-cancel-empty-first-tab",
+          "passed": true,
+          "hadCandidate": false,
+          "status": "OK"
+        },
+        {
+          "check": "p1-empty-first-tab-cancel-preserves-second-native-token",
+          "passed": true,
+          "status": "UNAVAILABLE",
+          "errorCode": "CONFIRMATION_REQUIRED"
+        },
+        {
+          "check": "p1-native-empty-token-page-cancel-accepted",
+          "passed": true,
+          "status": "OK"
+        },
+        {
+          "check": "p1-native-empty-token-page-cancel-preserves-second-token",
+          "passed": true,
+          "status": "UNAVAILABLE",
+          "errorCode": "CONFIRMATION_REQUIRED"
+        },
+        {
+          "check": "p1-real-native-first-tab-candidate-prepared",
+          "passed": true,
+          "status": "OK",
+          "prepared": true
+        },
+        {
+          "check": "p1-cancel-first-tab-with-candidate",
+          "passed": true,
+          "status": "OK"
+        },
+        {
+          "check": "p1-first-token-cancel-preserves-second-native-token",
+          "passed": true,
+          "status": "UNAVAILABLE",
+          "errorCode": "CONFIRMATION_REQUIRED"
+        },
+        {
+          "check": "p1-same-origin-new-document-refuses-old-candidate-fill",
+          "passed": true,
+          "status": "UNAVAILABLE",
+          "errorCode": "STALE_DOCUMENT_CONTEXT",
+          "pendingPreserved": true
+        },
+        {
+          "check": "p1-same-origin-new-document-fields-remain-empty",
+          "passed": true
+        },
+        {
+          "check": "p1-same-origin-navigation-retains-native-success-confirmation",
+          "passed": true,
+          "status": "UNAVAILABLE",
+          "errorCode": "CONFIRMATION_REQUIRED"
+        },
+        {
+          "check": "p1-cross-origin-navigation-revokes-pending-and-refuses-fill",
+          "passed": true,
+          "status": "UNAVAILABLE",
+          "errorCode": "NO_PENDING_CANDIDATE",
+          "noPending": true
+        },
+        {
+          "check": "p1-cross-origin-document-fields-remain-empty",
+          "passed": true
+        },
+        {
+          "check": "p1-isolation-probes-do-not-write-vault",
+          "passed": true
+        },
+        {
+          "check": "actual-extension-popup-open",
+          "passed": true
+        },
+        {
+          "check": "real-model-generation-rechecked",
+          "passed": true,
+          "elapsedMs": 1085
+        },
+        {
+          "check": "host-token-prepared",
+          "passed": true
+        },
+        {
+          "check": "new-and-confirm-fields-filled",
+          "passed": true
+        },
+        {
+          "check": "not-saved-before-website-success",
+          "passed": true
+        },
+        {
+          "check": "website-success",
+          "passed": true
+        },
+        {
+          "check": "actual-popup-first-save",
+          "passed": true
+        },
+        {
+          "check": "kdbx-persisted",
+          "passed": true
+        },
+        {
+          "check": "release-desktop-running",
+          "passed": true
+        },
+        {
+          "check": "restart-retrieval",
+          "passed": true
+        },
+        {
+          "check": "return-visit-fill-authenticates",
+          "passed": true
+        },
+        {
+          "check": "second-account-generation",
+          "passed": true,
+          "status": "OK"
+        },
+        {
+          "check": "second-account-persisted",
+          "passed": true
+        },
+        {
+          "check": "two-distinct-target-entries",
+          "passed": true
+        },
+        {
+          "check": "default-budget-safe-result-before-explicit-retry",
+          "passed": true,
+          "status": "TIMEOUT",
+          "level": "UNKNOWN",
+          "tokenPrepared": false,
+          "budgetMs": 3000
+        },
+        {
+          "check": "generated-then-account-switch-refuses-save",
+          "passed": true,
+          "generated": true,
+          "rejected": true,
+          "errorCode": "NO_PENDING_CANDIDATE"
+        },
+        {
+          "check": "switch-did-not-update-other-entry",
+          "passed": true
+        },
+        {
+          "check": "change-rechecks-independent-pard",
+          "passed": true,
+          "status": "OK",
+          "historyUsed": 2
+        },
+        {
+          "check": "change-candidate-filled",
+          "passed": true,
+          "status": "OK"
+        },
+        {
+          "check": "change-fill-preserves-current-password-field",
+          "passed": true
+        },
+        {
+          "check": "change-page-field-values-agree",
+          "passed": true,
+          "equal": true,
+          "length": 20
+        },
+        {
+          "check": "change-website-accepted",
+          "passed": true,
+          "websiteAccepted": true,
+          "websiteRejected": false,
+          "equal": true,
+          "length": 20
+        },
+        {
+          "check": "change-updates-only-original-entry",
+          "passed": true
+        },
+        {
+          "check": "changed-vault-persisted-other-account-intact",
+          "passed": true
+        },
+        {
+          "check": "locked-database-refuses-risk",
+          "passed": true
+        }
+      ],
+      "complete": true,
+      "processIdentity": {
+        "packagedPythonSeen": true,
+        "packagedNativeProxySeen": true,
+        "algorithmListeningSockets": 0
+      },
+      "isolatedStateCleaned": true,
+      "elapsedSeconds": 44.67
+    },
+    "edge": {
+      "browserVersion": "155.0.4283.62",
+      "passed": 46,
+      "failed": 0,
+      "checks": [
+        {
+          "check": "independent-encrypted-vault-created",
+          "passed": true
+        },
+        {
+          "check": "release-desktop-running",
+          "passed": true
+        },
+        {
+          "check": "fixed-extension-loaded",
+          "passed": true
+        },
+        {
+          "check": "native-associated-unlocked",
+          "passed": true
+        },
+        {
+          "check": "real-page-debounced-generic-feedback",
+          "passed": true
+        },
+        {
+          "check": "actual-native-generic-assessment",
+          "passed": true,
+          "status": "OK"
+        },
+        {
+          "check": "actual-native-generation",
+          "passed": true,
+          "status": "OK",
+          "tokenPrepared": true
+        },
+        {
+          "check": "p1-real-native-second-tab-candidate-prepared",
+          "passed": true,
+          "status": "OK",
+          "prepared": true
+        },
+        {
+          "check": "p1-cancel-empty-first-tab",
+          "passed": true,
+          "hadCandidate": false,
+          "status": "OK"
+        },
+        {
+          "check": "p1-empty-first-tab-cancel-preserves-second-native-token",
+          "passed": true,
+          "status": "UNAVAILABLE",
+          "errorCode": "CONFIRMATION_REQUIRED"
+        },
+        {
+          "check": "p1-native-empty-token-page-cancel-accepted",
+          "passed": true,
+          "status": "OK"
+        },
+        {
+          "check": "p1-native-empty-token-page-cancel-preserves-second-token",
+          "passed": true,
+          "status": "UNAVAILABLE",
+          "errorCode": "CONFIRMATION_REQUIRED"
+        },
+        {
+          "check": "p1-real-native-first-tab-candidate-prepared",
+          "passed": true,
+          "status": "OK",
+          "prepared": true
+        },
+        {
+          "check": "p1-cancel-first-tab-with-candidate",
+          "passed": true,
+          "status": "OK"
+        },
+        {
+          "check": "p1-first-token-cancel-preserves-second-native-token",
+          "passed": true,
+          "status": "UNAVAILABLE",
+          "errorCode": "CONFIRMATION_REQUIRED"
+        },
+        {
+          "check": "p1-same-origin-new-document-refuses-old-candidate-fill",
+          "passed": true,
+          "status": "UNAVAILABLE",
+          "errorCode": "STALE_DOCUMENT_CONTEXT",
+          "pendingPreserved": true
+        },
+        {
+          "check": "p1-same-origin-new-document-fields-remain-empty",
+          "passed": true
+        },
+        {
+          "check": "p1-same-origin-navigation-retains-native-success-confirmation",
+          "passed": true,
+          "status": "UNAVAILABLE",
+          "errorCode": "CONFIRMATION_REQUIRED"
+        },
+        {
+          "check": "p1-cross-origin-navigation-revokes-pending-and-refuses-fill",
+          "passed": true,
+          "status": "UNAVAILABLE",
+          "errorCode": "NO_PENDING_CANDIDATE",
+          "noPending": true
+        },
+        {
+          "check": "p1-cross-origin-document-fields-remain-empty",
+          "passed": true
+        },
+        {
+          "check": "p1-isolation-probes-do-not-write-vault",
+          "passed": true
+        },
+        {
+          "check": "actual-extension-popup-open",
+          "passed": true
+        },
+        {
+          "check": "real-model-generation-rechecked",
+          "passed": true,
+          "elapsedMs": 1086
+        },
+        {
+          "check": "host-token-prepared",
+          "passed": true
+        },
+        {
+          "check": "new-and-confirm-fields-filled",
+          "passed": true
+        },
+        {
+          "check": "not-saved-before-website-success",
+          "passed": true
+        },
+        {
+          "check": "website-success",
+          "passed": true
+        },
+        {
+          "check": "actual-popup-first-save",
+          "passed": true
+        },
+        {
+          "check": "kdbx-persisted",
+          "passed": true
+        },
+        {
+          "check": "release-desktop-running",
+          "passed": true
+        },
+        {
+          "check": "restart-retrieval",
+          "passed": true
+        },
+        {
+          "check": "return-visit-fill-authenticates",
+          "passed": true
+        },
+        {
+          "check": "second-account-generation",
+          "passed": true,
+          "status": "OK"
+        },
+        {
+          "check": "second-account-persisted",
+          "passed": true
+        },
+        {
+          "check": "two-distinct-target-entries",
+          "passed": true
+        },
+        {
+          "check": "default-budget-safe-result-before-explicit-retry",
+          "passed": true,
+          "status": "TIMEOUT",
+          "level": "UNKNOWN",
+          "tokenPrepared": false,
+          "budgetMs": 3000
+        },
+        {
+          "check": "generated-then-account-switch-refuses-save",
+          "passed": true,
+          "generated": true,
+          "rejected": true,
+          "errorCode": "NO_PENDING_CANDIDATE"
+        },
+        {
+          "check": "switch-did-not-update-other-entry",
+          "passed": true
+        },
+        {
+          "check": "change-rechecks-independent-pard",
+          "passed": true,
+          "status": "OK",
+          "historyUsed": 2
+        },
+        {
+          "check": "change-candidate-filled",
+          "passed": true,
+          "status": "OK"
+        },
+        {
+          "check": "change-fill-preserves-current-password-field",
+          "passed": true
+        },
+        {
+          "check": "change-page-field-values-agree",
+          "passed": true,
+          "equal": true,
+          "length": 20
+        },
+        {
+          "check": "change-website-accepted",
+          "passed": true,
+          "websiteAccepted": true,
+          "websiteRejected": false,
+          "equal": true,
+          "length": 20
+        },
+        {
+          "check": "change-updates-only-original-entry",
+          "passed": true
+        },
+        {
+          "check": "changed-vault-persisted-other-account-intact",
+          "passed": true
+        },
+        {
+          "check": "locked-database-refuses-risk",
+          "passed": true
+        }
+      ],
+      "complete": true,
+      "processIdentity": {
+        "packagedPythonSeen": true,
+        "packagedNativeProxySeen": true,
+        "algorithmListeningSockets": 0
+      },
+      "isolatedStateCleaned": true,
+      "elapsedSeconds": 45.16
+    }
+  },
+  "unitRegression": {
+    "node": {
+      "passed": 44,
+      "failed": 0
+    },
+    "qt": {
+      "passed": 33,
+      "failed": 0,
+      "includesInitCleanup": true
+    }
+  },
+  "scope": "isolated fixture creation/association, real production Native Messaging and model inference, real popup/DOM/website/KDBX persistence; fixed machine functional acceptance, no personal first-use GUI setup",
+  "packageCriticalFileHashes": [
+    {
+      "file": "Launch.cmd",
+      "sha256": "0fccd6afd34d0cbab981aff8e969660af213bb4d3d2b5766fbc18912361f2dd5"
+    },
+    {
+      "file": "启动软件.cmd",
+      "sha256": "0fccd6afd34d0cbab981aff8e969660af213bb4d3d2b5766fbc18912361f2dd5"
+    },
+    {
+      "file": "Setup.cmd",
+      "sha256": "43515f7458edebd542e7994a59616b0d237bbe8f60da2f7f224f212333576d20"
+    },
+    {
+      "file": "首次配置.cmd",
+      "sha256": "43515f7458edebd542e7994a59616b0d237bbe8f60da2f7f224f212333576d20"
+    },
+    {
+      "file": "CheckEnvironment.cmd",
+      "sha256": "80b3a75eff8ffc589b12e3559a1118fb6b66ef5bbb8059bb6883e11122178b14"
+    },
+    {
+      "file": "start-demo.ps1",
+      "sha256": "b91cd9f95284d79708b4e6dc9e7b23d9f8c0eec5bf90d4d277578bfe98903379"
+    },
+    {
+      "file": "Launch-Remote.cmd",
+      "sha256": "46cac63fb95fb9a475f72062e2f32f4439e45d148ddf3321888a11730a024c7b"
+    },
+    {
+      "file": "远程启动.cmd",
+      "sha256": "46cac63fb95fb9a475f72062e2f32f4439e45d148ddf3321888a11730a024c7b"
+    },
+    {
+      "file": "Setup-Remote.cmd",
+      "sha256": "7fc61a44c8e8577d3355bc37f2e95cf16105c749898c2148b3818c1e4912dcb5"
+    },
+    {
+      "file": "远程首次配置.cmd",
+      "sha256": "7fc61a44c8e8577d3355bc37f2e95cf16105c749898c2148b3818c1e4912dcb5"
+    },
+    {
+      "file": "window-display.ps1",
+      "sha256": "50156a73e4a45053e51627485255714ab22a1a71076bd6da2d06fb164208e69f"
+    },
+    {
+      "file": "TheyKnowYourPasswords.exe",
+      "sha256": "a7ca51582e57a78af0d0f581ff5f96e4fe52e6ada608b67420ec8c125dfe25e5"
+    },
+    {
+      "file": "they-know-your-passwords-proxy.exe",
+      "sha256": "8fd63e3dfb3ebaec455788bbc04bd392fe516fd46fd16a0d90a09b0a51eda761"
+    },
+    {
+      "file": "they-know-your-passwords-cli.exe",
+      "sha256": "80341822edf8aa0e11fd4ab6d7ab00330bf6d6ee9071fe1827d75396d880aa2e"
+    },
+    {
+      "file": "algo-service\\server.py",
+      "sha256": "988af796b1c39cc021f11ab1e57dd0d2fb429990396f706f7ea97149a8a7e651"
+    },
+    {
+      "file": "algo-service\\config.toml",
+      "sha256": "9477d72fa16beeda7bf1d2e97ecc3d102a9eccb33c1fd01ddd923715f1b4d845"
+    },
+    {
+      "file": "algo-service\\adapters\\rankguess.py",
+      "sha256": "6e5c4c6fc9319e18dc26e4f131df8697329ec080545153a5f27c8cd3f944366b"
+    },
+    {
+      "file": "algo-service\\adapters\\pard.py",
+      "sha256": "0d90cef3967e0f673a0efe5e34c87517434fb70c8e4a3418b62b6daff498f608"
+    },
+    {
+      "file": "algo-service\\adapters\\psm.py",
+      "sha256": "23477ca0bf8f4c377be5f3cefe222e9fd5463920ec069a73011326c0471fa5b4"
+    },
+    {
+      "file": "extension-chromium\\manifest.json",
+      "sha256": "b7750fc4deba8dd83cbc0e770f029361378bd96c1225b68b8dad97b1e7af7641"
+    },
+    {
+      "file": "extension-chromium\\background\\client.js",
+      "sha256": "656b61f3f82c1bd923a31cb6a95651a9b28f274267dc65ff4feb20d844db9cda"
+    },
+    {
+      "file": "extension-chromium\\background\\keepass.js",
+      "sha256": "1cf75e9f3ded74eca767cdbe8b1eb99e6f03143a348947926ae8b3b70e2d041c"
+    },
+    {
+      "file": "extension-chromium\\background\\tabs.js",
+      "sha256": "790f240175cfe7eb01462695cbcf79741c7466c2b2f8a2552889303609b22acf"
+    },
+    {
+      "file": "extension-chromium\\content\\they-know-your-passwords-browser.js",
+      "sha256": "c50a46f1d4b630607729b8ec43621339ff935fb485568550b04d93e89f0685f9"
+    },
+    {
+      "file": "algorithms\\rankguess\\MC.py",
+      "sha256": "100db65199d753674ae0d873da0b3ef6d4afead4301430c340f7aca1d5867fa7"
+    },
+    {
+      "file": "algorithms\\rankguess\\engine-a.bin",
+      "sha256": "442c105becdc849880bd1b0b3fb21477063dbc4266126d825871b3f065d1f86c"
+    },
+    {
+      "file": "algorithms\\pard\\demo6_glca.py",
+      "sha256": "2c1020414a8707a7494ffd44c072eea902d9ef90a6a7949d1304a619f54faf0c"
+    },
+    {
+      "file": "algorithms\\pard\\eval6_glca.py",
+      "sha256": "e9c703aa034da4ba8f905964001a3fb82a46ccab966e1543edb7853bf84fa637"
+    },
+    {
+      "file": "algorithms\\pard\\engine-b.bin",
+      "sha256": "eb0c8c5abaf12ced38a2ec341fcc86290302e6f75677842f8f3866cfbecbc99f"
+    },
+    {
+      "file": "runtime\\python.exe",
+      "sha256": "4d6f5f81a4bca11191c4c7c6b43632694d0a4ce74e068619d8fdc161d469859a"
+    },
+    {
+      "file": "runtime\\python312.dll",
+      "sha256": "9a0e3435aaa680d868150f87ab3e388ad2eebc22f87e036155c7b4eda8cd2120"
+    },
+    {
+      "file": "runtime\\python312._pth",
+      "sha256": "9ee66b9e50adaf86541dd1c677382491d54e5dd63b3ae94986bc4ae6ed532316"
+    },
+    {
+      "file": "runtime\\build-artifacts.json",
+      "sha256": "22dc16dcf05ca4c2204029d253c15a4182b9874f299ce979eb0e2461860d8dba"
+    }
+  ],
+  "environment": {
+    "osLabel": "Windows x64 25H2 build 26200.9711",
+    "cpu": "Intel(R) Core(TM) i7-14650HX",
+    "logicalCPUs": 24,
+    "physicalRAMGiB": 31.77,
+    "architecture": "AMD64"
+  },
+  "finalZipExtractionAcceptance": true,
+  "pathWithSpacesVerified": true,
+  "launchAcceptance": {
+    "passed": 39,
+    "failed": 0,
+    "scope": "actual Setup/Launch/remote CMD, isolated empty GUI config, no vault or screenshots",
+    "registrationRestored": true,
+    "testInstanceClosed": true,
+    "checks": [
+      {
+        "check": "Setup.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1593
+      },
+      {
+        "check": "Setup.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "local-startup-blocks-capture-by-default",
+        "passed": true
+      },
+      {
+        "check": "chrome-setup-registers-current-package",
+        "passed": true
+      },
+      {
+        "check": "edge-setup-registers-current-package",
+        "passed": true
+      },
+      {
+        "check": "chinese-setup-alias-identical",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1141
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "repeat-uses-same-instance",
+        "passed": true
+      },
+      {
+        "check": "启动软件.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1063
+      },
+      {
+        "check": "启动软件.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "minimized-instance-restored",
+        "passed": true
+      },
+      {
+        "check": "offscreen-window-reproduced",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1078
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "offscreen-window-restored",
+        "passed": true
+      },
+      {
+        "check": "missing-file-nonzero-exit",
+        "passed": true
+      },
+      {
+        "check": "failure-keeps-error-visible",
+        "passed": true
+      },
+      {
+        "check": "failure-does-not-close-existing-test-desktop",
+        "passed": true
+      },
+      {
+        "check": "normal-test-instance-closed",
+        "passed": true
+      },
+      {
+        "check": "legacy-hidden-instance-reproduced",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1078
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "legacy-instance-recovered-without-restart",
+        "passed": true
+      },
+      {
+        "check": "Launch-Remote.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1281
+      },
+      {
+        "check": "Launch-Remote.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "remote-request-normally-restarts-protected-instance",
+        "passed": true
+      },
+      {
+        "check": "remote-window-allows-capture-without-taking-screenshots",
+        "passed": true
+      },
+      {
+        "check": "远程启动.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1078
+      },
+      {
+        "check": "远程启动.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "remote-repeat-reuses-instance",
+        "passed": true
+      },
+      {
+        "check": "Setup-Remote.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1359
+      },
+      {
+        "check": "Setup-Remote.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "remote-setup-reuses-capture-enabled-instance",
+        "passed": true
+      },
+      {
+        "check": "remote-setup-alias-identical",
+        "passed": true
+      },
+      {
+        "check": "remote-test-instance-closed-normally",
+        "passed": true
+      },
+      {
+        "check": "Launch.cmd-exit-success",
+        "passed": true,
+        "elapsed_ms": 1235
+      },
+      {
+        "check": "Launch.cmd-visible-opaque-main-window",
+        "passed": true
+      },
+      {
+        "check": "local-startup-restores-capture-protection",
+        "passed": true
+      }
+    ]
+  },
+  "releaseAssets": [
+    {
+      "file": "TKYP-Windows-x64-v0.2.3.zip",
+      "bytes": 268610889,
+      "files": 17387,
+      "sha256": "ee8f99b78c5da06e00af36256ef827649e3b253814693f7611d2a0d8544d4046",
+      "crc": "OK"
+    },
+    {
+      "file": "TKYP-Chrome-Edge-v0.2.3.zip",
+      "bytes": 1072468,
+      "files": 191,
+      "sha256": "5e0f0ee46b1a3733e41426248b6fe6fc530f559cf747730d8624b4aa834275bb",
+      "crc": "OK"
+    }
+  ],
+  "softwarePluginIdenticalPayloadFiles": 189,
+  "testedCriticalFileCount": 33
+}

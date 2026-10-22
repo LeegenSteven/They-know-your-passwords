@@ -1,0 +1,405 @@
+{
+  "date": "2026-10-22",
+  "base_commit": "f1a723b32719d5123dccb65bc8f7a86a886742b5",
+  "scope": "local-source-P1-document-context-and-page-scoped-cancellation",
+  "public_release_updated": false,
+  "full_real_model_release_acceptance_rerun": false,
+  "node": {
+    "passed": 44,
+    "failed": 0,
+    "command": "node --test browser-extension/tests/risk-context.test.cjs browser-extension/tests/risk-flow.test.cjs",
+    "scope": "actual production background/content/client scripts in isolated VM; synthetic DOM/native responses"
+  },
+  "qt": {
+    "passed": 33,
+    "failed": 0,
+    "business_rows": 31,
+    "new_rows": 23,
+    "includes_init_cleanup": true,
+    "version": "6.8.3",
+    "checks": [
+      {
+        "name": "initTestCase",
+        "row": null,
+        "passed": true
+      },
+      {
+        "name": "firstSaveCreatesAndPersists",
+        "row": null,
+        "passed": true
+      },
+      {
+        "name": "switchingAccountCannotUpdateOtherEntry",
+        "row": null,
+        "passed": true
+      },
+      {
+        "name": "pageCancellationPreservesOtherPendingCandidate",
+        "row": "explicit-token",
+        "passed": true
+      },
+      {
+        "name": "pageCancellationPreservesOtherPendingCandidate",
+        "row": "empty-token",
+        "passed": true
+      },
+      {
+        "name": "pageWithoutCandidateCannotCancelAnotherPage",
+        "row": "no-pending-token",
+        "passed": true
+      },
+      {
+        "name": "pageWithoutCandidateCannotCancelAnotherPage",
+        "row": "account-switch",
+        "passed": true
+      },
+      {
+        "name": "pageWithoutCandidateCannotCancelAnotherPage",
+        "row": "input-change",
+        "passed": true
+      },
+      {
+        "name": "pageChangesStillCancelTheirOwnCandidate",
+        "row": "account-switch",
+        "passed": true
+      },
+      {
+        "name": "pageChangesStillCancelTheirOwnCandidate",
+        "row": "input-change",
+        "passed": true
+      },
+      {
+        "name": "cancellationRequiresConnectionPageAndOrigin",
+        "row": "wrong-connection",
+        "passed": true
+      },
+      {
+        "name": "cancellationRequiresConnectionPageAndOrigin",
+        "row": "wrong-page-with-valid-token",
+        "passed": true
+      },
+      {
+        "name": "cancellationRequiresConnectionPageAndOrigin",
+        "row": "wrong-origin-with-valid-token",
+        "passed": true
+      },
+      {
+        "name": "cancellationRequiresConnectionPageAndOrigin",
+        "row": "missing-page-with-valid-token",
+        "passed": true
+      },
+      {
+        "name": "cancellationRequiresConnectionPageAndOrigin",
+        "row": "empty-page-with-valid-token",
+        "passed": true
+      },
+      {
+        "name": "cancellationRequiresConnectionPageAndOrigin",
+        "row": "missing-origin-with-valid-token",
+        "passed": true
+      },
+      {
+        "name": "cancellationRequiresConnectionPageAndOrigin",
+        "row": "empty-origin-with-valid-token",
+        "passed": true
+      },
+      {
+        "name": "cancellationRequiresConnectionPageAndOrigin",
+        "row": "wrong-token",
+        "passed": true
+      },
+      {
+        "name": "connectionAndDatabaseCleanupInvalidateCandidates",
+        "row": null,
+        "passed": true
+      },
+      {
+        "name": "newestRequestWinsWithIdenticalInputRevision",
+        "row": null,
+        "passed": true
+      },
+      {
+        "name": "oldTokenCleanupPreservesNewRequest",
+        "row": "new-request-in-flight",
+        "passed": true
+      },
+      {
+        "name": "oldTokenCleanupPreservesNewRequest",
+        "row": "new-candidate-ready",
+        "passed": true
+      },
+      {
+        "name": "lifecycleInvalidationRejectsLateRequests",
+        "row": "page-cancel",
+        "passed": true
+      },
+      {
+        "name": "lifecycleInvalidationRejectsLateRequests",
+        "row": "database-clear",
+        "passed": true
+      },
+      {
+        "name": "lifecycleInvalidationRejectsLateRequests",
+        "row": "connection-close",
+        "passed": true
+      },
+      {
+        "name": "requestGenerationsAreScopedToPageAndOrigin",
+        "row": null,
+        "passed": true
+      },
+      {
+        "name": "expirySessionRevisionAndMissingTarget",
+        "row": null,
+        "passed": true
+      },
+      {
+        "name": "oldPasswordPriorityAndAuditExclusion",
+        "row": null,
+        "passed": true
+      },
+      {
+        "name": "constraintsRejectBeforeInference",
+        "row": null,
+        "passed": true
+      },
+      {
+        "name": "metadataAlsoInvalidatesCandidateRevision",
+        "row": null,
+        "passed": true
+      },
+      {
+        "name": "localMessagesSurvivePartialAndCoalescedReads",
+        "row": null,
+        "passed": true
+      },
+      {
+        "name": "hostTimeoutRestartsAndRecoversWithoutLateReply",
+        "row": null,
+        "passed": true
+      },
+      {
+        "name": "cleanupTestCase",
+        "row": null,
+        "passed": true
+      }
+    ],
+    "scope": "native store, persistence and fault/timeout protocol tests; no real model inference"
+  },
+  "real_browsers": [
+    {
+      "browser": "chrome",
+      "checks": [
+        {
+          "name": "production-recommendation-path",
+          "passed": true
+        },
+        {
+          "name": "one-fill-writes-only-new-and-confirm",
+          "passed": true
+        },
+        {
+          "name": "actual-frame-target-is-top-document",
+          "passed": true
+        },
+        {
+          "name": "actual-webNavigation-documentId-targeted",
+          "passed": true
+        },
+        {
+          "name": "cross-origin-candidate-prepared",
+          "passed": true
+        },
+        {
+          "name": "cross-origin-navigation-revokes-pending",
+          "passed": true
+        },
+        {
+          "name": "cross-origin-document-cannot-fill",
+          "passed": true
+        },
+        {
+          "name": "same-origin-candidate-prepared",
+          "passed": true
+        },
+        {
+          "name": "same-origin-new-document-rejects-fill",
+          "passed": true
+        },
+        {
+          "name": "same-origin-navigation-retains-confirmation",
+          "passed": true
+        },
+        {
+          "name": "same-origin-website-success-can-confirm",
+          "passed": true
+        },
+        {
+          "name": "same-origin-race-prepared",
+          "passed": true
+        },
+        {
+          "name": "same-origin-navigation-between-check-and-delivery-blocked",
+          "passed": true,
+          "errorCode": "PAGE_FILL_FAILED"
+        },
+        {
+          "name": "cross-origin-race-prepared",
+          "passed": true
+        },
+        {
+          "name": "cross-origin-navigation-between-check-and-delivery-blocked",
+          "passed": true,
+          "errorCode": "PAGE_FILL_FAILED"
+        },
+        {
+          "name": "tab-b-candidate-prepared",
+          "passed": true
+        },
+        {
+          "name": "empty-tab-a-cancel-navigation-close-do-not-revoke-b",
+          "passed": true
+        },
+        {
+          "name": "tab-b-still-fills-and-confirms",
+          "passed": true
+        },
+        {
+          "name": "no-native-host-call-and-no-empty-cancel",
+          "passed": true
+        }
+      ],
+      "native": "stubbed-and-connectNative-denied",
+      "algorithm": "stubbed",
+      "browserApis": "actual-tabs-webNavigation-sendMessage",
+      "screenshots": false,
+      "trace": false,
+      "video": false,
+      "complete": true,
+      "browserVersion": "155.0.8059.85"
+    },
+    {
+      "browser": "edge",
+      "checks": [
+        {
+          "name": "production-recommendation-path",
+          "passed": true
+        },
+        {
+          "name": "one-fill-writes-only-new-and-confirm",
+          "passed": true
+        },
+        {
+          "name": "actual-frame-target-is-top-document",
+          "passed": true
+        },
+        {
+          "name": "actual-webNavigation-documentId-targeted",
+          "passed": true
+        },
+        {
+          "name": "cross-origin-candidate-prepared",
+          "passed": true
+        },
+        {
+          "name": "cross-origin-navigation-revokes-pending",
+          "passed": true
+        },
+        {
+          "name": "cross-origin-document-cannot-fill",
+          "passed": true
+        },
+        {
+          "name": "same-origin-candidate-prepared",
+          "passed": true
+        },
+        {
+          "name": "same-origin-new-document-rejects-fill",
+          "passed": true
+        },
+        {
+          "name": "same-origin-navigation-retains-confirmation",
+          "passed": true
+        },
+        {
+          "name": "same-origin-website-success-can-confirm",
+          "passed": true
+        },
+        {
+          "name": "same-origin-race-prepared",
+          "passed": true
+        },
+        {
+          "name": "same-origin-navigation-between-check-and-delivery-blocked",
+          "passed": true,
+          "errorCode": "PAGE_FILL_FAILED"
+        },
+        {
+          "name": "cross-origin-race-prepared",
+          "passed": true
+        },
+        {
+          "name": "cross-origin-navigation-between-check-and-delivery-blocked",
+          "passed": true,
+          "errorCode": "PAGE_FILL_FAILED"
+        },
+        {
+          "name": "tab-b-candidate-prepared",
+          "passed": true
+        },
+        {
+          "name": "empty-tab-a-cancel-navigation-close-do-not-revoke-b",
+          "passed": true
+        },
+        {
+          "name": "tab-b-still-fills-and-confirms",
+          "passed": true
+        },
+        {
+          "name": "no-native-host-call-and-no-empty-cancel",
+          "passed": true
+        }
+      ],
+      "native": "stubbed-and-connectNative-denied",
+      "algorithm": "stubbed",
+      "browserApis": "actual-tabs-webNavigation-sendMessage",
+      "screenshots": false,
+      "trace": false,
+      "video": false,
+      "complete": true,
+      "browserVersion": "155.0.4283.62"
+    }
+  ],
+  "build": {
+    "targets": [
+      "testriskassessment",
+      "KeePassXC",
+      "keepassxc-proxy"
+    ],
+    "passed": true,
+    "toolchain": "MSVC 2022 x64 / Qt 6.8.3 / existing Ninja build"
+  },
+  "static_integration_contract_passed": true,
+  "changed_javascript_syntax_passed": true,
+  "independent_patch_review": "passed; no new P1 findings",
+  "privacy": {
+    "personal_vault_read": false,
+    "personal_browser_profile_used": false,
+    "native_host_registration_changed": false,
+    "passwords_or_keys_in_report": false
+  },
+  "tested_source_sha256": {
+    "desktop-app/src/riskassess/RiskCandidateStore.h": "84699d06f807e27c9142329575b7435290299eb041968b61d2406869e987e7cf",
+    "desktop-app/src/riskassess/RiskCandidateStore.cpp": "be0cd9925f04c8d38b7532ccd05a37a4e59364a95440d4ae5e3d44c971064474",
+    "desktop-app/src/browser/BrowserService.h": "f1efdd5be3e5e22d699beed839f4979ade40b99d09aece2704177f91899d3cad",
+    "desktop-app/src/browser/BrowserService.cpp": "01cc7716562c968ffd60ea46b34bb8012757fac0aa9021512b947ca33192bbdf",
+    "desktop-app/tests/TestRiskAssessment.cpp": "fce32fe93d7113fc11d45a488d1398e1884c742480b557b3fb5ddb0de0b978fb",
+    "browser-extension/extension/background/keepass.js": "1cf75e9f3ded74eca767cdbe8b1eb99e6f03143a348947926ae8b3b70e2d041c",
+    "browser-extension/extension/background/client.js": "656b61f3f82c1bd923a31cb6a95651a9b28f274267dc65ff4feb20d844db9cda",
+    "browser-extension/extension/background/tabs.js": "790f240175cfe7eb01462695cbcf79741c7466c2b2f8a2552889303609b22acf",
+    "browser-extension/extension/content/they-know-your-passwords-browser.js": "c50a46f1d4b630607729b8ec43621339ff935fb485568550b04d93e89f0685f9",
+    "browser-extension/tests/risk-flow.test.cjs": "5ba35140430fa940d35506d9fdbf992847a5d5353dc11851190950e4ae82fcfa",
+    "browser-extension/tests/risk-context.test.cjs": "77467512953a0cd9f21544242e10c488787f0d98ae68f69d827faf16ec9f72ec",
+    "browser-extension/tests/risk-browser-regression.cjs": "c857702b4ef554a33dc2b98c0c48d20c8113ba78dda21c36eef2013d4e43cb02"
+  }
+}

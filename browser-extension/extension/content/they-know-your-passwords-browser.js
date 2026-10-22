@@ -15,6 +15,8 @@ const sendMessage = async function(action, args) {
  * The main content script object.
  */
 const kpxc = {};
+kpxc.riskDocumentToken = Array.from(crypto.getRandomValues(new Uint8Array(16)),
+    (value) => value.toString(16).padStart(2, '0')).join('');
 kpxc.combinations = [];
 kpxc.credentials = [];
 kpxc.databaseState = DatabaseState.DISCONNECTED;
@@ -935,12 +937,23 @@ browser.runtime.onMessage.addListener(async function(req, sender) {
             sendMessage('page_set_manual_fill', ManualFill.PASSWORD);
             await kpxc.receiveCredentialsIfNecessary();
             kpxcFill.fillInFromActiveElement(true); // passOnly to true
+        } else if (req.action === 'risk_document_context' && window.self === window.top) {
+            if (sender?.id !== browser.runtime.id || !/^https?:$/.test(window.location.protocol)) {
+                return { status: 'UNAVAILABLE', error_code: 'SOURCE_NOT_ALLOWED' };
+            }
+            return { origin: window.location.origin, documentToken: kpxc.riskDocumentToken };
         } else if (req.action === 'risk_target_fields' && window.self === window.top) {
             return Array.from(document.querySelectorAll('input[type="password"]'))
                 .filter((field) => field.offsetParent !== null && !field.disabled && !field.readOnly)
                 .map((field, index) => ({ index, label: field.labels?.[0]?.textContent?.trim()
                     || field.getAttribute('aria-label') || field.name || ('口令输入框 ' + (index + 1)) }));
         } else if (req.action === 'fill_risk_candidate' && window.self === window.top) {
+            // This check runs in the target document immediately before DOM
+            // writes, closing navigation races after the background's checks.
+            if (sender?.id !== browser.runtime.id || req.expectedOrigin !== window.location.origin
+                || req.documentToken !== kpxc.riskDocumentToken) {
+                return { status: 'UNAVAILABLE', error_code: 'STALE_DOCUMENT_CONTEXT' };
+            }
             const fields = Array.from(document.querySelectorAll('input[type="password"]'))
                 .filter((field) => field.offsetParent !== null && !field.disabled && !field.readOnly);
             const newFields = fields.filter((field) => field.autocomplete === 'new-password'

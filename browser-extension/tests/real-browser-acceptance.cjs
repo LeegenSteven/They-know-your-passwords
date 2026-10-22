@@ -14,13 +14,15 @@ const name = process.argv[2] ?? 'chrome';
 const executablePath = name === 'edge'
     ? 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'
     : 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const fixtureExe = 'D:/tmp/TheyKnowYourPasswordsBuild/tests/riskfixture.exe';
+const fixtureExe = path.resolve(process.env.TKYP_TEST_FIXTURE
+    ?? 'D:/tmp/TheyKnowYourPasswordsBuild/tests/riskfixture.exe');
 const extensionId = 'ijlckofhohjbbifcfhpiglkmfndaaeol';
 const acceptanceRoot = path.join(root, process.env.TKYP_TEST_REPORTS ?? 'out/acceptance', name);
+const runId = crypto.randomUUID();
 const env = {
     ...process.env, PATH: packageRoot + ';C:/Windows/System32;C:/Windows',
     // A separate named pipe leaves an already running personal desktop untouched.
-    USERNAME: 'tkyp-acceptance-' + name,
+    USERNAME: 'tkyp-acceptance-' + name + '-' + runId,
     QT_PLUGIN_PATH: packageRoot, QT_QPA_PLATFORM_PLUGIN_PATH: path.join(packageRoot, 'platforms'),
     KEEPASSXC_RISK_PYTHON: path.join(packageRoot, existsSync(path.join(packageRoot, 'runtime/python.exe'))
         ? 'runtime/python.exe' : 'runtime/Scripts/python.exe'),
@@ -29,11 +31,13 @@ const env = {
 };
 delete env.DEBUG;
 delete env.PWDEBUG;
-const report = { browser: name, checks: [], complete: false, trace: false, screenshots: false };
+const report = { browser: name, runId, checks: [], complete: false, trace: false, screenshots: false,
+    nativeMessaging: 'real', models: 'real-packaged-cpu', credentials: 'memory-only-fictional' };
 let stage = 'initialization';
 let desktop;
 let context;
 let server;
+let alternateServer;
 let master;
 let associationKey;
 let vaultPath;
@@ -128,7 +132,7 @@ async function startDesktop() {
         { env, windowsHide: true, stdio: ['pipe', 'ignore', 'ignore'] });
     desktop.stdin.end(master + '\n');
     await new Promise((resolve) => setTimeout(resolve, 2500));
-    record('release-desktop-running', desktop.exitCode === null);
+    record('release-desktop-running', desktop.exitCode === null, { desktopPid: desktop.pid });
 }
 async function stopDesktop() {
     if (desktop && desktop.exitCode === null) {
@@ -137,10 +141,137 @@ async function stopDesktop() {
     }
 }
 
+// Real production methods, real browser documents and the Native host are used
+// throughout. A false website confirmation probes the host's existing token
+// without writing any account: a live token must return CONFIRMATION_REQUIRED.
+async function p1NativeRegression(worker, origin, alternateOrigin) {
+    const first = await context.newPage();
+    const second = await context.newPage();
+    try {
+        await first.goto(origin + '/p1-first');
+        await second.goto(origin + '/p1-second');
+        const activate = async (page) => {
+            await page.bringToFront();
+            const ready = await worker.evaluate(async (expectedUrl) => {
+                const until = Date.now() + 10000;
+                while (Date.now() < until) {
+                    const tab = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+                    if (tab?.url === expectedUrl && tabs.getTabFromId(tab?.id)
+                        && await keepass.getRiskDocumentContext(tab)) { return true; }
+                    await new Promise((resolve) => setTimeout(resolve, 100));
+                }
+                return false;
+            }, page.url());
+            if (!ready) { throw new Error('isolated-document-unavailable'); }
+        };
+        const prepare = async (page, account) => {
+            await activate(page);
+            return worker.evaluate(async (value) => {
+                const tab = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+                const result = await keepass.recommendPassword(tab, ['new', Date.now(), {
+                    account: value, constraints: { budgetMs: 120000 }
+                }]);
+                return { status: result.status, errorCode: result.error_code,
+                    prepared: !!result.candidateToken };
+            }, account);
+        };
+        const probe = async (page) => {
+            await activate(page);
+            return worker.evaluate(async () => {
+                const tab = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+                const pending = await keepass.getPendingRiskCandidate(tab);
+                if (pending.status !== 'OK') { return { status: pending.status, errorCode: pending.error_code }; }
+                const result = await keepass.confirmRiskCandidate(tab, [pending.inputRevision, false, true]);
+                return { status: result.status, errorCode: result.error_code };
+            });
+        };
+        const preparedSecond = await prepare(second, 'fictional-p1-second');
+        record('p1-real-native-second-tab-candidate-prepared', preparedSecond.status === 'OK'
+            && preparedSecond.prepared, preparedSecond);
+        await activate(first);
+        const emptyCancel = await worker.evaluate(async () => {
+            const tab = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+            const hadCandidate = !!tabs.getTabFromId(tab.id)?.riskPending;
+            const result = await keepass.cancelRiskCandidate(tab, [Date.now()]);
+            return { hadCandidate, status: result.status };
+        });
+        record('p1-cancel-empty-first-tab', !emptyCancel.hadCandidate && emptyCancel.status === 'OK', emptyCancel);
+        const afterEmpty = await probe(second);
+        record('p1-empty-first-tab-cancel-preserves-second-native-token',
+            afterEmpty.errorCode === 'CONFIRMATION_REQUIRED', afterEmpty);
+        // Explicit empty-token protocol coverage also exercises the host scope;
+        // the ordinary extension correctly omits this RPC when no token exists.
+        await activate(first);
+        const pageCancel = await worker.evaluate(async () => {
+            const tab = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+            const revision = Date.now();
+            tabs.getTabFromId(tab.id).riskRevision = revision;
+            const result = await keepass.riskSend(tab, 'cancel-risk-candidate', {
+                pageId: String(tab.id), origin: new URL(tab.url).origin,
+                candidateToken: '', inputRevision: revision
+            });
+            return { status: result.status, errorCode: result.error_code };
+        });
+        record('p1-native-empty-token-page-cancel-accepted', pageCancel.status === 'OK', pageCancel);
+        const afterProtocolCancel = await probe(second);
+        record('p1-native-empty-token-page-cancel-preserves-second-token',
+            afterProtocolCancel.errorCode === 'CONFIRMATION_REQUIRED', afterProtocolCancel);
+        const preparedFirst = await prepare(first, 'fictional-p1-first');
+        record('p1-real-native-first-tab-candidate-prepared', preparedFirst.status === 'OK'
+            && preparedFirst.prepared, preparedFirst);
+        const tokenCancel = await worker.evaluate(async () => {
+            const tab = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+            const result = await keepass.cancelRiskCandidate(tab, [Date.now()]);
+            return { status: result.status, errorCode: result.error_code };
+        });
+        record('p1-cancel-first-tab-with-candidate', tokenCancel.status === 'OK', tokenCancel);
+        const afterToken = await probe(second);
+        record('p1-first-token-cancel-preserves-second-native-token',
+            afterToken.errorCode === 'CONFIRMATION_REQUIRED', afterToken);
+
+        await second.goto(origin + '/p1-second-new-document');
+        await activate(second);
+        const sameOrigin = await worker.evaluate(async () => {
+            const tab = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+            const pending = await keepass.getPendingRiskCandidate(tab);
+            const result = await keepass.stageRiskCandidate(tab, ['', pending.inputRevision]);
+            return { status: result.status, errorCode: result.error_code,
+                pendingPreserved: pending.status === 'OK' };
+        });
+        record('p1-same-origin-new-document-refuses-old-candidate-fill',
+            sameOrigin.status !== 'OK' && sameOrigin.errorCode === 'STALE_DOCUMENT_CONTEXT'
+            && sameOrigin.pendingPreserved, sameOrigin);
+        record('p1-same-origin-new-document-fields-remain-empty', await second.evaluate(() =>
+            ['password', 'confirm'].every((id) => document.getElementById(id).value === '')));
+        const afterSameOrigin = await probe(second);
+        record('p1-same-origin-navigation-retains-native-success-confirmation',
+            afterSameOrigin.errorCode === 'CONFIRMATION_REQUIRED', afterSameOrigin);
+
+        await second.goto(alternateOrigin + '/p1-cross-origin');
+        await activate(second);
+        const crossOrigin = await worker.evaluate(async () => {
+            const tab = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+            const pending = await keepass.getPendingRiskCandidate(tab);
+            const result = await keepass.stageRiskCandidate(tab, ['', Date.now()]);
+            return { status: result.status, errorCode: result.error_code,
+                noPending: pending.status !== 'OK' };
+        });
+        record('p1-cross-origin-navigation-revokes-pending-and-refuses-fill',
+            crossOrigin.status !== 'OK' && crossOrigin.noPending, crossOrigin);
+        record('p1-cross-origin-document-fields-remain-empty', await second.evaluate(() =>
+            ['password', 'confirm'].every((id) => document.getElementById(id).value === '')));
+        record('p1-isolation-probes-do-not-write-vault', (await fixture('inspect')).entryCount === 0);
+    } finally {
+        await first.close().catch(() => {});
+        await second.close().catch(() => {});
+    }
+}
+
 async function main() {
     await fs.mkdir(acceptanceRoot, { recursive: true });
-    env.TEMP = path.join(root, '.tools/tmp');
+    env.TEMP = path.join(acceptanceRoot, 'temp');
     env.TMP = env.TEMP;
+    await fs.mkdir(env.TEMP, { recursive: true });
     master = crypto.randomBytes(24).toString('base64');
     associationKey = crypto.randomBytes(32).toString('base64');
     vaultPath = path.join(acceptanceRoot, 'isolated.kdbx');
@@ -179,6 +310,9 @@ async function main() {
     });
     await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
     const origin = 'http://127.0.0.1:' + server.address().port;
+    alternateServer = http.createServer(server.listeners('request')[0]);
+    await new Promise((resolve) => alternateServer.listen(0, '127.0.0.1', resolve));
+    const alternateOrigin = 'http://127.0.0.1:' + alternateServer.address().port;
     await startDesktop();
     stage = 'browser-launch';
     context = await chromium.launchPersistentContext(path.join(acceptanceRoot, 'browser-profile'), {
@@ -187,6 +321,7 @@ async function main() {
         viewport: { width: 1280, height: 900 }
     });
     context.setDefaultTimeout(15000);
+    report.browserVersion = context.browser().version();
     const session = await context.browser().newBrowserCDPSession();
     const loaded = await session.send('Extensions.loadUnpacked', { path: path.join(packageRoot, 'extension-chromium') });
     record('fixed-extension-loaded', loaded.id === extensionId);
@@ -233,6 +368,9 @@ async function main() {
         return summary;
     }, 'fictional-' + name);
     record('actual-native-generation', recommended.status === 'OK' && recommended.tokenPrepared, recommended);
+    stage = 'p1-native-isolation-and-document-regression';
+    await p1NativeRegression(worker, origin, alternateOrigin);
+    await site.bringToFront();
     stage = 'popup';
     const targets = await session.send('Target.getTargets', { filter: [{}] });
     const target = targets.targetInfos.find((item) => item.type === 'tab' && item.url.startsWith(origin));
@@ -432,6 +570,7 @@ main().catch((error) => {
     if (context) { await context.close().catch(() => {}); }
     await stopDesktop();
     if (server) { await new Promise((resolve) => server.close(resolve)); }
+    if (alternateServer) { await new Promise((resolve) => alternateServer.close(resolve)); }
     await fs.writeFile(path.join(acceptanceRoot, 'report.json'), JSON.stringify(report, null, 2));
     master = undefined;
     associationKey = undefined;

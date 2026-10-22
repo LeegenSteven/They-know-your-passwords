@@ -115,6 +115,8 @@ void BrowserService::setEnabled(bool enabled)
             RiskAssessmentService::instance()->start();
         }
     } else {
+        m_riskCandidates.clear();
+        m_latestRiskInputRevision.clear();
         m_browserHost->stop();
         RiskAssessmentService::instance()->stop();
     }
@@ -584,6 +586,21 @@ QString riskInputKey(QLocalSocket* socket, const QString& pageId)
 }
 }
 
+void BrowserService::clearRiskConnection()
+{
+    auto* socket = qobject_cast<QLocalSocket*>(sender());
+    if (!socket) {
+        return;
+    }
+    m_riskCandidates.clearConnection(socket);
+    const auto prefix = riskInputKey(socket, {});
+    for (auto it = m_latestRiskInputRevision.begin(); it != m_latestRiskInputRevision.end();) {
+        if (it.key().startsWith(prefix)) {
+            it = m_latestRiskInputRevision.erase(it);
+        } else { ++it; }
+    }
+}
+
 void BrowserService::sendRiskResponse(const KeyPairMessage& keyPairMessage,
                                       const QString& action,
                                       const QSharedPointer<Database>& database,
@@ -607,7 +624,7 @@ void BrowserService::sendRiskResponse(const KeyPairMessage& keyPairMessage,
                            {"requestID", response.value("requestID")},
                            {"inputRevision", response.value("inputRevision")}};
     }
-    if (!keyPairMessage.socket || !m_browserHost) {
+    if (!keyPairMessage.socket || keyPairMessage.socket->state() != QLocalSocket::ConnectedState || !m_browserHost) {
         return;
     }
     m_browserHost->sendClientMessage(
@@ -646,7 +663,7 @@ void BrowserService::assessPassword(const KeyPairMessage& keyPairMessage,
     RiskAssessmentService::instance()->assessPassword(
         database, candidate, context, entryUuid, requestId, inputRevision,
         [this, keyPairMessage, socket, database, action, pageId](const QJsonObject& response) {
-            if (!socket) {
+            if (!socket || socket->state() != QLocalSocket::ConnectedState) {
                 return;
             }
             auto result = response;
@@ -677,17 +694,18 @@ void BrowserService::recommendPassword(const KeyPairMessage& keyPairMessage,
         return;
     }
     const QPointer<QLocalSocket> socket(keyPairMessage.socket);
+    const auto requestGeneration = m_riskCandidates.beginRequest(socket, binding);
     RiskAssessmentService::instance()->recommendPassword(
         database, context, entryUuid, requestId, inputRevision,
-        [this, keyPairMessage, socket, database, binding](const QJsonObject& response) {
-            if (!socket) {
+        [this, keyPairMessage, socket, database, binding, requestGeneration](const QJsonObject& response) {
+            if (!socket || socket->state() != QLocalSocket::ConnectedState) {
                 return;
             }
             auto result = response;
             result["pageId"] = binding.value("pageId");
             if (m_latestRiskInputRevision.value(riskInputKey(socket, binding.value("pageId").toString())) == binding.value("inputRevision").toVariant().toLongLong()
                 && isDatabaseOpened() && getDatabase() == database && !response.value("candidate").toString().isEmpty()) {
-                result = m_riskCandidates.prepare(database, socket, binding, response);
+                result = m_riskCandidates.prepare(database, socket, binding, response, requestGeneration);
                 result["inputRevision"] = response.value("inputRevision");
                 result["pageId"] = binding.value("pageId");
             }
@@ -700,8 +718,11 @@ void BrowserService::riskCandidateAction(const KeyPairMessage& message, const QS
 {
     const auto db = isDatabaseOpened() ? getDatabase() : QSharedPointer<Database>{};
     if (action == "cancel-risk-candidate") {
-        m_latestRiskInputRevision.insert(riskInputKey(message.socket, params.value("pageId").toString()), params.value("inputRevision").toVariant().toLongLong());
-        m_riskCandidates.cancel(message.socket, params.value("candidateToken").toString());
+        const auto invalidateRequests = params.value("invalidateRequests").toBool(true);
+        if (invalidateRequests) {
+            m_latestRiskInputRevision.insert(riskInputKey(message.socket, params.value("pageId").toString()), params.value("inputRevision").toVariant().toLongLong());
+        }
+        m_riskCandidates.cancel(message.socket, params, invalidateRequests);
         sendRiskResponse(message, action, db, {{"status", "OK"}, {"inputRevision", params.value("inputRevision")}});
         return;
     }
@@ -714,11 +735,12 @@ void BrowserService::riskCandidateAction(const KeyPairMessage& message, const QS
     const auto inputRevision = params.value("inputRevision").toVariant().toLongLong();
     m_latestRiskInputRevision.insert(riskInputKey(message.socket, params.value("pageId").toString()), inputRevision);
     const QPointer<QLocalSocket> socket(message.socket);
+    const auto requestGeneration = m_riskCandidates.beginRequest(socket, params);
     RiskAssessmentService::instance()->assessPassword(
         db, params.value("candidate").toString(), params.value("context").toString(),
         params.value("entryUuid").toString(), params.value("requestID").toString(), inputRevision,
         [=](const QJsonObject& response) {
-            if (!socket) { return; }
+            if (!socket || socket->state() != QLocalSocket::ConnectedState) { return; }
             auto result = response;
             const auto reuse = response.value("reuse").toObject();
             if (response.value("status") == "OK" && (reuse.isEmpty() || reuse.value("status") == "OK")
@@ -726,7 +748,7 @@ void BrowserService::riskCandidateAction(const KeyPairMessage& message, const QS
                 && m_latestRiskInputRevision.value(riskInputKey(socket, params.value("pageId").toString())) == inputRevision) {
                 result["candidate"] = params.value("candidate");
                 result["resultStatus"] = "REVIEW_REQUIRED";
-                result = m_riskCandidates.prepare(db, socket, params, result);
+                result = m_riskCandidates.prepare(db, socket, params, result, requestGeneration);
             }
             result["inputRevision"] = inputRevision;
             result["pageId"] = params.value("pageId");
@@ -1938,6 +1960,10 @@ void BrowserService::handleDatabaseUnlockDialogFinished(bool accepted, DatabaseW
 
 void BrowserService::processClientMessage(QLocalSocket* socket, const QJsonObject& message)
 {
+    if (socket) {
+        connect(socket, &QLocalSocket::disconnected, this, &BrowserService::clearRiskConnection,
+                Qt::UniqueConnection);
+    }
     auto clientID = message["clientID"].toString();
     if (clientID.isEmpty()) {
         return;

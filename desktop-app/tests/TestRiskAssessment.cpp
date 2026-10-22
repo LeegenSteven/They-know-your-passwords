@@ -99,6 +99,226 @@ private slots:
         QVERIFY(first->password() == beforeFirst);
         QVERIFY(second->password() == beforeSecond);
     }
+    void pageCancellationPreservesOtherPendingCandidate_data() {
+        QTest::addColumn<bool>("emptyToken");
+        QTest::newRow("explicit-token") << false;
+        QTest::newRow("empty-token") << true;
+    }
+    void pageCancellationPreservesOtherPendingCandidate() {
+        QFETCH(bool, emptyToken);
+        auto db = QSharedPointer<Database>::create();
+        QObject connection;
+        RiskCandidateStore store;
+        auto pageA = binding("new", "synthetic-account-a");
+        auto pageB = binding("new", "synthetic-account-b");
+        pageA["pageId"] = "page-a";
+        pageB["pageId"] = "page-b";
+        pageA["candidateToken"] = store.prepare(db, &connection, pageA, assessment()).value("candidateToken");
+        pageB["candidateToken"] = store.prepare(db, &connection, pageB, assessment()).value("candidateToken");
+        QCOMPARE(store.m_candidates.size(), 2);
+        auto cancellation = pageA;
+        if (emptyToken) { cancellation["candidateToken"] = ""; }
+        store.cancel(&connection, cancellation);
+        QCOMPARE(store.confirm(db, &connection, pageA).value("error_code").toString(), QString("NO_PENDING_CANDIDATE"));
+        QCOMPARE(store.confirm(db, &connection, pageB).value("error_code").toString(), QString("CONFIRMATION_REQUIRED"));
+        QCOMPARE(store.m_candidates.size(), 1);
+    }
+    void pageWithoutCandidateCannotCancelAnotherPage_data() {
+        QTest::addColumn<QString>("change");
+        QTest::newRow("no-pending-token") << QString();
+        QTest::newRow("account-switch") << QString("account");
+        QTest::newRow("input-change") << QString("inputRevision");
+    }
+    void pageWithoutCandidateCannotCancelAnotherPage() {
+        QFETCH(QString, change);
+        auto db = QSharedPointer<Database>::create();
+        QObject connection;
+        RiskCandidateStore store;
+        auto pageA = binding("new", "synthetic-account-a");
+        auto pageB = binding("new", "synthetic-account-b");
+        pageA["pageId"] = "page-a";
+        pageB["pageId"] = "page-b";
+        pageA["candidateToken"] = store.prepare(db, &connection, pageA, assessment()).value("candidateToken");
+        pageB["candidateToken"] = "";
+        if (change == "account") { pageB["account"] = "synthetic-account-c"; }
+        if (change == "inputRevision") { pageB["inputRevision"] = 8; }
+        store.cancel(&connection, pageB);
+        QCOMPARE(store.m_candidates.size(), 1);
+        QCOMPARE(store.confirm(db, &connection, pageA).value("error_code").toString(), QString("CONFIRMATION_REQUIRED"));
+    }
+    void pageChangesStillCancelTheirOwnCandidate_data() {
+        QTest::addColumn<QString>("change");
+        QTest::newRow("account-switch") << QString("account");
+        QTest::newRow("input-change") << QString("inputRevision");
+    }
+    void pageChangesStillCancelTheirOwnCandidate() {
+        QFETCH(QString, change);
+        auto db = QSharedPointer<Database>::create();
+        QObject connection;
+        RiskCandidateStore store;
+        auto pageA = binding("new", "synthetic-account-a");
+        auto pageB = binding("new", "synthetic-account-b");
+        pageA["pageId"] = "page-a";
+        pageB["pageId"] = "page-b";
+        pageA["candidateToken"] = store.prepare(db, &connection, pageA, assessment()).value("candidateToken");
+        pageB["candidateToken"] = store.prepare(db, &connection, pageB, assessment()).value("candidateToken");
+        QCOMPARE(store.m_candidates.size(), 2);
+        auto cancellation = pageB;
+        cancellation["candidateToken"] = "";
+        if (change == "account") { cancellation["account"] = "synthetic-account-c"; }
+        if (change == "inputRevision") { cancellation["inputRevision"] = 8; }
+        store.cancel(&connection, cancellation);
+        QCOMPARE(store.confirm(db, &connection, pageA).value("error_code").toString(), QString("CONFIRMATION_REQUIRED"));
+        QCOMPARE(store.confirm(db, &connection, pageB).value("error_code").toString(), QString("NO_PENDING_CANDIDATE"));
+        QCOMPARE(store.m_candidates.size(), 1);
+    }
+    void cancellationRequiresConnectionPageAndOrigin_data() {
+        QTest::addColumn<QString>("mismatch");
+        QTest::newRow("wrong-connection") << QString("connection");
+        QTest::newRow("wrong-page-with-valid-token") << QString("pageId");
+        QTest::newRow("wrong-origin-with-valid-token") << QString("origin");
+        QTest::newRow("missing-page-with-valid-token") << QString("missingPage");
+        QTest::newRow("empty-page-with-valid-token") << QString("emptyPage");
+        QTest::newRow("missing-origin-with-valid-token") << QString("missingOrigin");
+        QTest::newRow("empty-origin-with-valid-token") << QString("emptyOrigin");
+        QTest::newRow("wrong-token") << QString("candidateToken");
+    }
+    void cancellationRequiresConnectionPageAndOrigin() {
+        QFETCH(QString, mismatch);
+        auto db = QSharedPointer<Database>::create();
+        QObject connection;
+        QObject otherConnection;
+        RiskCandidateStore store;
+        auto params = binding("new", "synthetic-account");
+        params["candidateToken"] = store.prepare(db, &connection, params, assessment()).value("candidateToken");
+        auto cancellation = params;
+        if (mismatch == "pageId") { cancellation["pageId"] = "another-page"; }
+        if (mismatch == "origin") { cancellation["origin"] = "https://another.example.test"; }
+        if (mismatch == "missingPage") { cancellation.remove("pageId"); }
+        if (mismatch == "emptyPage") { cancellation["pageId"] = ""; }
+        if (mismatch == "missingOrigin") { cancellation.remove("origin"); }
+        if (mismatch == "emptyOrigin") { cancellation["origin"] = ""; }
+        if (mismatch == "candidateToken") { cancellation["candidateToken"] = "unknown-test-token"; }
+        store.cancel(mismatch == "connection" ? &otherConnection : &connection, cancellation);
+        QCOMPARE(store.m_candidates.size(), 1);
+        QCOMPARE(store.confirm(db, &connection, params).value("error_code").toString(), QString("CONFIRMATION_REQUIRED"));
+    }
+    void connectionAndDatabaseCleanupInvalidateCandidates() {
+        auto db = QSharedPointer<Database>::create();
+        QObject connection;
+        QObject otherConnection;
+        RiskCandidateStore store;
+        auto pageA = binding("new", "synthetic-account-a");
+        auto pageB = binding("new", "synthetic-account-b");
+        auto pageC = binding("new", "synthetic-account-c");
+        pageA["pageId"] = "page-a";
+        pageB["pageId"] = "page-b";
+        pageC["pageId"] = "page-c";
+        pageA["candidateToken"] = store.prepare(db, &connection, pageA, assessment()).value("candidateToken");
+        pageB["candidateToken"] = store.prepare(db, &connection, pageB, assessment()).value("candidateToken");
+        pageC["candidateToken"] = store.prepare(db, &otherConnection, pageC, assessment()).value("candidateToken");
+        QCOMPARE(store.m_candidates.size(), 3);
+        store.clearConnection(&connection);
+        QCOMPARE(store.m_candidates.size(), 1);
+        QCOMPARE(store.confirm(db, &connection, pageA).value("error_code").toString(), QString("NO_PENDING_CANDIDATE"));
+        QCOMPARE(store.confirm(db, &connection, pageB).value("error_code").toString(), QString("NO_PENDING_CANDIDATE"));
+        QCOMPARE(store.confirm(db, &otherConnection, pageC).value("error_code").toString(), QString("CONFIRMATION_REQUIRED"));
+        // Database lock and active-database changes both use this global cleanup.
+        store.clear();
+        QCOMPARE(store.m_candidates.size(), 0);
+        QCOMPARE(store.confirm(db, &otherConnection, pageC).value("error_code").toString(), QString("NO_PENDING_CANDIDATE"));
+        QCOMPARE(db->rootGroup()->entries().size(), 0);
+    }
+    void newestRequestWinsWithIdenticalInputRevision() {
+        auto db = QSharedPointer<Database>::create();
+        QObject connection;
+        RiskCandidateStore store;
+        auto params = binding("new", "synthetic-account");
+        const auto first = store.beginRequest(&connection, params);
+        const auto second = store.beginRequest(&connection, params);
+        QVERIFY(first != second);
+        const auto accepted = store.prepare(db, &connection, params, assessment(), second);
+        QVERIFY(!accepted.value("candidateToken").toString().isEmpty());
+        const auto late = store.prepare(db, &connection, params, assessment(), first);
+        QCOMPARE(late.value("error_code").toString(), QString("STALE_RISK_REQUEST"));
+        params["candidateToken"] = accepted.value("candidateToken");
+        QCOMPARE(store.confirm(db, &connection, params).value("error_code").toString(), QString("CONFIRMATION_REQUIRED"));
+        QCOMPARE(store.m_candidates.size(), 1);
+    }
+    void oldTokenCleanupPreservesNewRequest_data() {
+        QTest::addColumn<bool>("newCandidateReady");
+        QTest::newRow("new-request-in-flight") << false;
+        QTest::newRow("new-candidate-ready") << true;
+    }
+    void oldTokenCleanupPreservesNewRequest() {
+        QFETCH(bool, newCandidateReady);
+        auto db = QSharedPointer<Database>::create();
+        QObject connection;
+        RiskCandidateStore store;
+        auto oldParams = binding("new", "synthetic-account");
+        const auto first = store.beginRequest(&connection, oldParams);
+        oldParams["candidateToken"] = store.prepare(db, &connection, oldParams, assessment(), first).value("candidateToken");
+        auto newParams = binding("new", "synthetic-account");
+        const auto second = store.beginRequest(&connection, newParams);
+        if (newCandidateReady) {
+            newParams["candidateToken"] = store.prepare(db, &connection, newParams, assessment(), second).value("candidateToken");
+        }
+        store.cancel(&connection, oldParams, false);
+        if (!newCandidateReady) {
+            newParams["candidateToken"] = store.prepare(db, &connection, newParams, assessment(), second).value("candidateToken");
+        }
+        QVERIFY(!newParams.value("candidateToken").toString().isEmpty());
+        QCOMPARE(store.prepare(db, &connection, oldParams, assessment(), first).value("error_code").toString(), QString("STALE_RISK_REQUEST"));
+        QCOMPARE(store.confirm(db, &connection, newParams).value("error_code").toString(), QString("CONFIRMATION_REQUIRED"));
+        QCOMPARE(store.m_candidates.size(), 1);
+    }
+    void lifecycleInvalidationRejectsLateRequests_data() {
+        QTest::addColumn<QString>("cleanup");
+        QTest::newRow("page-cancel") << QString("cancel");
+        QTest::newRow("database-clear") << QString("clear");
+        QTest::newRow("connection-close") << QString("connection");
+    }
+    void lifecycleInvalidationRejectsLateRequests() {
+        QFETCH(QString, cleanup);
+        auto db = QSharedPointer<Database>::create();
+        QObject connection;
+        RiskCandidateStore store;
+        auto params = binding("new", "synthetic-account");
+        const auto first = store.beginRequest(&connection, params);
+        if (cleanup == "cancel") { store.cancel(&connection, params); }
+        if (cleanup == "clear") { store.clear(); }
+        if (cleanup == "connection") { store.clearConnection(&connection); }
+        QCOMPARE(store.prepare(db, &connection, params, assessment(), first).value("error_code").toString(), QString("STALE_RISK_REQUEST"));
+        QCOMPARE(store.m_candidates.size(), 0);
+        const auto second = store.beginRequest(&connection, params);
+        QVERIFY(first != second);
+        params["candidateToken"] = store.prepare(db, &connection, params, assessment(), second).value("candidateToken");
+        QVERIFY(!params.value("candidateToken").toString().isEmpty());
+        QCOMPARE(store.prepare(db, &connection, params, assessment(), first).value("error_code").toString(), QString("STALE_RISK_REQUEST"));
+        QCOMPARE(store.confirm(db, &connection, params).value("error_code").toString(), QString("CONFIRMATION_REQUIRED"));
+        QCOMPARE(store.m_candidates.size(), 1);
+    }
+    void requestGenerationsAreScopedToPageAndOrigin() {
+        auto db = QSharedPointer<Database>::create();
+        QObject connection;
+        RiskCandidateStore store;
+        auto pageA = binding("new", "synthetic-account-a");
+        auto pageB = binding("new", "synthetic-account-b");
+        pageA["pageId"] = "page-a";
+        pageB["pageId"] = "page-b";
+        const auto first = store.beginRequest(&connection, pageA);
+        const auto second = store.beginRequest(&connection, pageB);
+        auto wrongOrigin = pageA;
+        wrongOrigin["origin"] = "https://another.example.test";
+        store.cancel(&connection, wrongOrigin);
+        pageB["candidateToken"] = store.prepare(db, &connection, pageB, assessment(), second).value("candidateToken");
+        pageA["candidateToken"] = store.prepare(db, &connection, pageA, assessment(), first).value("candidateToken");
+        QVERIFY(!pageA.value("candidateToken").toString().isEmpty());
+        QVERIFY(!pageB.value("candidateToken").toString().isEmpty());
+        QCOMPARE(store.m_candidates.size(), 2);
+        QCOMPARE(store.confirm(db, &connection, pageA).value("error_code").toString(), QString("CONFIRMATION_REQUIRED"));
+        QCOMPARE(store.confirm(db, &connection, pageB).value("error_code").toString(), QString("CONFIRMATION_REQUIRED"));
+    }
     void expirySessionRevisionAndMissingTarget() {
         auto db = QSharedPointer<Database>::create();
         auto* value = entry(db, "account-a");

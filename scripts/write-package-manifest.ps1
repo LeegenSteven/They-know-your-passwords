@@ -10,6 +10,8 @@ $files = @('Launch.cmd', '启动软件.cmd', 'Setup.cmd', '首次配置.cmd', 'C
     'TheyKnowYourPasswords.exe', 'they-know-your-passwords-proxy.exe', 'they-know-your-passwords-cli.exe',
     'algo-service\server.py', 'algo-service\config.toml', 'algo-service\adapters\rankguess.py',
     'algo-service\adapters\pard.py', 'algo-service\adapters\psm.py', 'extension-chromium\manifest.json',
+    'extension-chromium\background\client.js', 'extension-chromium\background\keepass.js',
+    'extension-chromium\background\tabs.js', 'extension-chromium\content\they-know-your-passwords-browser.js',
     'algorithms\rankguess\MC.py', $rankModel,
     'algorithms\pard\demo6_glca.py', 'algorithms\pard\eval6_glca.py', $pardModel)
 if ($portable) { $files += @('runtime\python.exe', 'runtime\python312.dll', 'runtime\python312._pth', 'runtime\build-artifacts.json') }

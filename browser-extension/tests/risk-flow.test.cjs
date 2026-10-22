@@ -17,7 +17,8 @@ function fixture() {
         browser: {
             runtime: { id: 'test-extension', getURL: (value) => 'chrome-extension://test-extension/' + value },
             storage: { local: { get: async () => ({ keyRing: {} }) } },
-            tabs: { get: async () => tab, sendMessage: async () => ({ status: 'OK' }) }
+            tabs: { get: async () => tab, sendMessage: async (_, message) => message.action === 'risk_document_context'
+                ? { origin: new URL(tab.url).origin, documentToken: 'synthetic-document-token' } : { status: 'OK' } }
         }
     };
     vm.createContext(context);
@@ -25,6 +26,8 @@ function fixture() {
     vm.runInContext(source + '\nglobalThis.subject = keepass;', context);
     const subject = context.subject;
     subject.databaseHash = 'synthetic-database-id';
+    subject.isConnected = true;
+    subject.isDatabaseClosed = false;
     subject.isAssociated = () => true;
     subject.testAssociation = async () => true;
     subject.riskSend = async (_, action, data) => {
@@ -55,7 +58,10 @@ test('switching accounts rejects confirmation without saving another entry', asy
     await subject.recommendPassword(tab, [ 'change', 7 ]);
     state.loginId = 'entry-b';
     let saves = 0;
-    subject.riskSend = async () => { saves++; return { status: 'OK', saved: true }; };
+    subject.riskSend = async (_, action) => {
+        if (action === 'confirm-risk-candidate') { saves++; }
+        return { status: 'OK', saved: true };
+    };
     const result = await subject.confirmRiskCandidate(tab, [ 7, true, true ]);
     assert.equal(result.status, 'UNAVAILABLE');
     assert.equal(saves, 0);
@@ -93,6 +99,6 @@ test('old generation reply is discarded after input cancellation', async () => {
     await new Promise((done) => setImmediate(done));
     await subject.cancelRiskCandidate(tab, [ 11 ]);
     resolve();
-    assert.equal((await generation).error_code, 'STALE_INPUT_REVISION');
+    assert.equal((await generation).error_code, 'STALE_DOCUMENT_CONTEXT');
     assert.equal(state.riskPending, undefined);
 });

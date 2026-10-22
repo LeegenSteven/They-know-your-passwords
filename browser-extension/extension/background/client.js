@@ -409,6 +409,7 @@ keepassClient.nativeConnect = function() {
 };
 
 function onDisconnected() {
+    keepass.clearRiskCandidates();
     keepassClient.nativePort = null;
     keepass.isConnected = false;
     keepass.isDatabaseClosed = true;
@@ -426,10 +427,7 @@ function onDisconnected() {
 keepassClient.onNativeMessage = function(response) {
     // Handle database lock/unlock status
     if (response.action === kpActions.DATABASE_LOCKED || response.action === kpActions.DATABASE_UNLOCKED) {
-        for (const state of tabs.tabList.values()) {
-            state.riskPending = undefined;
-            state.riskRevision = (state.riskRevision ?? 0) + 1;
-        }
+        keepass.clearRiskCandidates();
         keepass.updateDatabase();
         return;
     }

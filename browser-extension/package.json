@@ -1,6 +1,6 @@
 {
   "name": "they-know-your-passwords",
-  "version": "1.10.4",
+  "version": "1.10.5",
   "description": "They know your passwords browser extension",
   "main": "build.js",
   "devDependencies": {

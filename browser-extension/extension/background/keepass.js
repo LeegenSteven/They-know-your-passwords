@@ -233,56 +233,103 @@ keepass.rememberRiskCandidate = function(tab, binding, response) {
     if (!response?.candidateToken || !response?.candidate) { return; }
     tabs.updateTabValues(tab.id, { riskPending: {
         ...binding, candidate: response.candidate, candidateToken: response.candidateToken,
-        databaseHash: keepass.databaseHash, createdAt: Date.now(), result: {
+        databaseHash: keepass.databaseHash, createdAt: Date.now(),
+        expiresAt: Math.min(Date.now() + 600000, Date.parse(response.expiresAt) || Infinity), result: {
             status: response.status, resultStatus: response.resultStatus,
             trawling: response.trawling, reuse: response.reuse
         }
     } });
 };
 
-keepass.recommendPassword = async function(tab, args = []) {
-    const [ context = 'change', revision = 0, options = {} ] = args;
+// The nonce is generated in the isolated content world once per document. It
+// also protects Firefox versions without webNavigation documentId support.
+keepass.getRiskDocumentContext = async function(tab) {
+    try {
+        const origin = new URL(tab.url).origin;
+        const target = { frameId: 0 };
+        if (browser.webNavigation?.getFrame) {
+            const frame = await browser.webNavigation.getFrame({ tabId: tab.id, frameId: 0 });
+            if (!frame || new URL(frame.url).origin !== origin) { return undefined; }
+            if (frame.documentId) { target.documentId = frame.documentId; }
+        }
+        const document = await browser.tabs.sendMessage(tab.id, { action: 'risk_document_context' }, target);
+        if (document?.origin !== origin || typeof document.documentToken !== 'string'
+            || document.documentToken.length < 16) { return undefined; }
+        return { origin, documentToken: document.documentToken, target };
+    } catch (_err) { return undefined; }
+};
+
+keepass.cancelRiskResponse = async function(tab, binding, response) {
+    if (!response?.candidateToken || !keepass.isAssociated()) { return; }
+    await keepass.riskSend(tab, 'cancel-risk-candidate', {
+        candidateToken: response.candidateToken, origin: binding.origin,
+        pageId: binding.pageId, inputRevision: binding.inputRevision, invalidateRequests: false
+    });
+};
+
+keepass.requestRiskCandidate = async function(tab, action, context, revision, options, candidate) {
     const current = await keepass.validateRiskTab(tab);
-    if (!current) { return keepass.riskError('SOURCE_NOT_ALLOWED', revision); }
-    await keepass.cancelRiskCandidate(current, [ revision ]);
+    const state = tabs.getTabFromId(current?.id);
+    if (!current || !state) { return keepass.riskError('SOURCE_NOT_ALLOWED', revision); }
+    // Capture immediately: cancellation invalidates older in-flight requests,
+    // even when two popup requests happen to have the same input revision.
+    const cancellation = keepass.cancelRiskCandidate(current, [ revision ]);
+    const sequence = state.riskRequestSequence;
+    await cancellation;
+    if (sequence !== state.riskRequestSequence) { return keepass.riskError('STALE_INPUT_REVISION', revision); }
     const binding = keepass.riskBinding(current, context, revision, options);
     if (!binding.account || (context === 'change' && !binding.entryUuid)) {
         return keepass.riskError('SELECT_ACCOUNT_REQUIRED', revision);
     }
-    const state = tabs.getTabFromId(current.id);
-    state.riskRevision = revision;
-    const response = await keepass.riskSend(current, 'recommend-password', binding);
-    if (state.riskRevision !== revision) { return keepass.riskError('STALE_INPUT_REVISION', revision); }
-    keepass.rememberRiskCandidate(current, binding, response);
+    const databaseHash = keepass.databaseHash;
+    const document = await keepass.getRiskDocumentContext(current);
+    if (!document || sequence !== state.riskRequestSequence || keepass.isDatabaseClosed
+        || !keepass.isConnected || !keepass.isAssociated()) {
+        return keepass.riskError('STALE_DOCUMENT_CONTEXT', revision);
+    }
+    const response = await keepass.riskSend(current, action,
+        action === 'prepare-risk-candidate' ? { ...binding, candidate } : binding);
+    const latest = await keepass.validateRiskTab(current);
+    const latestDocument = latest && await keepass.getRiskDocumentContext(latest);
+    if (tabs.getTabFromId(current.id) !== state || sequence !== state.riskRequestSequence
+        || state.riskRevision !== revision || keepass.isDatabaseClosed || !keepass.isConnected
+        || !keepass.isAssociated() || databaseHash !== keepass.databaseHash
+        || !latestDocument || latestDocument.origin !== binding.origin
+        || latestDocument.documentToken !== document.documentToken) {
+        await keepass.cancelRiskResponse(current, binding, response);
+        return keepass.riskError('STALE_DOCUMENT_CONTEXT', revision);
+    }
+    keepass.rememberRiskCandidate(latest, { ...binding, documentToken: document.documentToken }, response);
     return response;
+};
+
+keepass.recommendPassword = async function(tab, args = []) {
+    const [ context = 'change', revision = 0, options = {} ] = args;
+    return keepass.requestRiskCandidate(tab, 'recommend-password', context, revision, options);
 };
 
 keepass.prepareRiskCandidate = async function(tab, args = []) {
     const [ candidate, context = 'new', revision = 0, options = {} ] = args;
-    const current = await keepass.validateRiskTab(tab);
-    if (!current) { return keepass.riskError('SOURCE_NOT_ALLOWED', revision); }
-    await keepass.cancelRiskCandidate(current, [ revision ]);
-    const binding = keepass.riskBinding(current, context, revision, options);
-    if (!binding.account || (context === 'change' && !binding.entryUuid)) {
-        return keepass.riskError('SELECT_ACCOUNT_REQUIRED', revision);
-    }
-    const state = tabs.getTabFromId(current.id);
-    state.riskRevision = revision;
-    const response = await keepass.riskSend(current, 'prepare-risk-candidate', { ...binding, candidate });
-    if (state.riskRevision !== revision) { return keepass.riskError('STALE_INPUT_REVISION', revision); }
-    keepass.rememberRiskCandidate(current, binding, response);
-    return response;
+    return keepass.requestRiskCandidate(tab, 'prepare-risk-candidate', context, revision, options, candidate);
 };
 
 keepass.stageRiskCandidate = async function(tab, args = []) {
     const [ _candidate, revision = 0, targetIndex ] = args;
     const current = await keepass.validateRiskTab(tab);
-    const pending = tabs.getTabFromId(current?.id)?.riskPending;
-    if (!pending || pending.inputRevision !== revision) { return keepass.riskError('NO_PENDING_CANDIDATE', revision); }
+    const pending = await keepass.getPendingRiskCandidate(current);
+    if (!current || pending.status !== 'OK' || !Number.isInteger(revision)
+        || pending.inputRevision !== revision) { return keepass.riskError('NO_PENDING_CANDIDATE', revision); }
+    const document = await keepass.getRiskDocumentContext(current);
+    const latest = await keepass.getPendingRiskCandidate(current);
+    if (!document || document.origin !== pending.origin || document.documentToken !== pending.documentToken
+        || latest.status !== 'OK' || latest.candidateToken !== pending.candidateToken) {
+        return keepass.riskError('STALE_DOCUMENT_CONTEXT', revision);
+    }
     try {
         const filled = await browser.tabs.sendMessage(current.id, {
-            action: 'fill_risk_candidate', candidate: pending.candidate, targetIndex
-        });
+            action: 'fill_risk_candidate', candidate: pending.candidate, targetIndex,
+            expectedOrigin: pending.origin, documentToken: pending.documentToken
+        }, document.target);
         return filled?.status === 'OK' ? filled : keepass.riskError(filled?.error_code ?? 'SELECT_TARGET_FIELD', revision);
     } catch (_err) { return keepass.riskError('PAGE_FILL_FAILED', revision); }
 };
@@ -291,10 +338,12 @@ keepass.getPendingRiskCandidate = async function(tab) {
     const current = await keepass.validateRiskTab(tab);
     const state = tabs.getTabFromId(current?.id);
     const pending = state?.riskPending;
-    if (!pending || Date.now() - pending.createdAt > 600000
+    if (!current || !pending || keepass.isDatabaseClosed || !keepass.isConnected || !keepass.isAssociated()
+        || Date.now() - pending.createdAt > 600000 || Date.now() >= pending.expiresAt
+        || state.riskRevision !== pending.inputRevision
         || pending.origin !== new URL(current.url).origin || pending.databaseHash !== keepass.databaseHash
         || (pending.context === 'change' && keepass.getRiskEntryUuid(current) && keepass.getRiskEntryUuid(current) !== pending.entryUuid)) {
-        if (state) { state.riskPending = undefined; }
+        if (state?.riskPending) { await keepass.cancelRiskCandidate(current, [ state.riskRevision ?? 0 ]); }
         return keepass.riskError('NO_PENDING_CANDIDATE');
     }
     return { status: 'OK', ...pending };
@@ -322,14 +371,46 @@ keepass.cancelRiskCandidate = async function(tab, args = []) {
     const [ revision = 0 ] = args;
     const state = tabs.getTabFromId(tab?.id);
     const pending = state?.riskPending;
-    if (state) { state.riskPending = undefined; state.riskRevision = revision; }
-    if (keepass.isAssociated() && /^https?:\/\//i.test(tab?.url ?? '')) {
+    if (state) {
+        state.riskPending = undefined;
+        state.riskRevision = revision;
+        state.riskRequestSequence = (state.riskRequestSequence ?? 0) + 1;
+    }
+    // No pending token means there is nothing to revoke. Never send a
+    // connection-wide empty-token cancellation from a tab operation.
+    if (pending?.candidateToken && keepass.isAssociated()) {
         return keepass.riskSend(tab, 'cancel-risk-candidate', {
-            candidateToken: pending?.candidateToken ?? '', origin: new URL(tab.url).origin,
-            pageId: String(tab.id), inputRevision: revision
+            candidateToken: pending.candidateToken, origin: pending.origin,
+            pageId: pending.pageId, inputRevision: revision
         });
     }
     return { status: 'OK', inputRevision: revision };
+};
+
+keepass.onRiskNavigation = async function(tabId, changeInfo, tab) {
+    const state = tabs.getTabFromId(tabId);
+    if (!state) { return; }
+    state.riskRequestSequence = (state.riskRequestSequence ?? 0) + 1;
+    const pending = state.riskPending;
+    if (!pending) { return; }
+    let origin;
+    try {
+        const url = new URL(changeInfo.url ?? tab?.url ?? '');
+        if (url.protocol === 'http:' || url.protocol === 'https:') { origin = url.origin; }
+    } catch (_err) { /* Non-web documents cannot retain a candidate. */ }
+    if (origin !== pending.origin) {
+        await keepass.cancelRiskCandidate({ ...tab, id: tabId }, [ (state.riskRevision ?? 0) + 1 ]);
+    }
+    // Same-origin success navigation may retain confirmation. Filling still
+    // requires the original content-document nonce, so it cannot target a new document.
+};
+
+keepass.clearRiskCandidates = function() {
+    for (const state of tabs.tabList.values()) {
+        state.riskPending = undefined;
+        state.riskRevision = (state.riskRevision ?? 0) + 1;
+        state.riskRequestSequence = (state.riskRequestSequence ?? 0) + 1;
+    }
 };
 
 keepass.getRiskContext = async function(tab) {

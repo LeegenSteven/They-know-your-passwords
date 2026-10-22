@@ -226,6 +226,7 @@ private:
     void hideWindow() const;
     void raiseWindow(const bool force = false);
     void updateWindowState();
+    void clearRiskConnection();
     void sendRiskResponse(const KeyPairMessage& keyPairMessage,
                           const QString& action,
                           const QSharedPointer<Database>& database,

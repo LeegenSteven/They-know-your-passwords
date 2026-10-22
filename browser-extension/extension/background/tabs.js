@@ -144,6 +144,7 @@ tabs.onCreated = async function(tab) {
  * @param {object} removeInfo
  */
 tabs.onRemoved = async function(tabId, _removeInfo) {
+    await keepass.cancelRiskCandidate({ id: tabId }, [ (tabs.getTabFromId(tabId)?.riskRevision ?? 0) + 1 ]);
     if (tabs.currentTabId === tabId) {
         const currentTab = await getCurrentTab();
         tabs.currentTabId = currentTab ? currentTab.id : -1;
@@ -162,6 +163,9 @@ tabs.onUpdated = async function(tabId, changeInfo, tab) {
     // Could not be tracked yet if discarded at browser startup
     if (tabId && !tabs.getTabFromId(tabId)) {
         await tabs.createTabEntry(tabId);
+    }
+    if (changeInfo.url || changeInfo.status === 'loading') {
+        await keepass.onRiskNavigation(tabId, changeInfo, tab);
     }
     // If the tab URL has changed (e.g. logged in) clear credentials
     if (changeInfo.url) {

@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "They know your passwords",
-    "version": "1.10.4",
+    "version": "1.10.5",
     "description": "KeePassXC 本地口令风险评估与安全推荐演示扩展",
     "author": "KeePassXC Team",
     "icons": {
