@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "version": "v0.2.3",
+  "releaseId": 420880898,
+  "url": "https://github.com/LeegenSteven/They-know-your-passwords/releases/tag/v0.2.3",
+  "targetCommit": "6ae3dd89b3607daec4a046689207ed6126dd7322",
+  "isLatest": true,
+  "draft": false,
+  "prerelease": false,
+  "publishedAtUtc": "2026-10-22T15:26:05Z",
+  "assets": [
+    {
+      "file": "SHA256SUMS.txt",
+      "bytes": 190,
+      "sha256": "b911b2b995d8d74333cd22eb391994238f34423d9a32082e9a1d9868c50c44de",
+      "anonymous_download": true,
+      "remote_digest_match": true,
+      "local_archive_match": true
+    },
+    {
+      "file": "TKYP-Chrome-Edge-v0.2.3.zip",
+      "bytes": 1072468,
+      "sha256": "5e0f0ee46b1a3733e41426248b6fe6fc530f559cf747730d8624b4aa834275bb",
+      "anonymous_download": true,
+      "remote_digest_match": true,
+      "local_archive_match": true
+    },
+    {
+      "file": "TKYP-Windows-x64-v0.2.3.zip",
+      "bytes": 268610889,
+      "sha256": "ee8f99b78c5da06e00af36256ef827649e3b253814693f7611d2a0d8544d4046",
+      "anonymous_download": true,
+      "remote_digest_match": true,
+      "local_archive_match": true
+    }
+  ],
+  "zipCrcVerified": true,
+  "downloadedCriticalComponentsVerified": 33,
+  "downloadedPluginPayloadIdenticalFiles": 189,
+  "pathWithSpaces": true,
+  "cleanPathCliVersionPassed": true,
+  "portableRuntime": {
+    "python": "3.12.10",
+    "torch": "2.8.0+cpu",
+    "pyg": "2.6.1",
+    "cuda": false,
+    "isolated": 1
+  },
+  "beforePublicationAcceptance": {
+    "realNativeModels": true,
+    "chromeChecks": 46,
+    "edgeChecks": 46,
+    "cmdStartupChecks": 39,
+    "registryRestored": true
+  },
+  "privacy": {
+    "personalVaultRead": false,
+    "personalConfigurationUploaded": false,
+    "credentialsInReport": false
+  }
+}

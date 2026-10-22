@@ -20,6 +20,8 @@
 
 PSM 仍是估计区间，PARD 未命中保持未知；默认 3 秒超时可安全重试，30/120 秒预算需明确选择。完整业务和专项覆盖指定本机 Windows x64 环境，不外推所有硬件。脱敏证据见 [release-acceptance-v0.2.3.json](release-acceptance-v0.2.3.json)，复现入口为 `tools/verify_release_browsers.py` 与 `browser-extension/tests/real-browser-acceptance.cjs`。
 
+公开发布复核：v0.2.3 已设为 latest，标签对应源码提交 `6ae3dd89b3607daec4a046689207ed6126dd7322`。两个 ZIP 与 SHA256SUMS.txt 均匿名下载成功，SHA-256 与本地构建及 GitHub 摘要一致；下载软件解压到含空格目录，33 个关键组件核对、两包 189 个扩展文件一致性、清洁 PATH 下 CLI 和隔离 CPU Python/PyTorch 验证通过。公开附件不包含测试配置、库或浏览器档案；证据见 [release-publication-v0.2.3.json](release-publication-v0.2.3.json)。
+
 ## 2026-10-22 候选来源与并发撤销回归
 
 本轮修复候选填充的文档绑定与导航竞争，以及空令牌取消跨页面影响其他候选的问题。扩展采用顶层文档令牌、可用的浏览器文档 ID、填充前同步校验和标签页请求序号；宿主取消限定连接、页面、来源及可选精确令牌，并在异步评估后用请求 generation 阻止迟到响应覆盖新候选。旧响应回收使用 `invalidateRequests=false`，不改变较新请求的输入修订或 generation。断连、锁库和解锁使扩展旧状态失效，宿主断连执行连接级清理。
